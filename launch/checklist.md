@@ -4,7 +4,7 @@
 
 - [ ] Resolve the open eligibility questions in `eligibility.md`.
 - [ ] Decide whether to retain the working name following the naming overlap check.
-- [ ] Verify the production URL and all three exhibits.
+- [x] Verify the production URL and all three exhibits (September 12, application revision `56e5945`; repeat September 17).
 - [x] Generate and inspect the four actual recording exports and gallery images.
 - [ ] Maintainer reviews the maker comment and finished assets before posting.
 - [ ] Complete ten observed beginner sessions using the worksheet.

@@ -15,6 +15,18 @@ Recorded September 12, 2026. Update this file when new checks are completed; do 
 - Real WebGL context-loss check: the browser's `WEBGL_lose_context` extension removed the scene, and the player displayed “The story still works” with its written-story link and calculated controls retained. A normal viewport unmount no longer reports a false rendering failure.
 - Media: inspected representative engine, gear, differential, contribution-card, and gallery frames. H.264 exports are 20 seconds for the three portrait clips and 55 seconds for the landscape demo. See [the asset index](../launch/ASSETS.md).
 
+## Deployed release check
+
+Application revision `56e5945` passed [GitHub's clean install, tests, build, and deployment](https://github.com/gulnoorCheema/OpenEngineering/actions/runs/34681362756). The live site was checked in the Codex in-app browser:
+
+- An engine share link restored chapter seven, four cylinders, and the paused 638° moment. Keyboard Home/ArrowRight moved to 1°; Reset restored the current chapter's 420° preset and four cylinders.
+- The 16-to-48 gear preset displayed 0.33× output speed and 3.00× ideal torque.
+- Changing differential turn direction exchanged the 0.80× and 1.20× outputs. The held-output chapter displayed 0.00× and 2.00× around a 1.00× carrier.
+- A genuine WebGL context loss on the public site displayed the readable fallback. No production JavaScript errors were observed during these checks.
+- The local recording studio switched scenes without the former false context-loss message.
+
+Native Chrome/Safari checks were blocked because the Mac was locked. The in-app browser and desktop viewport checks are not substitutes for those checks or a real touch-device test.
+
 ## Required before claiming launch readiness
 
 - [ ] Ten observed beginner sessions; target 8/10 discover a meaningful interaction and 7/10 explain the mechanism afterward.
@@ -23,7 +35,7 @@ Recorded September 12, 2026. Update this file when new checks are completed; do 
 - [ ] Safari and Chrome checks on the production build.
 - [ ] Real touch-device interaction, five-second loading target, and usable 30 fps measured on a representative phone.
 - [ ] Complete keyboard flow and reduced-motion behavior on native browsers.
-- [ ] Genuine WebGL failure, chapter share restoration, and reset on the final production revision.
+- [x] Genuine WebGL failure, chapter share restoration, and reset on deployed application revision `56e5945`.
 - [ ] Product Hunt eligibility questions resolved; working name considered against existing uses.
 
 Use `launch/validation-worksheet.csv` for participant observations. A scripted browser check is not a beginner session or an independent contributor test. Desktop viewport emulation is not real-phone performance evidence.
