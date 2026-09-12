@@ -1,32 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { exhibits as collection } from '../content/exhibits';
-const exhibits = ['engine', 'gears', 'differential'].map((id) =>
-  collection.find((e) => e.id === id)!,
-);
-import { defaultControls, type Controls, type Vec3 } from '../lib/exhibit';
+import { exhibits } from '../content/exhibits';
 import SceneViewport from './SceneViewport';
-import type { MotionClock } from '../lib/presentation';
 import { saveMedia } from '../lib/save-media';
-const scripts = {
-  engine: [
-    ['How does a push become rotation?', 'Burning fuel pushes the piston.'],
-    ['One end travels in a line.', 'The other follows a circle.'],
-    ['Four strokes make a cycle.', 'Intake. Compression. Power. Exhaust.'],
-    ['Spread the power strokes.', 'Four cylinders. One crankshaft.'],
-  ],
-  gears: [
-    ['Make it stronger.', 'Watch what happens to speed.'],
-    ['16 teeth drive 32.', 'The output turns at half the speed.'],
-    ['16 teeth drive 48.', '3× ideal torque. ⅓ the speed.'],
-    ['Try the opposite.', 'More speed means less ideal torque.'],
-  ],
-  differential: [
-    ['One engine. Two wheels.', 'Why do they turn differently?'],
-    ['The outside path is longer.', 'The outside wheel must turn faster.'],
-    ['Small gears allow a difference.', 'Left slows down. Right speeds up.'],
-    ['Hold one output on a bench.', 'The other turns at twice the carrier speed.'],
-  ],
-};
+import type { MotionClock } from '../lib/presentation';
+import { recordingChoices, recordingFrame, recordingSegment, isLandscape } from '../lib/recordings';
 const wrap = (
   ctx: CanvasRenderingContext2D,
   text: string,
@@ -49,34 +26,88 @@ const wrap = (
 };
 export default function Studio() {
   const [choice, setChoice] = useState('engine'),
+    [active, setActive] = useState('engine'),
+    [sample, setSample] = useState(() => recordingFrame('engine', 0)),
     [recording, setRecording] = useState(false),
-    [elapsed, setElapsed] = useState(0),
-    [index, setIndex] = useState(0),
-    [phase, setPhase] = useState(420),
-    [controls, setControls] = useState<Controls>(defaultControls(exhibits[0])),
-    [explode, setExplode] = useState(0),
-    [status, setStatus] = useState('Ready to record'),
     [ready, setReady] = useState(false),
+    [elapsed, setElapsed] = useState(0),
+    [status, setStatus] = useState('Ready to record'),
     [videoUrl, setVideoUrl] = useState('');
-  const motion = useRef<MotionClock>({ phase: 430, playing: false, visible: true, speed: 0 });
-  const lastTick = useRef(-1),
-    lastControls = useRef('');
   const source = useRef<HTMLCanvasElement | null>(null),
     output = useRef<HTMLCanvasElement>(null),
-    running = useRef(false),
-    recorder = useRef<MediaRecorder | null>(null),
     frame = useRef(0),
-    data = useRef({ index: 0, seconds: 0, choice: 'engine' });
-  const exhibit = exhibits[index],
-    landscape = choice === 'demo';
-  const position: Vec3 =
-    exhibit.scene === 'engine'
-      ? controls.cylinders === 4
-        ? [7.8, 4.2, 10.8]
-        : [6, 3.5, 9]
-      : exhibit.scene === 'gears'
-        ? [0.6, 2.5, 9]
-        : [6, 3.4, 9];
+    recorder = useRef<MediaRecorder | null>(null),
+    readyRef = useRef(false),
+    activeRef = useRef('engine'),
+    running = useRef(false),
+    lastSample = useRef('');
+  const motion = useRef<MotionClock>({ phase: 420, playing: false, visible: true, speed: 0 });
+  const exhibit = exhibits.find((e) => e.id === active)!,
+    landscape = isLandscape(choice);
+  const paint = (time: number, selectedChoice = choice) => {
+    const canvas = output.current,
+      src = source.current;
+    if (!canvas || !src) return;
+    const ctx = canvas.getContext('2d')!,
+      w = canvas.width,
+      h = canvas.height,
+      wide = isLandscape(selectedChoice),
+      seg = recordingSegment(selectedChoice, time),
+      f = recordingFrame(seg.id, seg.local),
+      e = exhibits.find((e) => e.id === seg.id)!;
+    ctx.fillStyle = '#f3f0e9';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#191e20';
+    ctx.font = '500 24px "Space Grotesk"';
+    ctx.fillText('OpenEngineering', wide ? 45 : 40, 60);
+    ctx.font = '12px "IBM Plex Mono"';
+    ctx.fillStyle = '#a45a39';
+    ctx.fillText('FREE TO EXPLORE / OPEN SOURCE', wide ? 914 : 40, wide ? 60 : 93);
+    const x = wide ? 30 : 0,
+      y = wide ? 110 : 135,
+      sw = wide ? 770 : 720,
+      sh = wide ? 550 : 750;
+    ctx.fillStyle = '#101719';
+    ctx.fillRect(x, y, sw, sh);
+    const scale = Math.min(sw / src.width, sh / src.height);
+    ctx.drawImage(
+      src,
+      x + (sw - src.width * scale) / 2,
+      y + (sh - src.height * scale) / 2,
+      src.width * scale,
+      src.height * scale,
+    );
+    const tx = wide ? 838 : 40,
+      tw = wide ? 390 : 640,
+      ty = wide ? 165 : 942;
+    ctx.fillStyle = '#a45a39';
+    ctx.font = '12px "IBM Plex Mono"';
+    ctx.fillText(`${e.number} / ${e.title.toUpperCase()}`, tx, ty);
+    ctx.fillStyle = '#191e20';
+    ctx.font = `500 ${wide ? 43 : 44}px "Space Grotesk"`;
+    const headline = seg.closing ? 'New ways to wonder.' : f.caption[0];
+    const end = wrap(ctx, headline, tx, ty + 65, tw, wide ? 49 : 51);
+    ctx.font = '23px "DM Sans"';
+    ctx.fillStyle = '#5b6766';
+    wrap(
+      ctx,
+      seg.closing
+        ? 'Six exhibits. One shared player. Build the next moment of understanding.'
+        : f.caption[1],
+      tx,
+      end + 29,
+      tw,
+      32,
+    );
+    ctx.font = '12px "IBM Plex Mono"';
+    ctx.fillStyle = '#66716f';
+    ctx.fillText('GULNOORCHEEMA.GITHUB.IO/OPENENGINEERING', wide ? 45 : 40, h - 32);
+    ctx.fillStyle = '#b94720';
+    ctx.fillRect(0, h - 5, w * Math.min(time / (wide ? 55 : 20), 1), 5);
+  };
+  useEffect(() => {
+    if (ready && !running.current) paint(0);
+  }, [ready, choice, active]);
   useEffect(
     () => () => {
       running.current = false;
@@ -86,150 +117,35 @@ export default function Studio() {
     [],
   );
   const prepare = (value: string) => {
+    const seg = recordingSegment(value, 0),
+      s = recordingFrame(seg.id, 0);
+    if (seg.id !== activeRef.current) {
+      readyRef.current = false;
+      setReady(false);
+      source.current = null;
+    }
     setChoice(value);
-    const i = value === 'demo' ? 0 : exhibits.findIndex((e) => e.id === value);
-    if (i !== index) setReady(false);
-    setIndex(i);
-    setControls(defaultControls(exhibits[i]));
-    setPhase(value === 'differential' ? 350 : 430);
-    motion.current.phase = value === 'differential' ? 350 : 430;
-    setExplode(0);
+    activeRef.current = seg.id;
+    setActive(seg.id);
+    setSample(s);
+    motion.current.phase = s.phase;
     setStatus('Ready to record');
+    setElapsed(0);
   };
-  function renderFrame() {
-    const canvas = output.current!,
-      ctx = canvas.getContext('2d')!,
-      w = canvas.width,
-      h = canvas.height;
-    const { index: i, seconds: t, choice: c } = data.current;
-    const wide = c === 'demo',
-      section = wide ? (t < 20 ? 0 : t < 35 ? 1 : t < 47 ? 2 : 3) : Math.min(3, Math.floor(t / 5));
-    const script = wide
-      ? scripts[exhibits[i].id as keyof typeof scripts][
-          i === 0
-            ? Math.min(3, Math.floor(t / 5))
-            : i === 1
-              ? Math.min(3, Math.floor((t - 20) / 3.75))
-              : Math.min(3, Math.floor((t - 35) / 3))
-        ]
-      : scripts[c as keyof typeof scripts][section];
-    ctx.fillStyle = '#f3f0e8';
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = '#d84f1a';
-    ctx.fillRect(45, 43, 9, 28);
-    ctx.fillStyle = '#282d2f';
-    ctx.font = '500 23px "Space Grotesk"';
-    ctx.fillText('OpenEngineering', 68, 65);
-    ctx.font = '12px "IBM Plex Mono"';
-    ctx.fillStyle = '#727970';
-    ctx.fillText('FREE TO EXPLORE  /  OPEN SOURCE', 45, h - 40);
-    if (wide && section === 3) {
-      ctx.fillStyle = '#282d2f';
-      ctx.font = '500 49px "Space Grotesk"';
-      wrap(ctx, 'Help build the next “aha”.', 65, 210, w - 130, 65);
-      ctx.font = '25px "DM Sans"';
-      wrap(ctx, 'Three working exhibits. One shared player.', 65, 320, w - 130, 42);
-      ctx.fillStyle = '#edf0e5';
-      ctx.fillRect(65, 390, w - 130, 145);
-      ctx.font = '20px "IBM Plex Mono"';
-      ctx.fillStyle = '#42604e';
-      ctx.fillText('npm run new-exhibit -- your-idea', 95, 445);
-      ctx.fillText('Sources. Design rules. Tests. Your curiosity.', 95, 495);
-      ctx.fillStyle = '#d84f1a';
-      ctx.font = '25px "DM Sans"';
-      ctx.fillText('github.com/gulnoorCheema/OpenEngineering', 65, 605);
-      return;
-    }
-    if (wide) {
-      const stageW = 800,
-        stageH = 560,
-        top = 106;
-      ctx.fillStyle = '#101719';
-      ctx.fillRect(0, top, stageW, stageH);
-      if (source.current) {
-        const src = source.current,
-          fit = Math.min(stageW / src.width, stageH / src.height);
-        ctx.drawImage(
-          src,
-          (stageW - src.width * fit) / 2,
-          top + (stageH - src.height * fit) / 2,
-          src.width * fit,
-          src.height * fit,
-        );
-      }
-      ctx.fillStyle = '#b94720';
-      ctx.font = '12px "IBM Plex Mono"';
-      ctx.fillText(`0${i + 1} / ${exhibits[i].title.toUpperCase()}`, 846, 159);
-      ctx.fillStyle = '#191e20';
-      ctx.font = '500 46px "Space Grotesk"';
-      const end = wrap(ctx, script[0], 846, 270, 385, 54);
-      ctx.fillStyle = '#67706c';
-      ctx.font = '27px "DM Sans"';
-      wrap(ctx, script[1], 846, end + 44, 365, 39);
-      ctx.fillStyle = '#b94720';
-      ctx.font = '12px "IBM Plex Mono"';
-      ctx.fillText('PLAY. PAUSE. TAKE IT APART.', 846, 618);
-      return;
-    }
-    const top = wide ? 122 : 255,
-      sceneH = wide ? 400 : 590;
-    if (source.current) {
-      const sw = source.current.width,
-        sh = source.current.height;
-      ctx.fillStyle = '#101719';
-      ctx.fillRect(0, top, w, sceneH);
-      const scale = Math.min(w / sw, sceneH / sh);
-      ctx.drawImage(
-        source.current,
-        (w - sw * scale) / 2,
-        top + (sceneH - sh * scale) / 2,
-        sw * scale,
-        sh * scale,
-      );
-    }
-    ctx.fillStyle = '#282d2f';
-    ctx.font = `500 ${wide ? 38 : 39}px "Space Grotesk"`;
-    wrap(ctx, script[0], 45, wide ? 575 : 143, w - 90, 50);
-    ctx.font = `${wide ? 25 : 26}px "DM Sans"`;
-    ctx.fillStyle = '#606b62';
-    wrap(ctx, script[1], 45, wide ? 628 : 930, w - 90, 39);
-    ctx.font = '13px "IBM Plex Mono"';
-    ctx.fillStyle = '#d84f1a';
-    ctx.fillText(
-      exhibits[i].id === 'engine'
-        ? 'A SIMPLIFIED FOUR-STROKE MODEL'
-        : exhibits[i].id === 'gears'
-          ? 'IDEAL RATIOS · LOSSES IGNORED'
-          : 'IDEAL OPEN DIFFERENTIAL',
-      45,
-      wide ? 100 : 235,
-    );
-  }
   async function start() {
-    if (!ready || recording) return;
-    if (!window.MediaRecorder) {
-      setStatus('Recording needs a browser with MediaRecorder support.');
-      return;
-    }
+    if (!readyRef.current || !output.current) return;
     await document.fonts.ready;
-    setRecording(true);
-    setStatus('Recording the live scene');
-    running.current = true;
-    const duration = choice === 'demo' ? 55 : 20;
-    const c = output.current!;
-    c.width = choice === 'demo' ? 1280 : 720;
-    c.height = choice === 'demo' ? 720 : 1280;
-    const mime = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/mp4'].find((m) =>
+    paint(0);
+    const mime = ['video/mp4;codecs=avc1.42E01E', 'video/webm;codecs=vp9', 'video/webm'].find((m) =>
       MediaRecorder.isTypeSupported(m),
     );
     if (!mime) {
-      setRecording(false);
-      setStatus('No supported video codec. Try Chrome.');
+      setStatus('This browser cannot record canvas video');
       return;
     }
-    const stream = c.captureStream(30),
+    const stream = output.current.captureStream(30),
+      rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6500000 }),
       chunks: Blob[] = [];
-    const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 5_000_000 });
     recorder.current = rec;
     rec.ondataavailable = (e) => {
       if (e.data.size) chunks.push(e.data);
@@ -237,57 +153,52 @@ export default function Studio() {
     rec.onstop = async () => {
       stream.getTracks().forEach((t) => t.stop());
       const blob = new Blob(chunks, { type: mime });
-      const url = URL.createObjectURL(blob);
-      let saveStatus = 'Recording saved';
-      try {
-        await saveMedia(blob, `openengineering-${choice}.${mime.includes('mp4') ? 'mp4' : 'webm'}`);
-      } catch {
-        saveStatus = 'Save failed — use the video preview to download';
-      }
-      if (videoUrl) URL.revokeObjectURL(videoUrl);
-      setVideoUrl(url);
+      setVideoUrl((previous) => {
+        if (previous) URL.revokeObjectURL(previous);
+        return URL.createObjectURL(blob);
+      });
+      await saveMedia(blob, `openengineering-${choice}.${mime.includes('mp4') ? 'mp4' : 'webm'}`);
       setRecording(false);
-      setStatus(saveStatus);
+      setStatus('Recording saved');
     };
-    rec.start();
-    let firstFrame: number | undefined;
+    rec.onerror = () => {
+      running.current = false;
+      setRecording(false);
+      setStatus('Recording failed');
+    };
+    running.current = true;
+    setRecording(true);
+    setStatus('Recording the actual scene');
+    rec.start(250);
+    let last = performance.now(),
+      time = 0,
+      lastUi = -1;
     const tick = (now: number) => {
-      firstFrame ??= now;
-      const t = Math.min(Math.max(0, (now - firstFrame) / 1000), duration);
-      if (Math.floor(t * 10) !== lastTick.current) {
-        lastTick.current = Math.floor(t * 10);
-        setElapsed(t);
+      if (!running.current) return;
+      const dt = Math.max(0, Math.min((now - last) / 1000, 0.06));
+      last = now;
+      if (readyRef.current) time += dt;
+      const segment = recordingSegment(choice, time);
+      if (segment.id !== activeRef.current) {
+        readyRef.current = false;
+        setReady(false);
+        activeRef.current = segment.id;
+        setActive(segment.id);
+        source.current = null;
       }
-      const i =
-        choice === 'demo'
-          ? t < 20
-            ? 0
-            : t < 35
-              ? 1
-              : 2
-          : exhibits.findIndex((e) => e.id === choice);
-      const rawLocal = choice === 'demo' ? t - (i === 0 ? 0 : i === 1 ? 20 : 35) : t;
-      const local =
-        choice === 'demo' ? rawLocal * (i === 0 ? 1 : i === 1 ? 20 / 15 : 20 / 12) : rawLocal;
-      setIndex(i);
-      motion.current.phase = local * 84 + 420;
-      let ctr = defaultControls(exhibits[i]);
-      if (i === 0) ctr.cylinders = local >= 15 ? 4 : 1;
-      if (i === 1) ctr.ratio = local < 5 ? 1 : local < 10 ? 2 : local < 15 ? 3 : 0.5;
-      if (i === 2) {
-        ctr.direction = local < 5 ? 0 : 1;
-        ctr.radius = local < 10 ? 5 : 2;
-        ctr.held = local >= 15 ? 1 : 0;
+      const current = recordingFrame(segment.id, segment.local);
+      motion.current.phase = current.phase;
+      const serialized = JSON.stringify({ ...current, phase: 0 });
+      if (serialized !== lastSample.current) {
+        lastSample.current = serialized;
+        setSample(current);
       }
-      const serialized = JSON.stringify(ctr);
-      if (serialized !== lastControls.current) {
-        lastControls.current = serialized;
-        setControls(ctr);
+      if (readyRef.current) paint(time);
+      if (Math.floor(time) !== lastUi) {
+        lastUi = Math.floor(time);
+        setElapsed(time);
       }
-      setExplode(i === 2 && local >= 15 ? 0.45 : 0);
-      data.current = { index: i, seconds: t, choice };
-      renderFrame();
-      if (t >= duration || !running.current) {
+      if (time >= (isLandscape(choice) ? 55 : 20)) {
         running.current = false;
         rec.stop();
         return;
@@ -371,11 +282,17 @@ export default function Studio() {
       <div className="studio-tools">
         <label>
           Recording{' '}
-          <select value={choice} disabled={recording} onChange={(e) => prepare(e.target.value)}>
-            <option value="engine">Engine · 20s portrait</option>
-            <option value="gears">Gears · 20s portrait</option>
-            <option value="differential">Differential · 20s portrait</option>
-            <option value="demo">Product demo · 55s landscape</option>
+          <select
+            aria-label="Recording"
+            value={choice}
+            disabled={recording}
+            onChange={(e) => prepare(e.target.value)}
+          >
+            {recordingChoices.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.label}
+              </option>
+            ))}
           </select>
         </label>
         <button disabled={recording || !ready} onClick={start}>
@@ -388,32 +305,44 @@ export default function Studio() {
       <p role="status">
         {status}. Keep this tab visible while recording. No microphone or screen permission is used.
       </p>
-      <div>
-        {videoUrl && (
-          <video
-            src={videoUrl}
-            controls
-            style={{ maxWidth: 500, width: '100%' }}
-            aria-label="Recorded launch clip"
-          />
-        )}
-      </div>
+      {videoUrl && (
+        <video
+          src={videoUrl}
+          controls
+          style={{ maxWidth: 500, width: '100%' }}
+          aria-label="Recorded launch clip"
+        />
+      )}
       <div className="studio-grid">
         <div className="studio-preview">
           <SceneViewport
-            key={exhibit.id}
-            scene={exhibit.scene}
-            phase={phase}
+            key={active}
+            scene={active}
+            phase={sample.phase}
             motion={motion}
-            explode={explode}
-            controls={controls}
+            explode={sample.explode}
+            controls={sample.controls}
             stage={99}
             selected=""
             onSelect={() => {}}
-            position={position}
-            onError={() => setStatus('3D rendering failed')}
-            onReady={() => setReady(true)}
-            onCanvas={(canvas) => (source.current = canvas)}
+            position={sample.position}
+            target={sample.target}
+            fov={sample.fov}
+            minAspect={exhibit.presentation?.minAspect}
+            quality="high"
+            effects
+            onError={() => {
+              running.current = false;
+              setStatus('3D rendering failed');
+              if (recorder.current?.state === 'recording') recorder.current.stop();
+            }}
+            onReady={() => {
+              readyRef.current = true;
+              setReady(true);
+            }}
+            onCanvas={(canvas) => {
+              source.current = canvas;
+            }}
           />
         </div>
         <canvas

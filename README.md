@@ -8,6 +8,9 @@ A free, open-source collection of interactive mechanical explanations, built wit
 
 **[Open the live exhibits](https://gulnoorcheema.github.io/OpenEngineering/)** · [Watch the demo](launch/assets/openengineering-demo.mp4)
 
+- **The sewing machine:** follow an upper-thread loop around a bobbin, then change the stitch spacing.
+- **The jet engine:** follow two streams through a turbofan and compare bypass mass-flow ratios.
+- **The mechanical watch:** inspect an alternating escapement and change the balance rhythm.
 - **The four-stroke engine:** follow expanding gas through a piston, connecting rod, crank, valves, and a complete 720-degree cycle.
 - **Gear ratios:** trade speed for turning force and watch the relationship change.
 - **The differential:** see how two driven wheels turn at different speeds while their average follows the input.

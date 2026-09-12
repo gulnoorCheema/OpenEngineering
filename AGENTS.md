@@ -37,7 +37,7 @@ For a new exhibit, run `npm run new-exhibit -- your-mechanism` once from the roo
 ## Rules to preserve
 
 - Keep educational calculations in pure TypeScript, separate from rendering. A phase and control state must reproduce the same mechanism and effects after pause or backward scrubbing. Test physical relationships independently of the implementation.
-- Keep the 720° engine cycle, 1–3–4–2 firing order, gear pitch/direction ratios and differential mean-speed relationship correct. Angles at the player boundary are degrees; Three.js rotations are radians.
+- Keep the 720° engine cycle, 1–3–4–2 firing order, gear pitch/direction ratios and differential mean-speed relationship correct. For the new collection, preserve needle-clear feed and selected stitch spacing, separate turbofan mass-flow fractions and linked spools, and two watch beats per oscillation with fixed train ratios. Angles at the player boundary are degrees; Three.js rotations are radians.
 - Preserve existing exhibit, chapter, part and control IDs and share parameters (`chapter`, `mode`, `phase`, `apart`, and control IDs). Shared links restore their paused moment. Optional manifest extensions need defaults so existing contributors' exhibits keep working.
 - Scrolling selects a chapter and composition; the shared playback clock owns mechanical phase. Explicit chapter navigation seeks its teaching position. Free exploration preserves the current state; returning restores the current chapter.
 - Retain pause, keyboard scrubbing, reset, part selection, browser Back, assembled/exploded inspection, touch scrolling and readable static explanations when JavaScript or WebGL is unavailable.

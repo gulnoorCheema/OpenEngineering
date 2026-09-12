@@ -11,6 +11,8 @@ These files come from the implemented application and its scene modules. No thir
 | [openengineering-gears.mp4](assets/openengineering-gears.mp4)               | 720 × 1280, about 20 seconds | Tooth-count presets trade speed for ideal torque                        |
 | [openengineering-differential.mp4](assets/openengineering-differential.mp4) | 720 × 1280, about 20 seconds | Different wheel paths and the held-output bench experiment              |
 
+The new collection adds [sewing machine](assets/openengineering-sewing-machine.mp4), [jet engine](assets/openengineering-jet-engine.mp4), and [mechanical watch](assets/openengineering-mechanical-watch.mp4) portrait clips (720 × 1280, 20 seconds each), plus a separate [New ways to wonder demo](assets/openengineering-new-collection.mp4) (1280 × 720, 55 seconds). The original four videos remain available.
+
 The clips are silent, with visible captions. They are recorded from the same Three.js scene components and deterministic calculations as the exhibits, with captions composed by the recording studio. The final demo card describes the actual contributor tools. Raw WebM exports remain local in `artifacts/captures/`; MP4 copies are encoded with H.264, yuv420p, and fast-start metadata for broad playback support.
 
 ## Gallery and icon
@@ -34,3 +36,11 @@ Plain original model renders in `public/exhibits/` supply the collection thumbna
 See the recording section of [the authoring guide](../docs/AUTHORING.md). Use `npm run build` followed by `npm run studio`. The loopback-only helper saves files into `artifacts/captures/`; it is not deployed. Keep the recording tab visible until it finishes. Inspect representative frames, especially at each transition, before replacing a release asset.
 
 Product Hunt and social posts remain unsubmitted. The local package is not evidence of acceptance, scheduling, or promotion.
+
+## New collection gallery
+
+- Sewing machine: [desktop](assets/openengineering-sewing-machine-desktop.png), [phone layout](assets/openengineering-sewing-machine-phone.png).
+- Jet engine: [desktop](assets/openengineering-jet-engine-desktop.png), [phone layout](assets/openengineering-jet-engine-phone.png).
+- Mechanical watch: [desktop](assets/openengineering-mechanical-watch-desktop.png), [phone layout](assets/openengineering-mechanical-watch-phone.png).
+
+Matching `sewing-machine.png`, `jet-engine.png`, and `mechanical-watch.png` images in `public/exhibits/` and `public/social/` come from the shared renderer. These are original simplified teaching assemblies, with no real-performance or reviewer claims.

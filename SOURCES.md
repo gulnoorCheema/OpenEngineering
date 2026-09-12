@@ -24,6 +24,24 @@ Boundary: ideal external spur gears with no losses or inertia. Angular speed rat
 
 Boundary: ideal symmetric open differential with equal side gears, prescribed input speed, no tire-slip or traction dynamics. Wheel speeds sum to twice carrier speed. Turn radius models only an axle following concentric circular paths (track width 1.6 m); it is not a full steering or vehicle dynamics model. Holding one output on a bench is distinct from locking a differential. Bevel-tooth geometry is schematic. Unequal speeds do not imply unequal torque; no “all torque goes to one wheel” claim is made.
 
+## Sewing machine
+
+- Henderson Sewing, [Getting started: how sewing machines work](https://www.hendersonsewing.com/images/Getting_started_how_sewing_machines_work.pdf). Supports the distinction between stitch formation, thread control, and fabric feed, including the oscillating-hook lockstitch.
+
+Boundary: original unbranded teaching mechanism. Needle, hook, take-up lever and feed motion are prescribed from phase. Thread curves stage the loop around the bobbin and its tightening; they are not a cloth, friction or tension solver. Completed stitches form a finite strip reconstructed from phase. Feed advances while the needle is clear, with 1, 2 and 4 mm spacing.
+
+## Jet engine
+
+- NASA Glenn, [Turbofan Engine](https://www.grc.nasa.gov/www/k-12/airplane/aturbf.html). Supports the fan, bypass/core paths and turbine-driven compressor.
+
+Boundary: simplified two-spool turbofan with continuous combustion. Bypass ratio B gives core mass-flow fraction 1/(1+B) and bypass fraction B/(1+B). These are not thrust fractions. The 2:1, 5:1 and 10:1 presets retain the same schematic geometry. Shaft speeds and trace speed are illustrative. No afterburner, repeating spark cycle, temperature, efficiency or thrust calculation.
+
+## Mechanical watch
+
+- Grand Seiko, [Mechanical movement](https://www.grand-seiko.com/uk-en/collections/movement/mechanical). Supports the mainspring energy store, gear train, escapement and balance regulator.
+
+Boundary: original hand-wound movement with a conventional lever escapement, simplified locking surfaces and prescribed balance motion. One oscillation contains two beats. The fixed train is calibrated to 4 Hz; 3/4/5 Hz produces 6/8/10 beats per second and 0.75/1/1.25 relative hand rates. Animation is slowed for inspection. No automatic winding, calendar, friction, real accuracy or spring-energy depletion calculation.
+
 ## Educational and creative influences
 
 - [PhET, About](https://phet.colorado.edu/en/about): visible cause and effect, immediate feedback, and independent exploration. This project's effectiveness has not been established by PhET or a learning study.

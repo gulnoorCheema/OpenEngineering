@@ -5,9 +5,10 @@ import { path } from '../../lib/paths';
 export function MechanicalPart({
   name,
   selected = false,
+  model = '/models/mechanical-parts.glb',
   ...props
-}: { name: string; selected?: boolean } & Record<string, any>) {
-  const { scene } = useGLTF(path('/models/mechanical-parts.glb'), path('/draco/'));
+}: { name: string; selected?: boolean; model?: string } & Record<string, any>) {
+  const { scene } = useGLTF(path(model), path('/draco/'));
   const object = useMemo(() => {
     const original = scene.getObjectByName(name);
     if (!original) throw new Error(`Missing mechanical asset: ${name}`);

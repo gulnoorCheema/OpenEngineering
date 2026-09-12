@@ -54,6 +54,14 @@ export interface Exhibit {
   sources: Source[];
   limitations: string;
   assetCredits: string;
+  featured?: boolean;
+  presentation?: {
+    cameras?: { overview: Vec3; front: Vec3; rear: Vec3 };
+    target?: Vec3;
+    fov?: number;
+    clockRateControl?: string;
+    minAspect?: number;
+  };
 }
 export interface SceneProps {
   motion?: MotionRef;
@@ -117,4 +125,10 @@ export function shareQuery(
   });
   for (const c of exhibit.controls) q.set(c.id, String(controls[c.id]));
   return q.toString();
+}
+
+/** Clock multipliers affect playback, never the state restored by a share link. */
+export function animationSpeed(exhibit: Exhibit, controls: Controls) {
+  const rate = exhibit.presentation?.clockRateControl;
+  return exhibit.speed * (controls.speed ?? 1) * (rate ? (controls[rate] ?? 1) : 1);
 }

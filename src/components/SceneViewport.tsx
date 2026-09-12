@@ -51,6 +51,7 @@ function Camera({
   position,
   target,
   fov,
+  minAspect = 0,
   revision,
   reduced,
   interactive,
@@ -58,11 +59,12 @@ function Camera({
   position: Vec3;
   target: Vec3;
   fov: number;
+  minAspect?: number;
   revision: number;
   reduced: boolean;
   interactive: boolean;
 }) {
-  const { camera, gl } = useThree(),
+  const { camera, gl, size } = useThree(),
     orbit = useRef<ComponentRef<typeof OrbitControls>>(null),
     manual = useRef(false),
     initial = useRef(true),
@@ -81,7 +83,14 @@ function Camera({
     const a = reduced || initial.current ? 1 : 1 - Math.exp(-d * 6.5);
     camera.position.lerp(dest, a);
     if ('fov' in camera) {
-      camera.fov = MathUtils.lerp(camera.fov as number, fov, a);
+      const fittedFov =
+        (2 *
+          Math.atan(
+            Math.tan((fov * Math.PI) / 360) * Math.max(1, minAspect / (size.width / size.height)),
+          ) *
+          180) /
+        Math.PI;
+      camera.fov = MathUtils.lerp(camera.fov as number, fittedFov, a);
       camera.updateProjectionMatrix();
     }
     if (orbit.current) {
@@ -180,6 +189,7 @@ export default function SceneViewport({
   revision = 0,
   target: customTarget,
   fov = 34,
+  minAspect,
   reduced = false,
   interactive = true,
   onError,
@@ -193,6 +203,7 @@ export default function SceneViewport({
   position: Vec3;
   target?: Vec3;
   fov?: number;
+  minAspect?: number;
   revision?: number;
   reduced?: boolean;
   interactive?: boolean;
@@ -259,6 +270,7 @@ export default function SceneViewport({
           position={position}
           target={target}
           fov={fov}
+          minAspect={minAspect}
           revision={revision}
           reduced={reduced}
           interactive={interactive}

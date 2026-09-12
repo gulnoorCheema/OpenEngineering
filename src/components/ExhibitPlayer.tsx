@@ -1,3 +1,4 @@
+import { animationSpeed } from '../lib/exhibit';
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import {
   ArrowDown,
@@ -61,7 +62,7 @@ export default function ExhibitPlayer({
     state = useRef({ step, mode, controls, explode });
   state.current = { step, mode, controls, explode };
   motion.current.playing = playing && ready && !failed;
-  motion.current.speed = exhibit.speed * (controls.speed || 1);
+  motion.current.speed = animationSpeed(exhibit, controls);
   const story = exhibit.steps[step],
     low = quality === 'low' || (quality === 'auto' && autoLow),
     part = exhibit.parts.find((p) => p.id === selected);
@@ -72,15 +73,16 @@ export default function ExhibitPlayer({
   }, []);
   const position: Vec3 =
     view === 1
-      ? [0, 1, 11.5]
+      ? exhibit.presentation?.cameras?.front || [0, 1, 11.5]
       : view === 2
-        ? [-6, 3, -9]
+        ? exhibit.presentation?.cameras?.rear || [-6, 3, -9]
         : intro || mode === 'explore'
-          ? exhibit.id === 'engine'
-            ? [6, 3.5, 9]
-            : exhibit.id === 'gears'
-              ? [0.6, 2.5, 9]
-              : [6, 3.4, 9]
+          ? exhibit.presentation?.cameras?.overview ||
+            (exhibit.id === 'engine'
+              ? [6, 3.5, 9]
+              : exhibit.id === 'gears'
+                ? [0.6, 2.5, 9]
+                : [6, 3.4, 9])
           : story.camera;
   const scrollToChapter = (i: number, behavior: ScrollBehavior = 'instant') => {
     suppressed.current = performance.now() + 1000;
@@ -362,8 +364,16 @@ export default function ExhibitPlayer({
                   selected={selected || (!intro && mode === 'story' ? story.parts[0] : '')}
                   onSelect={setSelected}
                   position={position}
-                  target={!intro && mode === 'story' ? story.presentation?.target : undefined}
-                  fov={!intro && mode === 'story' ? story.presentation?.fov || 34 : 34}
+                  target={
+                    (!intro && mode === 'story' ? story.presentation?.target : undefined) ||
+                    exhibit.presentation?.target
+                  }
+                  fov={
+                    (!intro && mode === 'story' ? story.presentation?.fov : undefined) ||
+                    exhibit.presentation?.fov ||
+                    34
+                  }
+                  minAspect={exhibit.presentation?.minAspect}
                   revision={revision}
                   quality={low ? 'low' : 'high'}
                   effects={!reduced}

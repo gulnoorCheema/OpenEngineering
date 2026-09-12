@@ -2,6 +2,18 @@
 
 Recorded September 12, 2026. Update this file when new checks are completed; do not turn targets into results.
 
+## New collection revision — September 12
+
+- Added sewing machine, jet engine, and mechanical watch through the existing manifest/scene registry. The engine homepage and original three exhibit IDs remain. Counts and collection cards derive from the six-entry registry.
+- `npm test`: 24 tests passed, including the existing mechanical suite. New checks cover needle-clear feed, exact stitch spacing, hook/loop alignment and backward phase; jet mass-flow partition, separate passage bounds, connected shafts and stationary stators; watch beats, alternating releases, train ratios, hand rates and hairspring anchoring. Asset checks verify separate compressed GLBs, semantic nodes and finite bounds. Recording checks include all six scenes, both demos and a negative initial timestamp regression. These tests do not establish real thread dynamics or manufacturing geometry.
+- Production build passed Astro/TypeScript checking and generated 13 static pages. Each new GLB is under 1 MB. Separate lazy scene imports and explicit per-scene model paths preserve the original engine asset default.
+- In-app browser checks: 390 px sewing/watch layouts, 737 px jet/watch layouts, 1024 px sewing/watch layouts and 1440 px scene compositions. The phone layout had no horizontal page overflow. These are desktop viewport checks, not touch-hardware certification.
+- Exercised 4 mm sewing feed and stage seeking, 10:1 jet bypass (9.1% core / 90.9% bypass), 3 Hz watch (6 beats/s, 0.75× hand rate), part selection, keyboard reverse scrubbing, reset, story/free switching and browser Back. A watch chapter link restored its exact paused phase and control values.
+- The reduced-motion preview retained explicit controls. Deliberate `WEBGL_lose_context` on the sewing scene displayed the readable fallback with calculated controls and written chapters intact; reload restored the model.
+- Original Blender sources and their generated GLBs were exported with the committed script. Reviewed actual portrait frames for all three mechanisms, the combined demo’s jet/watch/closing frames, share cards and exported galleries. New clips are H.264/yuv420p at 30 fps: three 20-second portraits and one 55-second landscape demo; the original demo remains. A production static-target check found no missing local href/src destinations.
+
+Real-phone five-second interaction / 30 fps targets, native Safari testing, independent mechanical review, beginner comprehension sessions and the unfamiliar-contributor test remain **pending**. Prior release checks below are historical evidence, not new measurements for this collection.
+
 ## Completed locally
 
 - `npm test`: 10 tests pass. Coverage includes constant connecting-rod length over forward/reverse motion, the full 720° engine cycle, stroke/valve timing, the 1–3–4–2 power sequence, gear direction/pitch motion/ideal power, differential mean speed and held output, invalid inputs, manifest integrity, and chapter state restoration.

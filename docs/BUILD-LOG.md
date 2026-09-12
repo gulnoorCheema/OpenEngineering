@@ -56,3 +56,13 @@ A later visual check caught interpolated normals crossing the gear lightening bo
 The final differential close-up revealed gaps between the bevel gears and exposed the need for opposite spider rotation about the same carrier-local axis. Their pitch cones now meet at a common apex, and a tangential-motion test checks both spiders against the side gear across forward/reverse and held-output states. The mean-speed behavior is unchanged.
 
 The engine's radial cam profile was aligned with the ideal sinusoidal valve lift, replacing a decorative two-circle lobe. Its quarter-turn active region and separate exhaust offset follow the two-turn engine cycle. It remains an illustrative radial follower, not a manufacturing cam profile.
+
+## Three new moments of understanding
+
+The maintainer approved sewing machine → jet engine → mechanical watch as a featured collection, retaining the engine homepage and original three exhibits. Astra authored original six-chapter stories, pure calculations, semantic Blender part libraries and compressed per-exhibit GLBs. No book pages or branded manufacturer models were reproduced.
+
+The sewing loop and hook were aligned at capture, feed was limited to the needle-clear interval, and the finite stitch strip was clipped to its fabric extent. Jet flow samples preserve the chosen core/bypass mass fractions while fixed stators remain independent of the two rotating spools. The watch separates mechanical frequency from inspection playback speed and tests the fixed gear train against elapsed ideal time.
+
+New optional manifest framing and clock metadata retain old defaults. A responsive FOV adjustment keeps the wide assemblies inside narrow stages. The shared studio now takes per-exhibit shot definitions and retains the original demo alongside a new collection demo. These additions remain illustrative kinematics; no physical or external review is implied.
+
+Recording QA caught a browser-frame timestamp preceding the recording start timestamp by a fraction of a millisecond. The studio now bounds elapsed deltas at zero, and shot definitions clamp their input to the clip duration. A regression check covers the negative initial sample.

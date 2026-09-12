@@ -28,7 +28,7 @@ Test an invariant, not a copied formula. Examples: the engine's rod stays the sa
 
 Exploded offsets are for inspection only. The engine moves its cylinder housing, head and flywheel while its rod and crank preserve their calculated relationship. Never change an equation merely to make a disassembled view fit.
 
-The built-in `Readout.tsx` supplies additional compact diagrams for the three first exhibits. A new scene works without one; add a small, accessible readout when it explains something the 3D model does not. No readout should infer unsupported physical values.
+The built-in `Readout.tsx` supplies additional compact diagrams for all six exhibits. A new scene works without one; add a small, accessible readout when it explains something the 3D model does not. No readout should infer unsupported physical values.
 
 ## Story and sources
 
@@ -42,7 +42,7 @@ Use “Go deeper” for equations, exceptions, and limits. Avoid describing a ki
 
 Read `DESIGN.md`. The object has most of the screen; the explanation sits beside it on desktop and below it on phones. Keep motion useful and controls few. Provide a keyboard equivalent for every pointer action. Honor reduced motion; users can explicitly start animation. Don’t require hover.
 
-Check 390 px and 1440 px widths, keyboard focus, sources, chapter sharing after an experiment, and a `?view=text` fallback. Also test genuine WebGL failure, Safari, Chrome, and real touch hardware before claiming support.
+Check 390, 737, 1024 and 1440 px widths, keyboard focus, sources, chapter sharing after an experiment, and a `?view=text` fallback. Also test genuine WebGL failure, Safari, Chrome, and real touch hardware before claiming support.
 
 ## Submit for review
 
@@ -75,3 +75,13 @@ Use `MechanicalPart` in `scenes/Assets.tsx` for named original GLB parts. All ex
 `engineEffects` is a pure phase function. Every particle position and shader noise field must derive from that phase. Update the **material's live uniforms** in the frame callback: a stale uniforms object can leave the visual stage stuck even when the piston moves. Effects disappear while the head is exploded or removed. The shader clips the gas to the chamber and piston crown. These are qualitative cues, not a thermodynamic simulation.
 
 Use `?capture=1` for the authoring panel. It displays renderer frame rate, elapsed navigation-to-ready time and active quality, and exposes context-loss and reduced-motion previews. Measurements run locally and are never transmitted. Browser timing at phone dimensions on a desktop GPU is not evidence of phone performance. Gallery export captures the introductory viewport; the studio's social-card button also exports a plain 720 × 540 exhibit image.
+
+## Optional exhibit framing and clock controls
+
+Exhibit-level `presentation` can supply `cameras: { overview, front, rear }`, a `target`, and `fov`. Chapter presentation can override the target and FOV. `minAspect` protects wide assemblies in narrow stages by widening the vertical field of view below that aspect ratio; inspect all four layout widths before setting it. Missing fields preserve the original player defaults.
+
+For a mechanical frequency experiment, `presentation.clockRateControl` names a numeric manifest control. Its value multiplies the base degrees-per-second clock independently of the `speed` playback control. The watch uses `rate` values 0.75, 1, and 1.25 for a fixed train calibrated to 4 Hz. Do not multiply frequency again inside the scene. Readouts and pure calculations must describe the same calibration. Chapter links serialize both controls.
+
+Pass `model="/models/your-exhibit.glb"` to `MechanicalPart` for a separate assembly. Omitting it retains the existing library. Use a base-relative model path, semantic node names, and lazy scene registration; never preload the entire collection on the homepage.
+
+Recording choices and shot definitions live in `src/lib/recordings.ts`. Add captions and a deterministic `recordingFrame` definition for a new exhibit, then export its portrait clip, social card, thumbnail, and desktop/phone gallery through the shared studio. The two collection demos have explicit segment definitions; existing media is retained unless deliberately refreshed.

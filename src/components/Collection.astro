@@ -9,31 +9,41 @@ import { path } from '../lib/paths';
       <div class="eyebrow">FOLLOW YOUR CURIOSITY</div>
       <h2>There’s more under the surface.</h2>
     </div>
-    <span class="collection-count">THE FIRST COLLECTION / 03 EXHIBITS</span>
+    <span class="collection-count">
+      {String(exhibits.length).padStart(2, '0')} EXHIBITS / FREE TO EXPLORE
+    </span>
   </div>
-  <div class="collection-grid">
-    {exhibits.map((e) => (
-      <a class="exhibit-card" href={path(`/exhibits/${e.id}/`)}>
-        <img
-          src={path(`/exhibits/${e.id}.png`)}
-          alt={`${e.title}: an original 3D cutaway`}
-          loading="lazy"
-          width="720"
-          height="540"
-        />
-        <div class="card-body">
-          <span class="eyebrow">
-            {e.number} / {e.duration} OF CURIOSITY
-          </span>
-          <h3>
-            {e.title}
-            <span aria-hidden="true">↗</span>
-          </h3>
-          <p>{e.question}</p>
-        </div>
-      </a>
-    ))}
-  </div>
+  {[
+    { title: 'New ways to wonder', items: exhibits.filter((e) => e.featured) },
+    { title: 'Where it began', items: exhibits.filter((e) => !e.featured) },
+  ].map((group) => (
+    <div class="collection-group">
+      <h3 class="collection-group-title">{group.title}</h3>
+      <div class="collection-grid">
+        {group.items.map((e) => (
+          <a class="exhibit-card" href={path(`/exhibits/${e.id}/`)}>
+            <img
+              src={path(`/exhibits/${e.id}.png`)}
+              alt={`${e.title}: an original 3D cutaway`}
+              loading="lazy"
+              width="720"
+              height="540"
+            />
+            <div class="card-body">
+              <span class="eyebrow">
+                {e.number} / {e.duration} OF CURIOSITY
+              </span>
+              <h3>
+                {e.title}
+                <span aria-hidden="true">↗</span>
+              </h3>
+              <p>{e.question}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  ))}
   <div class="contribute-strip">
     <div>
       <span class="eyebrow">THE NEXT EXHIBIT COULD BE YOURS</span>
