@@ -6,6 +6,8 @@ A free, open-source collection of interactive mechanical explanations, built wit
 
 ## Explore
 
+**[Open the live exhibits](https://gulnoorcheema.github.io/OpenEngineering/)** · [Watch the demo](launch/assets/openengineering-demo.mp4)
+
 - **The four-stroke engine:** follow expanding gas through a piston, connecting rod, crank, valves, and a complete 720-degree cycle.
 - **Gear ratios:** trade speed for turning force and watch the relationship change.
 - **The differential:** see how two driven wheels turn at different speeds while their average follows the input.
@@ -14,7 +16,7 @@ These are simplified teaching models. The explanations, equations, and limitatio
 
 ## Run locally
 
-Use Node.js 22.12+ or 24 LTS and npm.
+Use Node.js 24 LTS and npm.
 
 ```sh
 npm ci
@@ -49,7 +51,7 @@ The [build log](docs/BUILD-LOG.md) records what Astra helped produce and what ha
 
 ## Sources and credits
 
-This project is inspired by the curiosity of *The Way Things Work*, Bartosz Ciechanowski's interactive essays, and the explorable-explanations community. Text, code, and procedural models were authored for this project. No book pages, competitor models, screenshots, or videos are incorporated.
+This project is inspired by the curiosity of _The Way Things Work_, Bartosz Ciechanowski's interactive essays, and the explorable-explanations community. Text, code, and procedural models were authored for this project. No third-party book pages, model assets, screenshots, or videos are incorporated.
 
 Technical sources include NASA Glenn's four-stroke explanation, Eaton's differential introduction, and the gear-ratio relationships documented by Ciechanowski. See [SOURCES.md](SOURCES.md) for links, scope, and limitations.
 

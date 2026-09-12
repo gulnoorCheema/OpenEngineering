@@ -1,6 +1,10 @@
 # Product Hunt submission package
 
-Status: prepared copy; not submitted or scheduled.
+Status: prepared copy and launch assets; not submitted or scheduled.
+
+Live product: https://gulnoorcheema.github.io/OpenEngineering/
+Repository: https://github.com/gulnoorCheema/OpenEngineering
+Asset index: [ASSETS.md](ASSETS.md)
 
 ## Name
 
@@ -21,6 +25,8 @@ I've always loved the moment an explanation makes something click. The engine yo
 That is why I built OpenEngineering: free interactive 3D stories for curious people. You can follow an engine from a push to a working cycle, change a gear ratio, or explore why a car's driven wheels turn at different speeds. Pause it, take it apart, and follow the part you are curious about.
 
 I used GPT-6 Astra in Codex to help research, write, build, and check the experience. The equations are separate from the 3D scenes, and each exhibit states its sources and simplifications. Visitors do not need an AI account or an API key.
+
+One concrete correction during the build: our first cylinder offsets did not match the stated firing order. We corrected them and added a test that checks the actual 1–3–4–2 sequence. We also made clear that the engine animation calculates motion, not combustion pressure or flywheel dynamics.
 
 The code, original models, and explanations are open. There is also a shared player, a starter exhibit, a design guide, and an Astra brief so the next contributor can spend more time explaining a mechanism and less time rebuilding the interface.
 
@@ -45,7 +51,7 @@ Use actual product captures. Do not add fabricated testimonials, awards, reviewe
 
 ## Demo
 
-45–60 seconds; show motion in the first two seconds, then chapter navigation, a meaningful experiment, and the contribution path. See `demo-scripts.md`.
+The supplied 55-second demo shows motion immediately, then the engine's causal sequence, gear-ratio experiments, differential behavior, and the contribution foundation. It records the actual scene modules with captions; the gallery shows the full application interface. See `demo-scripts.md`.
 
 ## Submission gate
 

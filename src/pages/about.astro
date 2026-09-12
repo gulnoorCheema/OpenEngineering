@@ -1,5 +1,53 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {path} from '../lib/paths';
+import { path } from '../lib/paths';
 ---
-<Layout title="A little curiosity — OpenEngineering"><section class="editorial"><span class="eyebrow">WHY WE’RE HERE</span><h1>The world makes more sense<br/>when you can take it apart.</h1><p class="lede">An engine is a collection of answers to surprisingly simple questions. How do you contain a push? Turn it into a circle? Keep it going?</p><p>OpenEngineering is a free place to follow those questions. You can slow a machine down, see through its walls, and try a change for yourself. Start with a story, then follow your own curiosity.</p><div class="editorial-callout">Understand how machines work.<br/><span>Play with them in 3D.</span></div><h2>Built to be shared.</h2><p>The project began with a love of engineering explainers and a wish that learning could feel more like discovery. GPT-6 Astra helped turn that idea into working exhibits, original explanations, and a reusable foundation.</p><p>The models are simplified teaching tools. We publish sources, explain what is omitted, and welcome corrections. Technical accuracy and a clear explanation matter more than a complicated-looking animation.</p><h2>Open means you can make something with it.</h2><p>Read the source. Reuse an explanation with attribution. Improve a sentence. Build a new exhibit. Our first three machines share the same player so the next contributor can begin with a working example.</p><a class="outline-link" href={path('/contribute/')}>Meet the contribution kit ↗</a><p class="model-note">OpenEngineering is an independent project, unaffiliated with The Open University or its OpenEngineering Laboratory. The working name is still under review.</p></section></Layout>
+
+<Layout title="A little curiosity — OpenEngineering">
+  <section class="editorial">
+    <span class="eyebrow">WHY WE’RE HERE</span>
+    <h1>
+      The world makes more sense
+      <br />
+      when you can take it apart.
+    </h1>
+    <p class="lede">
+      An engine is a collection of answers to surprisingly simple questions. How do you contain a
+      push? Turn it into a circle? Keep it going?
+    </p>
+    <p>
+      OpenEngineering is a free place to follow those questions. You can slow a machine down, see
+      through its walls, and try a change for yourself. Start with a story, then follow your own
+      curiosity.
+    </p>
+    <div class="editorial-callout">
+      Understand how machines work.
+      <br />
+      <span>Play with them in 3D.</span>
+    </div>
+    <h2>Built to be shared.</h2>
+    <p>
+      The project began with a love of engineering explainers and a wish that learning could feel
+      more like discovery. GPT-6 Astra helped turn that idea into working exhibits, original
+      explanations, and a reusable foundation.
+    </p>
+    <p>
+      The models are simplified teaching tools. We publish sources, explain what is omitted, and
+      welcome corrections. Technical accuracy and a clear explanation matter more than a
+      complicated-looking animation.
+    </p>
+    <h2>Open means you can make something with it.</h2>
+    <p>
+      Read the source. Reuse an explanation with attribution. Improve a sentence. Build a new
+      exhibit. Our first three machines share the same player so the next contributor can begin with
+      a working example.
+    </p>
+    <a class="outline-link" href={path('/contribute/')}>
+      Meet the contribution kit ↗
+    </a>
+    <p class="model-note">
+      OpenEngineering is an independent project, unaffiliated with The Open University or its
+      OpenEngineering Laboratory. The working name is still under review.
+    </p>
+  </section>
+</Layout>

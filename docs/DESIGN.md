@@ -8,18 +8,18 @@ A warm, contemporary technical exhibit: one machine, enough space to inspect it,
 
 The source of truth is `src/styles/global.css`.
 
-| Role | Token | Default |
-|---|---|---|
-| Page | `--paper` | #f7f5f0 |
-| Exhibit background | `--surface` | #efeee8 |
-| Main text | `--ink` | #282d2f |
-| Supporting text | `--muted` | #71746f |
-| Action / input | `--orange` | #d84f1a |
-| Secondary mechanism / output | `--blue` | #356c89 |
-| Dividers | `--line` | #dddcd4 |
-| Body | `--font` | DM Sans |
-| Headings | `--display` | Space Grotesk |
-| Technical labels | `--mono` | IBM Plex Mono |
+| Role                         | Token       | Default       |
+| ---------------------------- | ----------- | ------------- |
+| Page                         | `--paper`   | #f7f5f0       |
+| Exhibit background           | `--surface` | #efeee8       |
+| Main text                    | `--ink`     | #282d2f       |
+| Supporting text              | `--muted`   | #71746f       |
+| Action / input               | `--orange`  | #d84f1a       |
+| Secondary mechanism / output | `--blue`    | #356c89       |
+| Dividers                     | `--line`    | #dddcd4       |
+| Body                         | `--font`    | DM Sans       |
+| Headings                     | `--display` | Space Grotesk |
+| Technical labels             | `--mono`    | IBM Plex Mono |
 
 Use 16px body copy, 14px regular controls, and 12px secondary labels. Do not encode meaning through color alone. Orange suggests the driver or highlighted action; blue suggests a contrasting component. Add labels, motion, and arrows where needed.
 

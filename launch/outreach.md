@@ -4,15 +4,15 @@ Nothing in this file has been sent. Begin with small, specific invitations after
 
 ## Relevant people and communities
 
-| Candidate | Why relevant | Specific invitation |
-|---|---|---|
-| Dilum Sanjaya (@DilumSanjaya) | Landing-gear visualization in the supplied reference | Ask for one mechanical-visualization correction, with credit |
-| ashe (@ashebytes) | Interactive anatomy reference | Ask whether the first interaction is clear on a phone |
-| Pietro Schirano (@skirano) | Spatial interaction reference | Ask for feedback on camera, control, and model clarity |
-| Christian Keil (@pronounced_kyle) | The book-inspired public idea | Share the working implementation of the underlying educational idea, acknowledging the inspiration |
-| Mechanical Library / Steve Turbek | Hands-on mechanical teaching | Ask which misconception a beginner is likely to have about the gear exhibit |
-| OpenAI developer community | Astra build process and contributors | Share a working demo with the actual build log and one technical lesson |
-| An engineering or maker community you already participate in | Domain feedback | Request correction of one clearly bounded mechanism, following its self-promotion policy |
+| Candidate                                                    | Why relevant                                         | Specific invitation                                                                                |
+| ------------------------------------------------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Dilum Sanjaya (@DilumSanjaya)                                | Landing-gear visualization in the supplied reference | Ask for one mechanical-visualization correction, with credit                                       |
+| ashe (@ashebytes)                                            | Interactive anatomy reference                        | Ask whether the first interaction is clear on a phone                                              |
+| Pietro Schirano (@skirano)                                   | Spatial interaction reference                        | Ask for feedback on camera, control, and model clarity                                             |
+| Christian Keil (@pronounced_kyle)                            | The book-inspired public idea                        | Share the working implementation of the underlying educational idea, acknowledging the inspiration |
+| Mechanical Library / Steve Turbek                            | Hands-on mechanical teaching                         | Ask which misconception a beginner is likely to have about the gear exhibit                        |
+| OpenAI developer community                                   | Astra build process and contributors                 | Share a working demo with the actual build log and one technical lesson                            |
+| An engineering or maker community you already participate in | Domain feedback                                      | Request correction of one clearly bounded mechanism, following its self-promotion policy           |
 
 Candidate relevance comes from public posts/pages inspected during planning. Availability, interest, contact details, and willingness to amplify are unverified. Large creators are optional upside; prioritize actual beginner testers and reachable contributors.
 

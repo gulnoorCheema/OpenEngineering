@@ -1,12 +1,165 @@
 import type { Exhibit } from '../../lib/exhibit';
 export const differential: Exhibit = {
- id:'differential',number:'03',scene:'differential',title:'The differential',subtitle:'One engine. Two wheels. A clever way to let them disagree.',question:'How can two wheels share an engine but turn at different speeds?',duration:'3 min',author:'OpenEngineering contributors',period:1440,speed:60,
- controls:[{id:'direction',label:'Travel direction',kind:'select',default:0,options:[{label:'Straight ahead',value:0},{label:'Turn left',value:1},{label:'Turn right',value:-1}]},{id:'radius',label:'Turn radius at axle centre',kind:'range',default:4,min:2,max:12,step:.5,unit:'m'},{id:'held',label:'Bench experiment',kind:'select',default:0,options:[{label:'Both wheels free',value:0},{label:'Hold the left output',value:1}]},{id:'speed',label:'Playback speed',kind:'select',default:1,options:[{label:'Slow · ½×',value:.5},{label:'Normal · 1×',value:1}]}],
- parts:[{id:'carrier',name:'Carrier & ring gear',description:'The input turns this frame, carrying the small spider gears around the axle. The drive pinion and housing cover are omitted.'},{id:'spider',name:'Spider gears',description:'These small bevel gears travel with the carrier and can also spin on their own cross-shaft. That extra motion allows the two side gears to differ.'},{id:'left',name:'Left side gear',description:'The orange side gear drives the left output. Its speed plus the right output’s speed is twice the carrier speed.'},{id:'right',name:'Right side gear',description:'The blue side gear drives the right output. In a left turn it must turn faster to cover the longer path.'}],
- steps:[
- {id:'two-paths',label:'01 / A CORNER CREATES A PROBLEM',title:'The outside wheel goes farther.',body:'Around a corner, the outside wheel follows a larger circle. If both wheels were forced to turn at the same speed, at least one would have to slip.',why:'We need a shared drive that lets the wheels turn at different speeds. An open differential provides that extra freedom.',experiment:'Choose a left turn. The blue right wheel takes the longer path and speeds up; the orange left wheel slows down.',deeper:'For rolling wheels of equal radius, speed is proportional to path radius. With track width w and axle-centre turn radius R, normalized speeds are 1 − w/(2R) and 1 + w/(2R). This model uses w = 1.6 m.',parts:['left','right'],controls:['direction','radius'],phase:150,camera:[7,5,9],defaults:{direction:1}},
- {id:'carry-together',label:'02 / MOVE TOGETHER',title:'Straight ahead, share the motion.',body:'The ring gear turns a carrier. Two small spider gears ride in that carrier, meshing with a side gear connected to each wheel.',why:'Going straight, both side gears turn with the carrier. The spiders orbit the axle without spinning relative to their cross-shaft.',experiment:'Select straight ahead. Look at the white markers on both outputs: they keep pace with one another.',deeper:'The housing is opened up and the drive pinion is omitted. Side and spider teeth are schematic bevel shapes, not a manufacturing model. Ring gear speed is our prescribed input.',parts:['carrier','spider'],controls:['direction'],phase:45,camera:[7,4,10],defaults:{direction:0,held:0}},
- {id:'allow-a-difference',label:'03 / ADD ONE FREEDOM',title:'The small gears make the difference.',body:'In a turn, the spiders also spin on their own axes. That spin subtracts motion from one side and adds the same amount to the other.',why:'The average output speed always matches the carrier: (left + right) ÷ 2 = carrier. A differential permits the difference; the paths of the wheels demand it.',experiment:'Turn left, then tighten the radius. Watch the spider motion and the growing difference between the output speeds.',deeper:'The turn controls prescribe wheel paths under ideal rolling constraints. The differential does not choose which side needs speed. Torque, road forces, friction and wheel slip are not calculated.',parts:['spider','left','right'],controls:['direction','radius'],phase:180,camera:[5,5,11],defaults:{direction:1,held:0}},
- {id:'hold-one-side',label:'04 / A BENCH EXPERIMENT',title:'Hold one. The other doubles.',body:'Imagine the differential on a workbench. Keep the carrier turning, but hold the left output still. The right output must turn twice as fast as the carrier.',why:'The mean-speed rule still holds: (0 + 2) ÷ 2 = 1. This is a useful way to see what the gears allow.',experiment:'Hold the left output, then release it. Compare the speed labels and inspect the spider gears in the exploded view.',deeper:'This is a kinematic bench experiment, not a prediction about traction. A real open differential generally supplies equal torque to both side gears; limited grip can constrain the useful drive torque.',parts:['spider','left','right'],controls:['held','speed'],phase:180,camera:[7,5,10],defaults:{held:1}}
- ],sources:[{title:'Eaton — Differentials and traction control',url:'https://www.eaton.com/us/en-us/products/differentials-traction-control.html'},{title:'MIT 2.972 — How a differential works',url:'https://web.mit.edu/2.972/www/reports/differential/differential.html'},{title:'MathWorks — Differential gear constraint',url:'https://www.mathworks.com/help/sdl/ref/differential.html'}],limitations:'An ideal open differential with equal side gears. Turn radius prescribes the output rates; forces, torque, traction and tire slip are not solved. Bevel teeth and ring drive are schematic. The housing and input pinion are omitted.',assetCredits:'Original procedural geometry and educational text. No imported 3D assets.'
+  id: 'differential',
+  number: '03',
+  scene: 'differential',
+  title: 'The differential',
+  subtitle: 'One engine. Two wheels. A clever way to let them disagree.',
+  question: 'How can two wheels share an engine but turn at different speeds?',
+  duration: '3 min',
+  author: 'OpenEngineering contributors',
+  period: 1440,
+  speed: 60,
+  controls: [
+    {
+      id: 'direction',
+      label: 'Travel direction',
+      kind: 'select',
+      default: 0,
+      options: [
+        { label: 'Straight ahead', value: 0 },
+        { label: 'Turn left', value: 1 },
+        { label: 'Turn right', value: -1 },
+      ],
+    },
+    {
+      id: 'radius',
+      label: 'Turn radius at axle centre',
+      kind: 'range',
+      default: 4,
+      min: 2,
+      max: 12,
+      step: 0.5,
+      unit: 'm',
+    },
+    {
+      id: 'held',
+      label: 'Bench experiment',
+      kind: 'select',
+      default: 0,
+      options: [
+        { label: 'Both wheels free', value: 0 },
+        { label: 'Hold the left output', value: 1 },
+      ],
+    },
+    {
+      id: 'speed',
+      label: 'Playback speed',
+      kind: 'select',
+      default: 1,
+      options: [
+        { label: 'Slow · ½×', value: 0.5 },
+        { label: 'Normal · 1×', value: 1 },
+      ],
+    },
+  ],
+  parts: [
+    {
+      id: 'carrier',
+      name: 'Carrier & ring gear',
+      description:
+        'The input turns this frame, carrying the small spider gears around the axle. The drive pinion and housing cover are omitted.',
+    },
+    {
+      id: 'spider',
+      name: 'Spider gears',
+      description:
+        'These small bevel gears travel with the carrier and can also spin on their own cross-shaft. That extra motion allows the two side gears to differ.',
+    },
+    {
+      id: 'left',
+      name: 'Left side gear',
+      description:
+        'The orange side gear drives the left output. Its speed plus the right output’s speed is twice the carrier speed.',
+    },
+    {
+      id: 'right',
+      name: 'Right side gear',
+      description:
+        'The blue side gear drives the right output. In a left turn it must turn faster to cover the longer path.',
+    },
+  ],
+  steps: [
+    {
+      id: 'two-paths',
+      label: '01 / A CORNER CREATES A PROBLEM',
+      title: 'The outside wheel goes farther.',
+      body: 'Around a corner, the outside wheel follows a larger circle. If both wheels were forced to turn at the same speed, at least one would have to slip.',
+      why: 'We need a shared drive that lets the wheels turn at different speeds. An open differential provides that extra freedom.',
+      experiment:
+        'Choose a left turn. The blue right wheel takes the longer path and speeds up; the orange left wheel slows down.',
+      deeper:
+        'For rolling wheels of equal radius, speed is proportional to path radius. With track width w and axle-centre turn radius R, normalized speeds are 1 − w/(2R) and 1 + w/(2R). This model uses w = 1.6 m.',
+      parts: ['left', 'right'],
+      controls: ['direction', 'radius'],
+      phase: 150,
+      camera: [7, 5, 9],
+      defaults: { direction: 1 },
+    },
+    {
+      id: 'carry-together',
+      label: '02 / MOVE TOGETHER',
+      title: 'Straight ahead, share the motion.',
+      body: 'The ring gear turns a carrier. Two small spider gears ride in that carrier, meshing with a side gear connected to each wheel.',
+      why: 'Going straight, both side gears turn with the carrier. The spiders orbit the axle without spinning relative to their cross-shaft.',
+      experiment:
+        'Select straight ahead. Look at the white markers on both outputs: they keep pace with one another.',
+      deeper:
+        'The housing is opened up and the drive pinion is omitted. Side and spider teeth are schematic bevel shapes, not a manufacturing model. Ring gear speed is our prescribed input.',
+      parts: ['carrier', 'spider'],
+      controls: ['direction'],
+      phase: 45,
+      camera: [7, 4, 10],
+      defaults: { direction: 0, held: 0 },
+    },
+    {
+      id: 'allow-a-difference',
+      label: '03 / ADD ONE FREEDOM',
+      title: 'The small gears make the difference.',
+      body: 'In a turn, the spiders also spin on their own axes. That spin subtracts motion from one side and adds the same amount to the other.',
+      why: 'The average output speed always matches the carrier: (left + right) ÷ 2 = carrier. A differential permits the difference; the paths of the wheels demand it.',
+      experiment:
+        'Turn left, then tighten the radius. Watch the spider motion and the growing difference between the output speeds.',
+      deeper:
+        'The turn controls prescribe wheel paths under ideal rolling constraints. The differential does not choose which side needs speed. Torque, road forces, friction and wheel slip are not calculated.',
+      parts: ['spider', 'left', 'right'],
+      controls: ['direction', 'radius'],
+      phase: 180,
+      camera: [5, 5, 11],
+      defaults: { direction: 1, held: 0 },
+    },
+    {
+      id: 'hold-one-side',
+      label: '04 / A BENCH EXPERIMENT',
+      title: 'Hold one. The other doubles.',
+      body: 'Imagine the differential on a workbench. Keep the carrier turning, but hold the left output still. The right output must turn twice as fast as the carrier.',
+      why: 'The mean-speed rule still holds: (0 + 2) ÷ 2 = 1. This is a useful way to see what the gears allow.',
+      experiment:
+        'Hold the left output, then release it. Compare the speed labels and inspect the spider gears in the exploded view.',
+      deeper:
+        'This is a kinematic bench experiment, not a prediction about traction. A real open differential generally supplies equal torque to both side gears; limited grip can constrain the useful drive torque.',
+      parts: ['spider', 'left', 'right'],
+      controls: ['held', 'speed'],
+      phase: 180,
+      camera: [7, 5, 10],
+      defaults: { held: 1 },
+    },
+  ],
+  sources: [
+    {
+      title: 'Eaton — Differentials and traction control',
+      url: 'https://www.eaton.com/us/en-us/products/differentials-traction-control.html',
+    },
+    {
+      title: 'MIT 2.972 — How a differential works',
+      url: 'https://web.mit.edu/2.972/www/reports/differential/differential.html',
+    },
+    {
+      title: 'MathWorks — Differential gear constraint',
+      url: 'https://www.mathworks.com/help/sdl/ref/differential.html',
+    },
+  ],
+  limitations:
+    'An ideal open differential with equal side gears. Turn radius prescribes the output rates; forces, torque, traction and tire slip are not solved. Bevel teeth and ring drive are schematic. The housing and input pinion are omitted.',
+  assetCredits: 'Original procedural geometry and educational text. No imported 3D assets.',
 };

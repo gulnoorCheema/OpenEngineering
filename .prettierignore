@@ -1,0 +1,7 @@
+node_modules
+dist
+.astro
+artifacts
+public/licenses
+package-lock.json
+launch/assets

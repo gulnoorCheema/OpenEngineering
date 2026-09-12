@@ -1,5 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {path} from '../lib/paths';
+import { path } from '../lib/paths';
 ---
-<Layout title="That part is missing — OpenEngineering" noindex><section class="editorial"><span class="eyebrow">404 / A MISSING PART</span><h1>Let’s get you<br/>back to the machine.</h1><p>This page isn’t in the collection.</p><a class="outline-link" href={path('/')}>Open the engine →</a></section></Layout>
+
+<Layout title="That part is missing — OpenEngineering" noindex>
+  <section class="editorial">
+    <span class="eyebrow">404 / A MISSING PART</span>
+    <h1>
+      Let’s get you
+      <br />
+      back to the machine.
+    </h1>
+    <p>This page isn’t in the collection.</p>
+    <a class="outline-link" href={path('/')}>
+      Open the engine →
+    </a>
+  </section>
+</Layout>

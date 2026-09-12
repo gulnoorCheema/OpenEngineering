@@ -55,3 +55,11 @@ Include the opening question, sources, limitations, two screenshots, and how you
 ## Deployment
 
 The Pages workflow builds with `SITE_URL=https://OWNER.github.io` and `BASE_PATH=/REPOSITORY`. GitHub Actions deployment must be enabled in repository Pages settings. For a custom domain/root deployment, set the site and base appropriately. All internal links and scripts respect Astro's base. Static output in `dist/` is portable.
+
+## Record launch media locally
+
+Run `npm run build` with the default root base, then `npm run studio`. Open the printed `http://127.0.0.1:4323/studio/` URL. Recordings use the actual scene components and equations with caption overlays. Select each clip and press Record. Keep the tab visible for the full 20 or 55 seconds.
+
+The local helper writes only named media files to `artifacts/captures/`, binds to loopback, checks the Host and Origin, limits upload size, and rejects arbitrary paths. It is never included in the Pages deployment. It is a development tool, not a public backend API. Stop it when finished.
+
+For a gallery image, visit an exhibit or `/contribute/` on port 4323 with `?capture=1`, pause the scene at a useful moment, and press Save gallery PNG. Other hosts offer a normal browser download instead. Phone and desktop exports follow the current viewport. Review the saved image or video before using it in the launch.

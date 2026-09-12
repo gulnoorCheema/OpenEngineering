@@ -470,6 +470,14 @@
     ]
   },
   {
+    "name": "@prettier/parse-srcset",
+    "version": "3.1.0",
+    "license": "MIT",
+    "files": [
+      "@prettier__parse-srcset--license"
+    ]
+  },
+  {
     "name": "@react-three/drei",
     "version": "10.7.8",
     "license": "MIT",
@@ -2074,6 +2082,14 @@
     ]
   },
   {
+    "name": "prettier-plugin-astro",
+    "version": "1.0.0",
+    "license": "MIT",
+    "files": [
+      "prettier-plugin-astro--LICENSE"
+    ]
+  },
+  {
     "name": "prismjs",
     "version": "1.30.0",
     "license": "MIT",
@@ -2229,6 +2245,22 @@
     "license": "MIT",
     "files": [
       "rolldown--LICENSE"
+    ]
+  },
+  {
+    "name": "s.color",
+    "version": "0.0.15",
+    "license": "MIT",
+    "files": [
+      "s.color--LICENSE"
+    ]
+  },
+  {
+    "name": "sass-formatter",
+    "version": "0.8.0",
+    "license": "MIT",
+    "files": [
+      "sass-formatter--LICENSE"
     ]
   },
   {
@@ -2411,6 +2443,14 @@
     "license": "MIT",
     "files": [
       "strip-ansi--license"
+    ]
+  },
+  {
+    "name": "suf-log",
+    "version": "2.5.3",
+    "license": "MIT",
+    "files": [
+      "suf-log--LICENSE"
     ]
   },
   {

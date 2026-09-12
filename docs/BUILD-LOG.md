@@ -24,6 +24,7 @@ No runtime AI was added to the product. Visitors need no account or API key. No 
 4. **Rendering compatibility:** a shadow helper produced an incorrect gray plane and repeated Three.js warnings. It was replaced with standard percentage-filtered shadows and a transparent shadow receiver.
 5. **URL restoration:** chapter defaults, including four cylinders and the held differential output, must restore from a direct link. Shared experiment values override those defaults only when valid.
 6. **Accessible range names:** numeric outputs and sliders share a visual label, but each range also needs an explicit accessible name.
+7. **Recording and failure handling:** the demo exposed a false failure message when R3F intentionally disposed an old WebGL context. The context-loss listener now cleans up with its viewport. A deliberate context-loss test still activates the readable fallback, and reloading restores the scene.
 
 ## Reusable prompt material
 
@@ -32,3 +33,7 @@ No runtime AI was added to the product. Visitors need no account or API key. No 
 ## Evidence and pending work
 
 The repository history, executable tests, static build, scene recordings, and `VALIDATION.md` provide inspectable evidence. Human beginner sessions, an unfamiliar contributor's setup test, and independent mechanical review are still pending. No fabricated reviewers, testimonials, study results, or performance guarantees are included.
+
+## Contribution-kit check
+
+An isolated copy generated a fourth gear-starter exhibit, passed all eleven tests (the ten project checks plus its example), and built its static page. This caught an initial test assumption about collection array positions; tests now select exhibits by stable IDs. This automated setup check does not replace a test with an unfamiliar contributor.

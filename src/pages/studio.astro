@@ -2,4 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import Studio from '../components/Studio';
 ---
-<Layout title="Recording studio — OpenEngineering" noindex><section class="editorial wide"><span class="eyebrow">MAKER TOOLS</span><h1>Show the moment it clicks.</h1><p class="lede">Record the actual exhibit scenes with their captions. These exports use the same models and calculations as the public player.</p><Studio client:load/><p class="model-note">Silent video with visible captions. Review each export before publishing. Gallery images can be saved from any exhibit or the contribution page by adding ?capture=1 to its URL.</p></section></Layout>
+
+<Layout title="Recording studio — OpenEngineering" noindex>
+  <section class="editorial wide">
+    <span class="eyebrow">MAKER TOOLS</span>
+    <h1>Show the moment it clicks.</h1>
+    <p class="lede">
+      Record the actual exhibit scenes with their captions. These exports use the same models and
+      calculations as the public player.
+    </p>
+    <Studio client:load />
+    <p class="model-note">
+      Silent video with visible captions. Review each export before publishing. Gallery images can
+      be saved from any exhibit or the contribution page by adding ?capture=1 to its URL.
+    </p>
+  </section>
+</Layout>

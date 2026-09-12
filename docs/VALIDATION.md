@@ -5,9 +5,15 @@ Recorded September 12, 2026. Update this file when new checks are completed; do 
 ## Completed locally
 
 - `npm test`: 10 tests pass. Coverage includes constant connecting-rod length over forward/reverse motion, the full 720° engine cycle, stroke/valve timing, the 1–3–4–2 power sequence, gear direction/pitch motion/ideal power, differential mean speed and held output, invalid inputs, manifest integrity, and chapter state restoration.
-- Initial production build: passed Astro/TypeScript checks and generated all nine initial public pages. Final build is rerun after launch tooling and documentation changes.
+- Production build: passed Astro/TypeScript checks (zero errors, warnings, or hints) and generated ten static pages, including the recording studio. Vite reports the expected large Three.js bundle; this is not a measured phone-performance result.
 - Browser interaction: engine pause, keyboard Home/Arrow scrubbing, chapter switching, one/four cylinder selection, free exploration, and differential turning direction operated in the local browser.
 - Original screenshots and recordings are generated from the actual rendered application. Export status is recorded in `launch/ASSETS.md` when complete.
+- Responsive layout: the in-app browser at 390 pixels showed a stacked model and explanation with no horizontal page overflow. Desktop layout was also inspected at 1440 pixels.
+- Contribution-kit smoke test: in an isolated temporary copy, `npm run new-exhibit -- belt-drive` created the starter, its test passed, and the build produced the new exhibit page. This verifies the scaffold, not an unfamiliar person's experience using it.
+- Initial GitHub Pages deployment passed its mechanical tests and production build. Public routes returned HTTP 200 and used the correct `/OpenEngineering/` asset prefix.
+- Final local build: all ten pages generated; a static link check found no missing local `href` or `src` targets.
+- Real WebGL context-loss check: the browser's `WEBGL_lose_context` extension removed the scene, and the player displayed “The story still works” with its written-story link and calculated controls retained. A normal viewport unmount no longer reports a false rendering failure.
+- Media: inspected representative engine, gear, differential, contribution-card, and gallery frames. H.264 exports are 20 seconds for the three portrait clips and 55 seconds for the landscape demo. See [the asset index](../launch/ASSETS.md).
 
 ## Required before claiming launch readiness
 
@@ -16,7 +22,8 @@ Recorded September 12, 2026. Update this file when new checks are completed; do 
 - [ ] Independent mechanical review of the release revision.
 - [ ] Safari and Chrome checks on the production build.
 - [ ] Real touch-device interaction, five-second loading target, and usable 30 fps measured on a representative phone.
-- [ ] Keyboard flow, reduced-motion behavior, genuine WebGL failure, chapter share restoration, and reset on production.
+- [ ] Complete keyboard flow and reduced-motion behavior on native browsers.
+- [ ] Genuine WebGL failure, chapter share restoration, and reset on the final production revision.
 - [ ] Product Hunt eligibility questions resolved; working name considered against existing uses.
 
 Use `launch/validation-worksheet.csv` for participant observations. A scripted browser check is not a beginner session or an independent contributor test. Desktop viewport emulation is not real-phone performance evidence.

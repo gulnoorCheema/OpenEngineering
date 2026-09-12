@@ -5,7 +5,8 @@
 - [ ] Resolve the open eligibility questions in `eligibility.md`.
 - [ ] Decide whether to retain the working name following the naming overlap check.
 - [ ] Verify the production URL and all three exhibits.
-- [ ] Review the maker comment and actual recording exports.
+- [x] Generate and inspect the four actual recording exports and gallery images.
+- [ ] Maintainer reviews the maker comment and finished assets before posting.
 - [ ] Complete ten observed beginner sessions using the worksheet.
 - [ ] Have an unfamiliar contributor test the guide.
 - [ ] Obtain a mechanical review, or retain the accurate source-reviewed-only description.

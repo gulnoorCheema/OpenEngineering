@@ -1,49 +1,45 @@
 # Actual-product recording scripts
 
-Capture the live application. Use the internal `/studio/` page to export the actual 3D scene with its explanation. No generated mockups or claims about features that are not present.
+The supplied videos are composed in `/studio/` from the actual exhibit scene modules and calculations. They show moving mechanisms and visible captions. They are scene recordings, not recordings of pointer actions in the full interface; the gallery captures show that interface.
 
 ## Engine — 20-second vertical clip
 
-0–3: the crank and piston are already moving. “How does a push become a circle?”
+0–5: moving piston and crank. “How does a push become rotation?” / “Burning fuel pushes the piston.”
 
-3–8: isolate the piston and rod; scrub the cycle. “A piston moves in a straight line. The connecting rod follows a rotating crank.”
+5–10: same mechanism. “One end travels in a line.” / “The other follows a circle.”
 
-8–15: show the four strokes. “Bring air and fuel in. Compress. Burn. Clear the exhaust. Repeat.”
+10–15: the cycle continues. “Four strokes make a cycle.” / “Intake. Compression. Power. Exhaust.”
 
-15–20: reveal the full engine. “Take it apart yourself. Free and open source.”
+15–20: reveal four cylinders. “Spread the power strokes.” / “Four cylinders. One crankshaft.”
 
 ## Gears — 20-second vertical clip
 
-0–3: show a small driver turning a large output. “Make it stronger. What happens to speed?”
+0–5: equal gears. “Make it stronger.” / “Watch what happens to speed.”
 
-3–10: change from 1:1 to 2:1. “Half the speed. Twice the ideal turning force.”
+5–10: 16 teeth drive 32. The output turns at half the speed.
 
-10–16: reverse to 1:2. “More speed trades away torque. The gears don't create energy.”
+10–15: 16 teeth drive 48. “3× ideal torque. ⅓ the speed.”
 
-16–20: show the experiment controls. “Try the trade for yourself.”
+15–20: 32 teeth drive 16. “Try the opposite.” / “More speed means less ideal torque.”
 
 ## Differential — 20-second vertical clip
 
-0–3: the two wheels and carrier already turn. “One engine. Two different wheel speeds.”
+0–5: straight travel. “One engine. Two wheels.” / “Why do they turn differently?”
 
-3–10: compare straight travel with a turn. “The outside wheel travels farther in the same time.”
+5–10: a turn. “The outside path is longer.” / “The outside wheel must turn faster.”
 
-10–16: expose the central gears. “These gears allow the difference. The average follows the input.”
+10–15: a tighter turn. “Small gears allow a difference.” / “Left slows down. Right speeds up.”
 
-16–20: show the radius control. “Follow the motion. Then change it.”
+15–20: an exploded bench view, with one output held. “The other turns at twice the carrier speed.”
 
 ## Product Hunt — 55-second landscape demo
 
-0–6: working engine cutaway, title and clear controls.
+0–20: the engine sequence above, including the four-cylinder reveal.
 
-6–18: navigate a story chapter, scrub the cycle, select a part, and show the source/limitation notes.
+20–35: the four gear presets, each lasting 3.75 seconds.
 
-18–30: change a gear ratio and show its corresponding readouts.
+35–47: the differential sequence, each stage lasting three seconds.
 
-30–41: turn the differential and expose the carrier and side gears.
-
-41–50: show the contribution guide and starter exhibit.
-
-50–55: “Understand how machines work. Play with them in 3D. Free to explore. Open to everyone.”
+47–55: a contribution card with the actual scaffold command, supporting resources, and public repository URL.
 
 Export captions with every clip. Describe the models as idealized where relevant. Use a direct exhibit link in the published post.

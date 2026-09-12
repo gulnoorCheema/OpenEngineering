@@ -28,7 +28,7 @@ Boundary: ideal symmetric open differential with equal side gears, prescribed in
 
 - [PhET, About](https://phet.colorado.edu/en/about): visible cause and effect, immediate feedback, and independent exploration. This project's effectiveness has not been established by PhET or a learning study.
 - [Explorable Explanations](https://explorabl.es/): learning through play and inspectable models.
-- David Macaulay's *The Way Things Work*: an influence on the project's curiosity and educational purpose. The book is not reproduced or adapted page by page.
+- David Macaulay's _The Way Things Work_: an influence on the project's curiosity and educational purpose. The book is not reproduced or adapted page by page.
 - [Branch Education](https://branch.education/), [Mechanical Library](https://mechanical-library.org/), [PC Anatomy](https://github.com/brickshow/pc-anatomy), and [vistep](https://vistep.ai/en/): competitive and creative references, not code or asset sources.
 
 ## Attribution
