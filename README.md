@@ -43,6 +43,8 @@ Start with [the exhibit authoring guide](docs/AUTHORING.md), [the design system]
 
 Contributions can be explanations, technical references, accessibility fixes, translations, models, or code. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [starter opportunities](docs/GOOD-FIRST-ISSUES.md).
 
+**Working with an agent?** Give it the repository and [AGENTS.md](AGENTS.md). That file covers setup, project rules, task-specific instructions, and verification. [Copy the contributor starter prompt](CONTRIBUTING.md#work-with-an-agent) to give it a concrete task.
+
 ## How it is built
 
 Astro serves static pages. React and React Three Fiber render the selected interactive scene. TypeScript functions implement the mechanical relationships independently of rendering. There is no AI call during a visitor's session.

@@ -17,6 +17,28 @@ For a new exhibit, open a proposal with one opening question, the intended learn
 5. Verify the relevant interaction in desktop and phone layouts.
 6. Open a pull request describing the learner-facing change, sources, limitations, and checks actually performed.
 
+## Work with an agent
+
+Clone the repository and give your agent [AGENTS.md](AGENTS.md) as its entry point. The root file maps the codebase, setup commands, design and mechanical constraints, licenses, and required verification. Focused instructions live in [the scene directory](src/components/scenes/AGENTS.md) and [the exhibit-content directory](src/content/exhibits/AGENTS.md). Agents that discover `AGENTS.md` automatically can load these by scope; otherwise ask yours to read the relevant files explicitly.
+
+Copy this prompt and replace the bracketed fields:
+
+```text
+Work in my local OpenEngineering checkout.
+Read AGENTS.md and the AGENTS.md files in any directories you will edit.
+Then implement this focused contribution: [issue URL or concrete task].
+The intended result is: [what a beginner should understand or be able to do].
+Use these references where relevant: [sources, or ask the agent to research them].
+
+Inspect the existing implementation, preserve unrelated changes, and follow
+the shared exhibit interface. Implement the change and run the checks required
+by AGENTS.md. Report the sources, limitations, files changed, checks actually
+performed, and anything still unverified. Leave a reviewable local change;
+do not publish, deploy, merge, or send messages on my behalf.
+```
+
+For a whole exhibit, add the [reusable Astra brief](docs/ASTRA-BRIEF.md). It also works as a task brief for other coding agents. Researchers and writers can use the same entry point for a focused source or prose correction. Review what the agent produces before submitting your pull request; agent instructions do not replace technical or human review.
+
 ## Review standard
 
 - Does the first question make sense without engineering knowledge?
