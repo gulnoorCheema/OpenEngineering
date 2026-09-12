@@ -42,8 +42,26 @@ Use `launch/validation-worksheet.csv` for participant observations. A scripted b
 
 ## Performance measurement procedure
 
-Use a cold production load on the chosen phone and network, record device/browser/network, and time from navigation to a usable scene. `performance.mark('exhibit-ready:<id>')` is emitted after the selected scene mounts; correlate it with visual readiness. Record several runs, not one favorable sample. Observe frame pacing while playing and manipulating the controls; the player advances state at a target 30 updates/s, which is not a measured frame-rate guarantee. Stop animations in hidden/offscreen content.
+Use a cold production load on the chosen phone and network, record device/browser/network, and time from navigation to a usable scene. `performance.mark('exhibit-ready:<id>')` is emitted after the selected scene mounts; correlate it with visual readiness. Record several runs, not one favorable sample. Observe frame pacing while playing and manipulating the controls; the renderer advances on its frame clock and UI readouts sample at 10 Hz, which is not a measured frame-rate guarantee. Stop animations in hidden/offscreen content.
 
 ## Metrics
 
 Analytics collection is disabled. The optional explicit-event adapter emits no requests unless deliberately configured. Interaction completions, learning observations, external contribution results, and social/launch engagement must be reported separately.
+
+## Cinematic redesign verification — September 12
+
+This section supersedes the earlier renderer/layout observations above.
+
+- 14 automated tests pass, adding phase-pure effects, chamber/piston bounds across all four cylinders and reverse scrubbing, and named GLB-node/compression checks. Astro reports zero errors, warnings or hints; the ten-page static build succeeds.
+- Inspected the engine at 1440 × 1000, 737 × 1000, 1024 × 900 and 390 × 844. The intermediate-width view keeps the large vertical stage; phones keep the stage above the editorial story and expose an explicit rotate control.
+- Inspected paused intake, ignition and power states; fixed the live shader-uniform reference when power initially retained cyan intake coloring. Source geometry now exposes the intake/exhaust passages. Pure-function checks cover exhaust gating and effect bounds at every sampled phase.
+- Native Chrome exercised keyboard Home/ArrowRight scrubbing (1°), chapter-seven navigation with four cylinders, story/free mode switching and browser Back. A long smooth page-scroll race initially landed on chapter six; explicit navigation now seeks the page immediately while the camera transitions independently. The subsequent chapter-seven URL and four-cylinder state remained stable.
+- The in-app browser verified 16-to-48 ratios (0.33× output, 3.00× ideal torque), reversed differential direction (1.20× / 0.80×) and held output (0.00× / 2.00×).
+- Chrome's authoring reduced-motion preview starts paused, suppresses gas/bloom and camera travel, and retains the explicit Play control. This tests the same renderer branch used by the OS preference; it is not a change to the system preference.
+- A genuine Chrome `WEBGL_lose_context` test displayed “The story still works.” and retained the written explanation.
+- Production renderer observations after moving the readiness probe inside the asset boundary: the in-app browser at 1440 × 1000 reported 0.83 s to the rendered model and 120 fps at high quality; at 390 × 844 it reported 0.80 s and 120 fps at low quality. These are desktop GPU/loopback observations with previously loaded assets, not a cold mobile-network or real-phone performance result. An earlier native Chrome sample ran at 46 fps at high quality; its earlier readiness probe was replaced, so its load timing is not used. The authoring panel exposes local measurements via `?capture=1`; no results are transmitted.
+- Native Safari could not be inspected because the Mac was locked and automatic unlock failed. Real touch hardware, OS-level reduced-motion verification, and the representative-phone five-second / 30 fps target remain pending.
+
+The app's mechanism transforms now advance in the R3F render loop; React readouts update at 10 Hz. That update cadence is not a frame-rate guarantee. Auto quality reduces effects after sustained sub-27-fps windows. No human reviewer badge or beginner-study result has been added.
+
+The final differential review corrected the common pitch-cone placement and opposing spider directions. A new test compares tangential motion at the side/spider contact in forward, reverse, straight and held-output cases, in addition to the existing mean-speed invariant.

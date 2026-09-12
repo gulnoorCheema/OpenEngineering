@@ -38,7 +38,7 @@ export const engine: Exhibit = {
       id: 'piston',
       name: 'Piston',
       description:
-        'The gold piston slides inside the cylinder. Gas pressure acts on its top face; the connecting rod carries that force toward the crank.',
+        'The silver piston slides inside the cylinder. Gas pressure acts on its top face; the connecting rod carries that force toward the crank.',
     },
     {
       id: 'cylinder',
@@ -56,7 +56,7 @@ export const engine: Exhibit = {
       id: 'valves',
       name: 'Valves & camshaft',
       description:
-        'Blue admits fresh mixture; orange releases exhaust. A four-stroke camshaft turns once for every two crankshaft turns.',
+        'The blue passage admits fresh mixture; the copper passage releases exhaust. A four-stroke camshaft turns once for every two crankshaft turns.',
     },
     {
       id: 'flywheel',
@@ -70,16 +70,16 @@ export const engine: Exhibit = {
       id: 'a-push',
       label: 'THE BIG IDEA',
       title: 'How does fire become motion?',
-      body: 'Burning fuel heats the gas inside an engine. The gas expands and pushes on the gold piston. That push is the start of a journey from heat to motion.',
-      why: 'Follow the orange crank: the engine has found a way to turn a straight push into a circle.',
+      body: 'Burning fuel heats the gas inside an engine. The gas expands and pushes on the silver piston. That push is the start of a journey from heat to motion.',
+      why: 'Follow the crankshaft: the engine has found a way to turn a straight push into a circle.',
       experiment:
         'Pause, then drag the cycle slider through the orange power stroke. Watch the space above the piston grow.',
       deeper:
-        'Combustion raises the temperature and pressure of the gas. Pressure acts on the piston face. The colored chamber is a visual cue for each stroke, not a calculated pressure or temperature field.',
+        'Combustion raises the temperature and pressure of the gas. Pressure acts on the piston face. Gas flow, spark and flame are illustrative visual cues tied to the cycle, not calculated pressure, temperature or fluid fields.',
       parts: ['piston'],
       controls: ['speed'],
       phase: 420,
-      camera: [6, 4, 10],
+      camera: [5.1, 3.3, 8.1],
     },
     {
       id: 'contain-it',
@@ -94,11 +94,17 @@ export const engine: Exhibit = {
       parts: ['piston', 'cylinder'],
       controls: ['speed'],
       phase: 450,
-      camera: [3, 3, 11],
+      camera: [3.2, 2.5, 8.7],
     },
     {
       id: 'make-a-circle',
       label: '02 / CHANGE THE MOTION',
+      presentation: {
+        target: [0, 0, 0],
+        fov: 34,
+        reveal: ['piston', 'crankshaft'],
+        annotation: { text: 'A LINE BECOMES A CIRCLE', anchor: [-1.3, 0.3, 0] },
+      },
       title: 'Turn a line into a circle.',
       body: 'Add a connecting rod. Its top end follows the piston up and down; its bottom end follows an offset pin around the crankshaft.',
       why: 'The rod leans as the crank turns, so both ends can follow their own paths without changing its length.',
@@ -109,7 +115,7 @@ export const engine: Exhibit = {
       parts: ['crankshaft', 'piston'],
       controls: ['speed'],
       phase: 90,
-      camera: [1.5, 2, 12],
+      camera: [1.5, 1.4, 9.4],
     },
     {
       id: 'repeat-it',
@@ -124,13 +130,18 @@ export const engine: Exhibit = {
       parts: ['valves', 'piston'],
       controls: ['speed'],
       phase: 45,
-      camera: [6, 4, 10],
+      camera: [5.1, 3.3, 8.1],
     },
     {
       id: 'keep-time',
       label: '04 / COORDINATE THE PARTS',
+      presentation: {
+        target: [0, 1.45, 0],
+        fov: 31,
+        annotation: { text: 'HALF THE CRANKSHAFT SPEED', anchor: [-1.6, 2.7, 0] },
+      },
       title: 'The valves need a clock.',
-      body: 'The blue intake valve opens for fresh mixture. The orange exhaust valve opens for spent gas. Both stay closed during compression and most of the power stroke.',
+      body: 'The valve below the blue passage opens for fresh mixture. The valve below the copper passage opens for spent gas. Both stay closed during compression and most of the power stroke.',
       why: 'The camshaft coordinates these events. It turns at half the crankshaft’s speed, bringing each valve event around once per 720° cycle.',
       experiment:
         'Use slow playback. Follow the camshaft’s white marker while the crank completes two full turns.',
@@ -139,7 +150,7 @@ export const engine: Exhibit = {
       parts: ['valves'],
       controls: ['speed'],
       phase: 45,
-      camera: [5, 6, 10],
+      camera: [4.0, 4.4, 7.7],
       defaults: { speed: 0.5 },
     },
     {
@@ -155,7 +166,7 @@ export const engine: Exhibit = {
       parts: ['flywheel'],
       controls: ['speed'],
       phase: 240,
-      camera: [-6, 3, -10],
+      camera: [-5.4, 2.6, -8.6],
     },
     {
       id: 'share-the-work',
@@ -170,7 +181,7 @@ export const engine: Exhibit = {
       parts: ['piston', 'crankshaft'],
       controls: ['cylinders', 'speed'],
       phase: 420,
-      camera: [8, 5, 12],
+      camera: [7.8, 4.2, 10.8],
       defaults: { cylinders: 4 },
     },
   ],
@@ -188,5 +199,5 @@ export const engine: Exhibit = {
   limitations:
     'A simplified spark-ignition teaching model. Motion and valve timing are prescribed; no combustion, pressure, friction, torque, efficiency or flywheel dynamics are calculated. Front walls are deliberately removed. Cam geometry is schematic.',
   assetCredits:
-    'Original procedural geometry and educational text by OpenEngineering contributors. No imported 3D assets.',
+    'Original Blender geometry, procedural effects and educational text by OpenEngineering contributors. Editable models and export scripts are included; no third-party model assets.',
 };

@@ -85,6 +85,10 @@ export function differentialKinematics(
     leftRate: 1 - split,
     rightRate: 1 + split,
     pinionRelative: -split * carrier,
+    // Opposing 12-tooth spiders mesh with 16-tooth side gears. Angles are
+    // measured around the same carrier-local +Y axis, so their signs differ.
+    spiderTop: -split * carrier * (16 / 12),
+    spiderBottom: split * carrier * (16 / 12),
     split,
     trackWidth,
   };

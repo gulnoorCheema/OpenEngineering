@@ -1,6 +1,6 @@
 # Educational content license
 
-Original exhibit prose in `src/content/exhibits/`, public educational prose in Astro pages, and original educational illustrations exported from these models are licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**.
+Original exhibit prose in `src/content/exhibits/`, public educational prose in Astro pages, original Blender sources in `assets/source/`, generated GLB models in `public/models/`, the original studio environment in `public/environments/`, and original educational illustrations exported from these models are licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**.
 
 You may share and adapt the material, including commercially, provided you give appropriate credit, link to the license, and indicate changes. Do not imply endorsement.
 

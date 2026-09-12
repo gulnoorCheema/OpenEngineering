@@ -1,3 +1,4 @@
+import type { MotionRef, Quality } from './presentation';
 export type Vec3 = [number, number, number];
 export type Controls = Record<string, number>;
 export interface Source {
@@ -29,6 +30,12 @@ export interface StoryStep {
   phase: number;
   camera: Vec3;
   defaults?: Controls;
+  presentation?: {
+    target?: Vec3;
+    fov?: number;
+    reveal?: string[];
+    annotation?: { text: string; anchor: Vec3 };
+  };
 }
 export interface Exhibit {
   id: string;
@@ -49,6 +56,11 @@ export interface Exhibit {
   assetCredits: string;
 }
 export interface SceneProps {
+  motion?: MotionRef;
+  quality?: Quality;
+  effects?: boolean;
+  reduced?: boolean;
+  reveal?: string[];
   phase: number;
   explode: number;
   controls: Controls;

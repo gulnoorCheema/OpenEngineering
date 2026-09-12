@@ -1,47 +1,41 @@
 # Design system
 
-## Visual thesis
+## Direction
 
-A warm, contemporary technical exhibit: one machine, enough space to inspect it, and a small explanation that makes the next discovery inviting. The model is the focus. The interface provides orientation and control.
+Light editorial pages, dark cinematic machinery. Lead with “Every machine has a story.” The model establishes curiosity before the explanation. A broad dark stage sits beside an ivory narrative without a rounded card around the experience.
 
-## Tokens
+`src/styles/cinematic.css` extends the shared base in `global.css`.
 
-The source of truth is `src/styles/global.css`.
+| Role                    | Value                                   |
+| ----------------------- | --------------------------------------- |
+| Paper                   | #f3f0e9                                 |
+| Ink                     | #191e20                                 |
+| Stage                   | #101719                                 |
+| Fine rules              | #d7d5cc                                 |
+| Editorial accent        | #b94720                                 |
+| Stage highlight         | #ff8a51                                 |
+| Intake cue              | Cyan                                    |
+| Display / body / labels | Space Grotesk / DM Sans / IBM Plex Mono |
 
-| Role                         | Token       | Default       |
-| ---------------------------- | ----------- | ------------- |
-| Page                         | `--paper`   | #f7f5f0       |
-| Exhibit background           | `--surface` | #efeee8       |
-| Main text                    | `--ink`     | #282d2f       |
-| Supporting text              | `--muted`   | #71746f       |
-| Action / input               | `--orange`  | #d84f1a       |
-| Secondary mechanism / output | `--blue`    | #356c89       |
-| Dividers                     | `--line`    | #dddcd4       |
-| Body                         | `--font`    | DM Sans       |
-| Headings                     | `--display` | Space Grotesk |
-| Technical labels             | `--mono`    | IBM Plex Mono |
+Display typography is large and tightly spaced. Reading copy keeps comfortable line spacing and a short measure. Small technical labels provide context; essential explanations never rely on labels floating over the model. Orange/cyan markers supplement names and motion rather than replacing them.
 
-Use 16px body copy, 14px regular controls, and 12px secondary labels. Do not encode meaning through color alone. Orange suggests the driver or highlighted action; blue suggests a contrasting component. Add labels, motion, and arrows where needed.
+## Composition and control
 
-## Composition
+- Above 700 px, the sticky stage occupies 56–62% of the width, depending on available space. Narrow desktop/tablet layouts retain a substantial vertical model view.
+- At 700 px and below, the stage sticks above the story at 42svh with a 380 px minimum including playback controls. Touch scroll remains native. “Rotate model” explicitly enables drag manipulation.
+- The story and free lab are available immediately. Native scrolling changes the chapter and composition while playback owns a separate crank clock.
+- Chapter buttons seek teaching positions. Shared links restore a paused exact phase. Returning from the lab restores the current chapter; entering the lab preserves the phase and experiment controls.
+- A pointer drag owns the camera until the next chapter or preset. Camera and assembly transitions settle in about 700 ms. Reduced motion starts paused, removes decorative effects and camera travel, and permits explicit playback/scrubbing.
+- Keep all interactions keyboard-accessible. The story includes part buttons as an alternative to clicking the model.
 
-- Desktop: model on the left, a roughly 350px story panel on the right.
-- Phone: model, playback controls, story, experiment, and navigation in that order.
-- One main idea per chapter; short paragraphs; terminology explained at first use.
-- Allow free exploration immediately. Story chapters are navigable in any order.
-- Deeper technical detail belongs below the main player, with visible sources and limitations.
+## Machinery
 
-## Models and motion
+Use original Blender parts, separately addressable at moving pivots. Keep distinct cast aluminum, steel, iron, ceramic and rubber surfaces. Use bevels, local studio reflections, selective orange highlights and restrained bloom. Frame the primary engine at approximately 65–75% of the scene height without cropping.
 
-- Build original schematic geometry. Show necessary parts clearly before adding decorative detail.
-- Keep part identity and color consistent across chapters and exploded views.
-- Choose a camera that makes the primary relationship visible. Offer front and perspective presets.
-- Mechanism time and narrative progress are separate. The cycle slider changes the physical state; chapter navigation changes what is explained.
-- Use deterministic kinematics. Exploded offsets affect presentation only.
-- Respect reduced motion: start paused, avoid animated camera moves, and permit manual scrubbing.
-- Pause animation when the page is hidden or the model is offscreen.
-- State when motion is slowed or prescribed. Do not imply that simulated timing is measured performance.
+The intake/exhaust passages are open cutaways. Gas volume is bounded by the current piston crown and chamber top; flow and ignition derive only from cycle phase. Do not accumulate particle histories. Hide effects when the head is exploded or removed. Reverse scrubbing must restore the same image. These are illustrative effects, not pressure, temperature or combustion calculations.
+
+Low effects uses fewer samples, fewer particles, lower render resolution and smaller shadows. Auto chooses low for phone widths and drops quality if the renderer sustains less than 27 fps. Reduced-motion preferences also disable bloom and gas effects. Use actual model renders for collection thumbnails and social cards.
 
 ## Acceptance
 
-Verify 390px and 1440px layouts, 200% text enlargement, keyboard focus, touch controls, and readable failure states. All main controls need text or accessible names. Keep the initial scene small enough for a representative phone to load within five seconds and animate at 30fps; record the actual device and measured result.
+Inspect 390, 737, 1024 and 1440 px widths; keyboard interaction; chapter links; back navigation; free/story switching; and genuine WebGL failure. Record actual device and network for performance claims. A desktop browser at phone dimensions is a layout check, not a real-phone benchmark.

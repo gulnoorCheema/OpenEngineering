@@ -8,3 +8,7 @@ dist/
 .sites-runtime/
 artifacts/
 test-results/
+
+# Blender recovery files; editable final sources are committed.
+*.blend1
+*.blend2

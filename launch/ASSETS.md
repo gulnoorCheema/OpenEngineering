@@ -17,13 +17,15 @@ The clips are silent, with visible captions. They are recorded from the same Thr
 
 1. [Desktop engine](assets/openengineering-engine-desktop.png): the working cutaway, chapter text, controls, and part buttons.
 2. [Gear experiment](assets/openengineering-gears-desktop.png): the 16-to-48 preset and corresponding ideal ratios.
-3. [Phone layout](assets/openengineering-engine-phone.png): a complete 390-pixel-wide exhibit capture. This demonstrates layout, not real-device performance.
+3. [Phone layout](assets/openengineering-engine-phone.png): the introductory 390-pixel-wide composition. This demonstrates layout, not real-device performance.
 4. [Contribution kit](assets/openengineering-contribution-kit-desktop.png): the actual contributor page.
 5. [512-pixel icon](assets/openengineering-icon.png): the project's original vector mark rendered to PNG.
 
-The gallery images are full interface captures. The phone capture is tall; select a crop in Product Hunt's gallery editor that preserves the model and first explanation. No fake browser chrome, reviews, awards, or user counts have been added.
+The exhibit gallery images capture the introductory viewport, preserving the model, navigation and editorial treatment. The contributor image captures the complete page. No fake browser chrome, reviews, awards, or user counts have been added.
 
 ## Link previews
+
+Plain original model renders in `public/exhibits/` supply the collection thumbnails. The cinematic revision replaces the original schematic previews.
 
 `public/social/engine.png`, `gears.png`, and `differential.png` are 1200 × 630 share cards rendered from the actual scenes. Exhibit pages select the corresponding card in Open Graph metadata. Individual chapter links restore the scene state, while their preview card identifies the exhibit.
 

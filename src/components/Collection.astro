@@ -1,7 +1,6 @@
 ---
 import { exhibits } from '../content/exhibits';
 import { path } from '../lib/paths';
-import MechanismSketch from './MechanismSketch.astro';
 ---
 
 <section class="collection" id="collection">
@@ -15,7 +14,13 @@ import MechanismSketch from './MechanismSketch.astro';
   <div class="collection-grid">
     {exhibits.map((e) => (
       <a class="exhibit-card" href={path(`/exhibits/${e.id}/`)}>
-        <MechanismSketch id={e.id} title={`${e.title}: a schematic preview`} />
+        <img
+          src={path(`/exhibits/${e.id}.png`)}
+          alt={`${e.title}: an original 3D cutaway`}
+          loading="lazy"
+          width="720"
+          height="540"
+        />
         <div class="card-body">
           <span class="eyebrow">
             {e.number} / {e.duration} OF CURIOSITY

@@ -1,58 +1,54 @@
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Group, MathUtils } from 'three';
 import type { SceneProps } from '../../lib/exhibit';
 import { gearKinematics } from '../../lib/mechanics';
-import { Gear, Rod, colors } from './primitives';
-export function gearTeeth(ratio: number) {
-  return ratio === 0.5 ? [32, 16] : [16, 16 * ratio];
-}
-export default function GearScene({ phase, explode, controls, onSelect, selected }: SceneProps) {
-  const [n1, n2] = gearTeeth(controls.ratio),
-    r1 = n1 * 0.055,
-    r2 = n2 * 0.055;
-  const k = gearKinematics(phase, n1, n2),
-    left = -r2,
-    right = r1;
+import { MechanicalPart as Part } from './Assets';
+import { Rod } from './primitives';
+export default function GearScene(props: SceneProps) {
+  const ratio = props.controls.ratio || 1,
+    driver = ratio === 0.5 ? 32 : 16,
+    driven = ratio === 0.5 ? 16 : driver * ratio,
+    r1 = driver * 0.0475,
+    r2 = driven * 0.0475,
+    distance = r1 + r2,
+    refs = useRef<Group[]>([]);
+  useFrame((_, d) => {
+    if (props.reduced) d = 1;
+    const k = gearKinematics(props.motion?.current.phase ?? props.phase, driver, driven);
+    refs.current.forEach((g, i) => {
+      if (!g) return;
+      g.rotation.z = (i ? k.outputAngle : k.inputAngle) + (i ? Math.PI + Math.PI / driven : 0);
+      g.position.z = MathUtils.damp(g.position.z, props.explode * (i ? 0.45 : -0.45), 7, d);
+    });
+  });
   return (
-    <group>
-      <Rod start={[left, 0, -0.8]} end={[right, 0, -0.8]} radius={0.22} color={colors.ivory} />
-      {[left, right].map((x, i) => (
-        <group key={i} position={[x, 0, 0]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.14, 0.14, 1.8, 24]} />
-            <meshStandardMaterial color={colors.dark} metalness={0.6} roughness={0.3} />
-          </mesh>
-          <mesh position={[0, 0, -0.7]}>
-            <boxGeometry args={[0.72, 0.72, 0.25]} />
-            <meshStandardMaterial color={colors.steel} metalness={0.45} roughness={0.3} />
-          </mesh>
-        </group>
-      ))}
-      <group
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect('driver');
-        }}
-      >
-        <Gear
-          teeth={n1}
-          radius={r1}
-          position={[left, 0, explode * 0.55]}
-          angle={k.inputAngle}
-          color={selected === 'driver' ? '#f59944' : colors.orange}
-        />
-      </group>
-      <group
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect('driven');
-        }}
-      >
-        <Gear
-          teeth={n2}
-          radius={r2}
-          position={[right, 0, -explode * 0.55]}
-          angle={k.outputAngle + Math.PI + Math.PI / n2}
-          color={selected === 'driven' ? '#70a6be' : colors.blue}
-        />
+    <group rotation={[0, 0, 0.5]} scale={5.2 / (distance * (1 + Math.cos(0.5)) + 0.2)}>
+      <group position={[(r1 - r2) / 2, 0, 0]}>
+        {[driver, driven].map((teeth, i) => (
+          <group
+            key={i}
+            position={[((i ? 1 : -1) * distance) / 2, 0, 0]}
+            onClick={(e) => {
+              e.stopPropagation();
+              props.onSelect(i ? 'driven' : 'driver');
+            }}
+          >
+            <group
+              ref={(g) => {
+                if (g) refs.current[i] = g;
+              }}
+            >
+              <Part name={'Gear' + teeth} selected={props.selected === (i ? 'driven' : 'driver')} />
+              <mesh position={[teeth * 0.0475 * 0.65, 0, 0.145]}>
+                <circleGeometry args={[0.045, 16]} />
+                <meshBasicMaterial color={i ? '#83d6e4' : '#ff8d55'} />
+              </mesh>
+            </group>
+            <Rod start={[0, 0, -0.85]} end={[0, 0, 0.5]} radius={0.135} color="#666f78" />
+            <Part name="Bearing" position={[0, 0, -0.59]} />
+          </group>
+        ))}
       </group>
     </group>
   );

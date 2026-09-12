@@ -37,3 +37,22 @@ The repository history, executable tests, static build, scene recordings, and `V
 ## Contribution-kit check
 
 An isolated copy generated a fourth gear-starter exhibit, passed all eleven tests (the ten project checks plus its example), and built its static page. This caught an initial test assumption about collection array positions; tests now select exhibits by stable IDs. This automated setup check does not replace a test with an unfamiliar contributor.
+
+## Cinematic redesign
+
+The maintainer requested light editorial pages, dark 3D scenes and scroll-driven stories with an immediate free lab. Astra implemented that brief in the existing Astro application, preserving the mechanics and chapter IDs.
+
+- Created 23 original named parts with Blender 5.2, including beveled piston lands, a shaped rod, counterweights, cutaway head/passages, ceramic plug, helical springs, gears, bearings and a carrier. Committed editable part-library and assembled-engine sources with a reproducible script.
+- Exported a Draco-compressed GLB (under 0.5 MB) and generated a small local HDR reflection map. An overly dense Bezier spring was reduced to a sampled polyline before export.
+- Replaced per-frame UI updates with a shared render-loop clock and throttled readouts. Camera and assembly transitions are independent of the crank angle.
+- Added phase-derived gas, intake/exhaust flow and ignition. A live-uniform reference corrected a shader that initially stayed cyan through the power stroke. The gas proxy uses front faces so the opaque rear chamber wall cannot discard it. Effects are suppressed during disassembly.
+- Added native scroll chapter activation, phone rotation opt-in, meaningful low-effects mode, staged reveals and keyboard part inspection. A narrow two-column breakpoint corrected a tiny intermediate-width model.
+- Applied the same lighting to the companion exhibits and recording studio. Added original model thumbnails and refreshed media from the actual renderer.
+
+The machine meshes and flame are teaching illustrations. The existing equations still determine all kinematics; this revision adds no pressure, temperature, efficiency or manufacturing claims.
+
+A later visual check caught interpolated normals crossing the gear lightening bores. The gear material uses flat face normals so the planar web remains flat instead of appearing melted.
+
+The final differential close-up revealed gaps between the bevel gears and exposed the need for opposite spider rotation about the same carrier-local axis. Their pitch cones now meet at a common apex, and a tangential-motion test checks both spiders against the side gear across forward/reverse and held-output states. The mean-speed behavior is unchanged.
+
+The engine's radial cam profile was aligned with the ideal sinusoidal valve lift, replacing a decorative two-circle lobe. Its quarter-turn active region and separate exhaust offset follow the two-turn engine cycle. It remains an illustrative radial follower, not a manufacturing cam profile.

@@ -2,7 +2,7 @@
 
 **Understand how machines work. Play with them in 3D.**
 
-A free, open-source collection of interactive mechanical explanations, built with GPT-6 Astra. Each exhibit combines a short visual story with a working model you can pause, inspect, and experiment with.
+A free, open-source collection of interactive mechanical explanations, built with GPT-6 Astra. Scroll through an illustrated story or enter the free lab immediately. Original machined 3D assemblies, cutaway gas flow and phase-driven combustion make the hidden motion visible.
 
 ## Explore
 
@@ -47,11 +47,13 @@ Contributions can be explanations, technical references, accessibility fixes, tr
 
 Astro serves static pages. React and React Three Fiber render the selected interactive scene. TypeScript functions implement the mechanical relationships independently of rendering. There is no AI call during a visitor's session.
 
+Editable Blender sources and the reproducible export command are documented in [the artwork guide](assets/source/README.md).
+
 The [build log](docs/BUILD-LOG.md) records what Astra helped produce and what has actually been checked. The [validation record](docs/VALIDATION.md) distinguishes automated/browser checks from external mechanical review and beginner testing.
 
 ## Sources and credits
 
-This project is inspired by the curiosity of _The Way Things Work_, Bartosz Ciechanowski's interactive essays, and the explorable-explanations community. Text, code, and procedural models were authored for this project. No third-party book pages, model assets, screenshots, or videos are incorporated.
+This project is inspired by the curiosity of _The Way Things Work_, Bartosz Ciechanowski's interactive essays, and the explorable-explanations community. Text, code, Blender models and the studio reflection map were authored for this project. No third-party book pages, model assets, screenshots, or videos are incorporated.
 
 Technical sources include NASA Glenn's four-stroke explanation, Eaton's differential introduction, and the gear-ratio relationships documented by Ciechanowski. See [SOURCES.md](SOURCES.md) for links, scope, and limitations.
 
@@ -60,7 +62,7 @@ This independent project is not affiliated with The Open University, whose OpenE
 ## License
 
 - Project code and developer documentation: [MIT](LICENSE).
-- Original exhibit prose and original exported educational illustrations: [CC BY 4.0](CONTENT-LICENSE.md).
+- Original exhibit prose, Blender sources, models, environment and exported illustrations: [CC BY 4.0](CONTENT-LICENSE.md).
 - Dependencies and fonts retain their own licenses; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ## Launch materials

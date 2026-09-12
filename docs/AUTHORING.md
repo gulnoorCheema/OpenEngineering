@@ -63,3 +63,15 @@ Run `npm run build` with the default root base, then `npm run studio`. Open the 
 The local helper writes only named media files to `artifacts/captures/`, binds to loopback, checks the Host and Origin, limits upload size, and rejects arbitrary paths. It is never included in the Pages deployment. It is a development tool, not a public backend API. Stop it when finished.
 
 For a gallery image, visit an exhibit or `/contribute/` on port 4323 with `?capture=1`, pause the scene at a useful moment, and press Save gallery PNG. Other hosts offer a normal browser download instead. Phone and desktop exports follow the current viewport. Review the saved image or video before using it in the launch.
+
+## Cinematic scene contract
+
+Legacy manifests still work. New chapters can optionally set `presentation.target`, `fov`, `reveal`, and an `annotation` with a text label and 3D anchor. Keep chapter IDs unchanged. The scene interprets its semantic reveal list; the engine removes the shell for its crank chapter and the differential reveals its spider gears. Defaults retain the original chapter behavior.
+
+Scenes receive optional `motion`, `quality`, `effects`, and `reduced` props. Inside `useFrame`, read `motion?.current.phase ?? phase`; update object transforms and shader uniforms there. UI readouts sample the same clock at 10 Hz. Keep React state for interface changes. Avoid new vectors, materials or geometry in the frame loop. Dispose private buffers/materials, but retain shared GLTF geometry.
+
+Use `MechanicalPart` in `scenes/Assets.tsx` for named original GLB parts. All exhibits share the local HDR environment, lights, camera transitions and quality controls in `SceneViewport.tsx`. Details of the original Blender source and reproducible export are in `assets/source/README.md`. No external model or reflection downloads occur at runtime; the Draco decoder is local.
+
+`engineEffects` is a pure phase function. Every particle position and shader noise field must derive from that phase. Update the **material's live uniforms** in the frame callback: a stale uniforms object can leave the visual stage stuck even when the piston moves. Effects disappear while the head is exploded or removed. The shader clips the gas to the chamber and piston crown. These are qualitative cues, not a thermodynamic simulation.
+
+Use `?capture=1` for the authoring panel. It displays renderer frame rate, elapsed navigation-to-ready time and active quality, and exposes context-loss and reduced-motion previews. Measurements run locally and are never transmitted. Browser timing at phone dimensions on a desktop GPU is not evidence of phone performance. Gallery export captures the introductory viewport; the studio's social-card button also exports a plain 720 × 540 exhibit image.

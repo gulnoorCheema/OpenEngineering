@@ -1,221 +1,196 @@
-import type { ThreeEvent } from '@react-three/fiber';
-import { engineKinematics } from '../../lib/mechanics';
+import { useRef } from 'react';
+import { useFrame, type ThreeEvent } from '@react-three/fiber';
+import { Group, MathUtils, Quaternion, Vector3 } from 'three';
 import type { SceneProps } from '../../lib/exhibit';
-import { Bolt, Rod, colors } from './primitives';
-const strokeColors = ['#6caaca', '#cdc4ac', '#f27c37', '#979a99'];
-export default function EngineModel({
-  phase,
-  explode,
-  controls,
-  stage,
-  selected,
-  onSelect,
-}: SceneProps) {
-  const count = controls.cylinders === 4 ? 4 : 1;
-  const full = stage === 0 || stage >= 3;
-  const select = (id: string) => (e: ThreeEvent<MouseEvent>) => {
+import { engineKinematics } from '../../lib/mechanics';
+import { MechanicalPart as Part } from './Assets';
+import EngineEffects from './EngineEffects';
+import { Rod } from './primitives';
+function Cylinder({ props, index, count }: { props: SceneProps; index: number; count: number }) {
+  const piston = useRef<Group>(null),
+    rod = useRef<Group>(null),
+    crank = useRef<Group>(null),
+    shell = useRef<Group>(null),
+    head = useRef<Group>(null),
+    valves = useRef<Group[]>([]),
+    springs = useRef<Group[]>([]),
+    cams = useRef<Group[]>([]);
+  const axis = new Vector3(0, 1, 0),
+    direction = new Vector3(),
+    quaternion = new Quaternion();
+  useFrame((_, delta) => {
+    if (props.reduced) delta = 1;
+    const k = engineKinematics(props.motion?.current.phase ?? props.phase, index, count),
+      e = props.explode;
+    if (piston.current) piston.current.position.y = k.pistonY;
+    if (rod.current) {
+      rod.current.position.set(k.crankX, k.crankY, 0);
+      direction.set(-k.crankX, k.pistonY - k.crankY, 0).normalize();
+      quaternion.setFromUnitVectors(axis, direction);
+      rod.current.quaternion.copy(quaternion);
+    }
+    if (crank.current) crank.current.rotation.z = -k.angle;
+    if (shell.current) {
+      shell.current.position.z = MathUtils.damp(shell.current.position.z, -e * 0.95, 7, delta);
+      const target =
+        props.reveal && !props.reveal.includes('cylinder') ? 0 : props.stage === 2 ? 0.28 : 1;
+      shell.current.scale.setScalar(MathUtils.damp(shell.current.scale.x, target, 7, delta));
+    }
+    if (head.current) {
+      head.current.position.y = MathUtils.damp(head.current.position.y, 3.4 + e * 1.3, 7, delta);
+      head.current.visible = props.stage === 0 || props.stage >= 3;
+    }
+    [k.intakeLift, k.exhaustLift].forEach((lift, j) => {
+      if (valves.current[j]) valves.current[j].position.y = -0.23 - lift;
+      if (springs.current[j]) springs.current[j].scale.y = Math.max(0.13, 0.47 - lift);
+      if (cams.current[j]) cams.current[j].rotation.z = -k.camAngle + (j ? Math.PI * 1.5 : 0);
+    });
+  });
+  const choose = (id: string) => (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
-    onSelect(id);
+    props.onSelect(id);
   };
-  const glow = (id: string) => (selected === id ? '#644315' : '#000000');
+  const z = (index - (count - 1) / 2) * 1.84;
   return (
-    <group position={[0, -1.3, 0]} scale={count === 4 ? 0.82 : 1}>
-      {Array.from({ length: count }, (_, i) => {
-        const k = engineKinematics(phase, i, count),
-          z = (i - (count - 1) / 2) * 1.8;
-        const piston = k.pistonY,
-          gasHeight = Math.max(0.04, 3.2 - (piston + 0.3));
-        return (
-          <group key={i} position={[0, 0, z]}>
-            <group onClick={select('piston')}>
-              <mesh position={[0, piston, 0]} castShadow>
-                <cylinderGeometry args={[0.64, 0.6, 0.6, 48]} />
-                <meshStandardMaterial
-                  color={colors.gold}
-                  metalness={0.55}
-                  roughness={0.3}
-                  emissive={glow('piston')}
-                />
-              </mesh>
-              {[0.15, 0.23].map((y) => (
-                <mesh key={y} position={[0, piston + y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                  <torusGeometry args={[0.64, 0.022, 6, 48]} />
-                  <meshStandardMaterial color={colors.dark} />
-                </mesh>
-              ))}
-              <mesh position={[0, piston - 0.04, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                <cylinderGeometry args={[0.14, 0.14, 1.31, 24]} />
-                <meshStandardMaterial color={colors.steel} metalness={0.7} roughness={0.25} />
-              </mesh>
-            </group>
-            <group position={[0, 0, -explode * 0.7]} onClick={select('cylinder')}>
-              <mesh position={[0, 2.35, 0]} castShadow>
-                <cylinderGeometry args={[0.73, 0.73, 1.95, 48, 1, true, Math.PI / 2, Math.PI]} />
-                <meshStandardMaterial
-                  color={colors.steel}
-                  side={2}
-                  metalness={0.45}
-                  roughness={0.4}
-                  emissive={glow('cylinder')}
-                />
-              </mesh>
-              {[1.4, 3.3].map((y) => (
-                <mesh key={y} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                  <torusGeometry args={[0.74, 0.055, 8, 48, Math.PI]} />
-                  <meshStandardMaterial color="#d2d7d4" metalness={0.7} roughness={0.3} />
-                </mesh>
-              ))}
-            </group>
-            <mesh position={[0, piston + 0.3 + gasHeight / 2, 0]}>
-              <cylinderGeometry args={[0.6, 0.6, gasHeight, 32]} />
-              <meshStandardMaterial
-                color={strokeColors[k.strokeIndex]}
-                transparent
-                opacity={0.3}
-                depthWrite={false}
-                roughness={1}
-              />
-            </mesh>
-            {(full || stage >= 2) && (
-              <group onClick={select('crankshaft')}>
-                <Rod start={[k.crankX, k.crankY, 0]} end={[0, piston, 0]} radius={0.14} />
-                <mesh position={[k.crankX, k.crankY, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                  <cylinderGeometry args={[0.23, 0.23, 1.04, 24]} />
-                  <meshStandardMaterial color={colors.dark} metalness={0.65} roughness={0.3} />
-                </mesh>
-                <group rotation={[0, 0, -k.angle]}>
-                  {[-0.48, 0.48].map((zz) => (
-                    <group key={zz} position={[0, 0, zz]}>
-                      <mesh position={[0, 0.32, 0]} castShadow>
-                        <boxGeometry args={[0.4, 1.12, 0.18]} />
-                        <meshStandardMaterial
-                          color={colors.orange}
-                          metalness={0.45}
-                          roughness={0.3}
-                          emissive={glow('crankshaft')}
-                        />
-                      </mesh>
-                      <mesh position={[0, -0.3, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-                        <cylinderGeometry args={[0.46, 0.46, 0.22, 32]} />
-                        <meshStandardMaterial
-                          color={colors.orange}
-                          metalness={0.5}
-                          roughness={0.3}
-                        />
-                      </mesh>
-                    </group>
-                  ))}
-                </group>
-              </group>
-            )}
-            {full && (
-              <group position={[0, 3.42 + explode * 0.95, 0]} onClick={select('valves')}>
-                <mesh castShadow>
-                  <boxGeometry args={[1.76, 0.18, 1.46]} />
-                  <meshStandardMaterial
-                    color={colors.steel}
-                    metalness={0.5}
-                    roughness={0.35}
-                    emissive={glow('valves')}
-                  />
-                </mesh>
-                {[-0.38, 0.38].map((x, v) => (
-                  <group key={x} position={[x, -(v === 0 ? k.intakeLift : k.exhaustLift), 0.1]}>
-                    <mesh position={[0, -0.2, 0]}>
-                      <cylinderGeometry args={[0.23, 0.23, 0.09, 24]} />
-                      <meshStandardMaterial color={v === 0 ? colors.blue : colors.orange} />
-                    </mesh>
-                    <mesh position={[0, 0.18, 0]}>
-                      <cylinderGeometry args={[0.045, 0.045, 0.78, 12]} />
-                      <meshStandardMaterial color="#d5d9d6" metalness={0.6} roughness={0.25} />
-                    </mesh>
-                    {[0.12, 0.2, 0.28, 0.36, 0.44].map((y) => (
-                      <mesh key={y} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                        <torusGeometry args={[0.11, 0.018, 6, 16]} />
-                        <meshStandardMaterial color={colors.dark} />
-                      </mesh>
-                    ))}
-                  </group>
-                ))}
-                {[-0.7, 0.7].flatMap((x) =>
-                  [-0.55, 0.55].map((zz) => <Bolt key={`${x}:${zz}`} position={[x, 0.14, zz]} />),
-                )}
-                <mesh position={[0, 0.18, 0.45]}>
-                  <cylinderGeometry args={[0.085, 0.085, 0.5, 6]} />
-                  <meshStandardMaterial color="#fff9e9" />
-                </mesh>
-                {k.ignition && (
-                  <mesh position={[0, -0.25, 0.35]}>
-                    <sphereGeometry args={[0.12, 12, 8]} />
-                    <meshBasicMaterial color="#ffc53a" />
-                  </mesh>
-                )}
-              </group>
-            )}
+    <group position={[0, 0, z]}>
+      <group ref={piston} onClick={choose('piston')}>
+        <Part name="Piston" selected={props.selected === 'piston'} />
+      </group>
+      <group ref={shell} onClick={choose('cylinder')}>
+        <Part
+          name="CylinderShell"
+          position={[0, 2.35, 0]}
+          selected={props.selected === 'cylinder'}
+        />
+        {[1.4, 3.3].map((y) => (
+          <Part key={y} name="CylinderCollar" position={[0, y, 0]} />
+        ))}
+      </group>
+      <EngineEffects
+        phase={props.phase}
+        motion={props.motion}
+        cylinder={index}
+        count={count}
+        low={props.quality === 'low'}
+        enabled={
+          props.effects !== false && props.explode < 0.05 && (props.stage === 0 || props.stage >= 3)
+        }
+      />
+      {(props.stage === 0 || props.stage >= 2) && (
+        <>
+          <group ref={rod} onClick={choose('crankshaft')}>
+            <Part name="ConnectingRod" selected={props.selected === 'crankshaft'} />
           </group>
-        );
-      })}
-      {(full || stage >= 2) && (
-        <mesh rotation={[Math.PI / 2, 0, 0]} onClick={select('crankshaft')} castShadow>
-          <cylinderGeometry args={[0.18, 0.18, count * 1.8 + 1.9, 32]} />
-          <meshStandardMaterial color={colors.dark} metalness={0.7} roughness={0.3} />
-        </mesh>
+          <group ref={crank} onClick={choose('crankshaft')}>
+            {[-0.48, 0.48].map((z) => (
+              <Part name="CrankWeb" position={[0, 0, z]} key={z} />
+            ))}
+            <Part name="CrankPin" position={[0, 0.72, 0]} />
+          </group>
+          <Part name="Bearing" position={[0, 0, -0.85]} />
+        </>
       )}
-      {full && (
-        <group
-          position={[0, 4.17 + explode * 0.95, 0]}
-          rotation={[0, 0, (-phase * Math.PI) / 360]}
-          onClick={select('valves')}
-        >
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.1, 0.1, count * 1.8, 24]} />
-            <meshStandardMaterial color={colors.dark} metalness={0.7} roughness={0.3} />
-          </mesh>
-          {Array.from({ length: count }, (_, i) => (
-            <group key={i} position={[0, 0, (i - (count - 1) / 2) * 1.8]}>
-              <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                <cylinderGeometry args={[0.22, 0.22, 0.19, 24]} />
-                <meshStandardMaterial color={colors.steel} metalness={0.6} roughness={0.3} />
-              </mesh>
-              <mesh position={[0, 0.22, 0.11]}>
-                <sphereGeometry args={[0.04, 8, 6]} />
-                <meshBasicMaterial color="white" />
+      <group ref={head} position={[0, 3.4, 0]} onClick={choose('valves')}>
+        <Part name="Head" selected={props.selected === 'valves'} />
+        <Part name="SparkPlug" position={[0, -0.22, 0]} />
+        <Part name="IntakePort" />
+        <Part name="ExhaustPort" />
+        {[-0.38, 0.38].map((x, j) => (
+          <group key={x} position={[x, 0, 0]}>
+            <group
+              ref={(o) => {
+                if (o) valves.current[j] = o;
+              }}
+            >
+              <Part name="Valve" />
+            </group>
+            <group
+              position={[0, 0.04, 0]}
+              ref={(o) => {
+                if (o) springs.current[j] = o;
+              }}
+            >
+              <Part name="ValveSpring" />
+            </group>
+            <group
+              position={[0, 0.73, 0]}
+              ref={(o) => {
+                if (o) cams.current[j] = o;
+              }}
+            >
+              <Part name="CamLobe" />
+              <mesh position={[0, 0.21, 0.085]}>
+                <circleGeometry args={[0.035, 12]} />
+                <meshBasicMaterial color="#eee8d9" />
               </mesh>
             </group>
-          ))}
-        </group>
+          </group>
+        ))}
+      </group>
+    </group>
+  );
+}
+export default function EngineModel(props: SceneProps) {
+  const count = props.controls.cylinders === 4 ? 4 : 1,
+    fly = useRef<Group>(null),
+    top = useRef<Group>(null);
+  useFrame((_, d) => {
+    if (props.reduced) d = 1;
+    const phase = props.motion?.current.phase ?? props.phase;
+    if (fly.current) {
+      fly.current.rotation.z = (-phase * Math.PI) / 180;
+      fly.current.position.z = MathUtils.damp(
+        fly.current.position.z,
+        -count * 0.92 - 0.32 - props.explode * 0.9,
+        7,
+        d,
+      );
+    }
+    if (top.current)
+      top.current.position.y = MathUtils.damp(
+        top.current.position.y,
+        4.13 + props.explode * 1.3,
+        7,
+        d,
+      );
+  });
+  return (
+    <group position={[0, -1.15, 0]} scale={count === 4 ? 0.87 : 1}>
+      {Array.from({ length: count }, (_, i) => (
+        <Cylinder key={i} props={props} index={i} count={count} />
+      ))}
+      {(props.stage === 0 || props.stage >= 2) && (
+        <Rod
+          start={[0, 0, -count * 0.92 - 1]}
+          end={[0, 0, count * 0.92 + 0.6]}
+          radius={0.165}
+          color="#89949d"
+        />
       )}
-      {full && (
-        <group
-          position={[0, 0, -count * 0.9 - 0.3 - explode * 0.8]}
-          rotation={[0, 0, (-phase * Math.PI) / 180]}
-          onClick={select('flywheel')}
-        >
-          <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
-            <cylinderGeometry args={[0.97, 0.97, 0.2, 64]} />
-            <meshStandardMaterial
-              color={colors.dark}
-              metalness={0.65}
-              roughness={0.3}
-              emissive={glow('flywheel')}
-            />
-          </mesh>
-          <mesh position={[0, 0, 0.12]}>
-            <torusGeometry args={[0.76, 0.045, 8, 48]} />
-            <meshStandardMaterial color={colors.steel} metalness={0.65} roughness={0.3} />
-          </mesh>
-          {[0, 1, 2, 3, 4, 5].map((n) => (
-            <Bolt
-              key={n}
-              position={[
-                0.53 * Math.cos((n * Math.PI) / 3),
-                0.53 * Math.sin((n * Math.PI) / 3),
-                0.14,
-              ]}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-          ))}
-        </group>
+      {(props.stage === 0 || props.stage >= 3) && (
+        <>
+          <group ref={top} position={[0, 4.13, 0]}>
+            {[-0.38, 0.38].map((x) => (
+              <Rod
+                key={x}
+                start={[x, 0, -count * 0.92]}
+                end={[x, 0, count * 0.92]}
+                radius={0.095}
+                color="#8e969d"
+              />
+            ))}
+          </group>
+          <group
+            ref={fly}
+            position={[0, 0, -count * 0.92 - 0.32]}
+            onClick={(e) => {
+              e.stopPropagation();
+              props.onSelect('flywheel');
+            }}
+          >
+            <Part name="Flywheel" selected={props.selected === 'flywheel'} />
+          </group>
+        </>
       )}
     </group>
   );

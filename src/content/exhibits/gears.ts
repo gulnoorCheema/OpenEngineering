@@ -39,13 +39,13 @@ export const gears: Exhibit = {
       id: 'driver',
       name: 'Driver gear',
       description:
-        'The orange input receives rotation. Its teeth push against the blue gear’s teeth.',
+        'The gear with the orange marker receives rotation. Its teeth push against the output gear’s teeth.',
     },
     {
       id: 'driven',
       name: 'Driven gear',
       description:
-        'The blue output turns the opposite way. Its tooth count determines how far it turns for each input revolution.',
+        'The output with the cyan marker turns the opposite way. Its tooth count determines how far it turns for each input revolution.',
     },
   ],
   steps: [
@@ -53,7 +53,7 @@ export const gears: Exhibit = {
       id: 'pass-it-on',
       label: '01 / PASS THE MOTION',
       title: 'One tooth pushes the next.',
-      body: 'Turn the orange gear. Where the teeth meet, it pushes the blue gear the other way. Two external gears always rotate in opposite directions.',
+      body: 'Turn the gear with the orange marker. Where the teeth meet, it pushes the output gear the other way. Two external gears always rotate in opposite directions.',
       why: 'The teeth keep their motions linked. At the contact, both gears must move the same distance along their pitch circles.',
       experiment:
         'Pause and scrub backward. Both gears reverse, but they still turn in opposite directions.',
@@ -62,23 +62,23 @@ export const gears: Exhibit = {
       parts: ['driver', 'driven'],
       controls: ['ratio'],
       phase: 60,
-      camera: [1, 3.5, 10],
+      camera: [0.6, 2.5, 9],
       defaults: { ratio: 1 },
     },
     {
       id: 'count-the-teeth',
       label: '02 / COUNT THE TEETH',
       title: 'Twice the teeth. Half the turns.',
-      body: 'Give the blue gear 32 teeth and the orange gear 16. The input must turn twice to move all 32 teeth of the output past the contact.',
+      body: 'Give the output 32 teeth and the input 16. The input must turn twice to move all 32 teeth of the output past the contact.',
       why: 'The bigger output turns more slowly. The same input motion is spread over more teeth.',
       experiment:
-        'Choose 16 → 32. Scrub from 0° to 360°: the orange gear makes a full turn and the blue gear makes half a turn.',
+        'Choose 16 → 32. Scrub from 0° to 360°: the input makes a full turn and the output makes half a turn.',
       deeper:
-        'Output angular speed / input angular speed = −driver teeth / driven teeth. The minus sign indicates opposite direction. The white markers help you compare rotation.',
+        'Output angular speed / input angular speed = −driver teeth / driven teeth. The minus sign indicates opposite direction. The colored markers help you compare rotation.',
       parts: ['driven'],
       controls: ['ratio'],
       phase: 180,
-      camera: [1, 3, 11],
+      camera: [1.8, 1.8, 9],
       defaults: { ratio: 2 },
     },
     {
@@ -94,13 +94,13 @@ export const gears: Exhibit = {
       parts: ['driver', 'driven'],
       controls: ['ratio'],
       phase: 120,
-      camera: [1, 3.5, 12],
+      camera: [0.8, 2.2, 9],
     },
     {
       id: 'reverse-the-trade',
       label: '04 / TRY THE OPPOSITE',
       title: 'Want speed? Give up torque.',
-      body: 'Make the orange driver larger than the blue output. Now one input turn pushes enough teeth to spin the output more than once.',
+      body: 'Make the driver larger than the output. Now one input turn pushes enough teeth to spin the output more than once.',
       why: 'Gearboxes let a machine choose a useful compromise between speed and turning force. There is no free gain in both.',
       experiment:
         'Choose 32 → 16. Can you predict the speed ratio before looking? Then try another pair.',
@@ -109,7 +109,7 @@ export const gears: Exhibit = {
       parts: ['driver', 'driven'],
       controls: ['ratio', 'speed'],
       phase: 120,
-      camera: [1, 3.5, 10],
+      camera: [0.6, 2.5, 9],
       defaults: { ratio: 0.5 },
     },
   ],
@@ -122,5 +122,6 @@ export const gears: Exhibit = {
   ],
   limitations:
     'Ideal external gears with schematic teeth and no backlash, friction, material deformation or load. Torque is an ideal ratio, not a simulated force.',
-  assetCredits: 'Original procedural gears and educational text. No imported assets.',
+  assetCredits:
+    'Original Blender gears and educational text by OpenEngineering contributors. Editable source and export script included; no third-party model assets.',
 };

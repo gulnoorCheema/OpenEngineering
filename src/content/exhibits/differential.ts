@@ -70,13 +70,13 @@ export const differential: Exhibit = {
       id: 'left',
       name: 'Left side gear',
       description:
-        'The orange side gear drives the left output. Its speed plus the right output’s speed is twice the carrier speed.',
+        'The side gear drives the left output, identified by an orange wheel marker. Its speed plus the right output’s speed is twice the carrier speed.',
     },
     {
       id: 'right',
       name: 'Right side gear',
       description:
-        'The blue side gear drives the right output. In a left turn it must turn faster to cover the longer path.',
+        'The other side gear drives the right output, identified by a cyan wheel marker. In a left turn it must turn faster to cover the longer path.',
     },
   ],
   steps: [
@@ -87,13 +87,13 @@ export const differential: Exhibit = {
       body: 'Around a corner, the outside wheel follows a larger circle. If both wheels were forced to turn at the same speed, at least one would have to slip.',
       why: 'We need a shared drive that lets the wheels turn at different speeds. An open differential provides that extra freedom.',
       experiment:
-        'Choose a left turn. The blue right wheel takes the longer path and speeds up; the orange left wheel slows down.',
+        'Choose a left turn. The right wheel takes the longer path and speeds up; the left wheel slows down.',
       deeper:
         'For rolling wheels of equal radius, speed is proportional to path radius. With track width w and axle-centre turn radius R, normalized speeds are 1 − w/(2R) and 1 + w/(2R). This model uses w = 1.6 m.',
       parts: ['left', 'right'],
       controls: ['direction', 'radius'],
       phase: 150,
-      camera: [7, 5, 9],
+      camera: [6, 3.4, 9],
       defaults: { direction: 1 },
     },
     {
@@ -103,13 +103,13 @@ export const differential: Exhibit = {
       body: 'The ring gear turns a carrier. Two small spider gears ride in that carrier, meshing with a side gear connected to each wheel.',
       why: 'Going straight, both side gears turn with the carrier. The spiders orbit the axle without spinning relative to their cross-shaft.',
       experiment:
-        'Select straight ahead. Look at the white markers on both outputs: they keep pace with one another.',
+        'Select straight ahead. Look at the colored markers on both outputs: they keep pace with one another.',
       deeper:
         'The housing is opened up and the drive pinion is omitted. Side and spider teeth are schematic bevel shapes, not a manufacturing model. Ring gear speed is our prescribed input.',
       parts: ['carrier', 'spider'],
       controls: ['direction'],
       phase: 45,
-      camera: [7, 4, 10],
+      camera: [5.4, 2.5, 9],
       defaults: { direction: 0, held: 0 },
     },
     {
@@ -125,7 +125,13 @@ export const differential: Exhibit = {
       parts: ['spider', 'left', 'right'],
       controls: ['direction', 'radius'],
       phase: 180,
-      camera: [5, 5, 11],
+      camera: [3.8, 2.3, 8.5],
+      presentation: {
+        target: [0, 0, 0],
+        fov: 34,
+        reveal: ['spider', 'left', 'right'],
+        annotation: { text: 'Equal and opposite changes', anchor: [0, 1.7, 0] },
+      },
       defaults: { direction: 1, held: 0 },
     },
     {
@@ -141,7 +147,7 @@ export const differential: Exhibit = {
       parts: ['spider', 'left', 'right'],
       controls: ['held', 'speed'],
       phase: 180,
-      camera: [7, 5, 10],
+      camera: [5, 3, 9],
       defaults: { held: 1 },
     },
   ],
@@ -161,5 +167,6 @@ export const differential: Exhibit = {
   ],
   limitations:
     'An ideal open differential with equal side gears. Turn radius prescribes the output rates; forces, torque, traction and tire slip are not solved. Bevel teeth and ring drive are schematic. The housing and input pinion are omitted.',
-  assetCredits: 'Original procedural geometry and educational text. No imported 3D assets.',
+  assetCredits:
+    'Original Blender geometry and procedural rendering and educational text. No imported 3D assets.',
 };

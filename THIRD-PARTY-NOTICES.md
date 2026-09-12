@@ -18,3 +18,7 @@ The original code is MIT; original educational content and assets are CC BY 4.0 
 Fonts are self-hosted through Fontsource. Copyright and license texts supplied by the packages are retained in `public/licenses/` so they ship with the site. The generated dependency license inventory covers installed transitive packages and must be regenerated after dependency changes with `npm run licenses`.
 
 Sources in `SOURCES.md` are linked references and influences. Their authors do not endorse or independently validate OpenEngineering.
+
+## Local Draco decoder
+
+`public/draco/draco_wasm_wrapper.js` and `draco_decoder.wasm` are distributed from the installed Three.js package and implement Google Draco (Apache License 2.0). The full upstream license is retained in `public/draco/LICENSE`. Source: https://github.com/google/draco. These vendor files are an explicit exception to the project code/content licenses. No remote decoder or reflection-map request is made.

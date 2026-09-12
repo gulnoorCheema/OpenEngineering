@@ -5,3 +5,5 @@ artifacts
 public/licenses
 package-lock.json
 launch/assets
+
+public/draco

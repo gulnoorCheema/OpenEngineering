@@ -5,6 +5,7 @@ const exhibits = ['engine', 'gears', 'differential'].map((id) =>
 );
 import { defaultControls, type Controls, type Vec3 } from '../lib/exhibit';
 import SceneViewport from './SceneViewport';
+import type { MotionClock } from '../lib/presentation';
 import { saveMedia } from '../lib/save-media';
 const scripts = {
   engine: [
@@ -57,6 +58,9 @@ export default function Studio() {
     [status, setStatus] = useState('Ready to record'),
     [ready, setReady] = useState(false),
     [videoUrl, setVideoUrl] = useState('');
+  const motion = useRef<MotionClock>({ phase: 430, playing: false, visible: true, speed: 0 });
+  const lastTick = useRef(-1),
+    lastControls = useRef('');
   const source = useRef<HTMLCanvasElement | null>(null),
     output = useRef<HTMLCanvasElement>(null),
     running = useRef(false),
@@ -66,7 +70,13 @@ export default function Studio() {
   const exhibit = exhibits[index],
     landscape = choice === 'demo';
   const position: Vec3 =
-    exhibit.scene === 'engine' ? [6, 4, 11] : exhibit.scene === 'gears' ? [1, 3.5, 12] : [6, 4, 11];
+    exhibit.scene === 'engine'
+      ? controls.cylinders === 4
+        ? [7.8, 4.2, 10.8]
+        : [6, 3.5, 9]
+      : exhibit.scene === 'gears'
+        ? [0.6, 2.5, 9]
+        : [6, 3.4, 9];
   useEffect(
     () => () => {
       running.current = false;
@@ -81,7 +91,9 @@ export default function Studio() {
     if (i !== index) setReady(false);
     setIndex(i);
     setControls(defaultControls(exhibits[i]));
-    setPhase(420);
+    setPhase(value === 'differential' ? 350 : 430);
+    motion.current.phase = value === 'differential' ? 350 : 430;
+    setExplode(0);
     setStatus('Ready to record');
   };
   function renderFrame() {
@@ -101,7 +113,7 @@ export default function Studio() {
               : Math.min(3, Math.floor((t - 35) / 3))
         ]
       : scripts[c as keyof typeof scripts][section];
-    ctx.fillStyle = '#f7f5f0';
+    ctx.fillStyle = '#f3f0e8';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#d84f1a';
     ctx.fillRect(45, 43, 9, 28);
@@ -128,12 +140,43 @@ export default function Studio() {
       ctx.fillText('github.com/gulnoorCheema/OpenEngineering', 65, 605);
       return;
     }
+    if (wide) {
+      const stageW = 800,
+        stageH = 560,
+        top = 106;
+      ctx.fillStyle = '#101719';
+      ctx.fillRect(0, top, stageW, stageH);
+      if (source.current) {
+        const src = source.current,
+          fit = Math.min(stageW / src.width, stageH / src.height);
+        ctx.drawImage(
+          src,
+          (stageW - src.width * fit) / 2,
+          top + (stageH - src.height * fit) / 2,
+          src.width * fit,
+          src.height * fit,
+        );
+      }
+      ctx.fillStyle = '#b94720';
+      ctx.font = '12px "IBM Plex Mono"';
+      ctx.fillText(`0${i + 1} / ${exhibits[i].title.toUpperCase()}`, 846, 159);
+      ctx.fillStyle = '#191e20';
+      ctx.font = '500 46px "Space Grotesk"';
+      const end = wrap(ctx, script[0], 846, 270, 385, 54);
+      ctx.fillStyle = '#67706c';
+      ctx.font = '27px "DM Sans"';
+      wrap(ctx, script[1], 846, end + 44, 365, 39);
+      ctx.fillStyle = '#b94720';
+      ctx.font = '12px "IBM Plex Mono"';
+      ctx.fillText('PLAY. PAUSE. TAKE IT APART.', 846, 618);
+      return;
+    }
     const top = wide ? 122 : 255,
       sceneH = wide ? 400 : 590;
     if (source.current) {
       const sw = source.current.width,
         sh = source.current.height;
-      ctx.fillStyle = '#efeee8';
+      ctx.fillStyle = '#101719';
       ctx.fillRect(0, top, w, sceneH);
       const scale = Math.min(w / sw, sceneH / sh);
       ctx.drawImage(
@@ -211,7 +254,10 @@ export default function Studio() {
     const tick = (now: number) => {
       firstFrame ??= now;
       const t = Math.min(Math.max(0, (now - firstFrame) / 1000), duration);
-      setElapsed(t);
+      if (Math.floor(t * 10) !== lastTick.current) {
+        lastTick.current = Math.floor(t * 10);
+        setElapsed(t);
+      }
       const i =
         choice === 'demo'
           ? t < 20
@@ -224,7 +270,7 @@ export default function Studio() {
       const local =
         choice === 'demo' ? rawLocal * (i === 0 ? 1 : i === 1 ? 20 / 15 : 20 / 12) : rawLocal;
       setIndex(i);
-      setPhase(local * 84 + 420);
+      motion.current.phase = local * 84 + 420;
       let ctr = defaultControls(exhibits[i]);
       if (i === 0) ctr.cylinders = local >= 15 ? 4 : 1;
       if (i === 1) ctr.ratio = local < 5 ? 1 : local < 10 ? 2 : local < 15 ? 3 : 0.5;
@@ -233,7 +279,11 @@ export default function Studio() {
         ctr.radius = local < 10 ? 5 : 2;
         ctr.held = local >= 15 ? 1 : 0;
       }
-      setControls(ctr);
+      const serialized = JSON.stringify(ctr);
+      if (serialized !== lastControls.current) {
+        lastControls.current = serialized;
+        setControls(ctr);
+      }
       setExplode(i === 2 && local >= 15 ? 0.45 : 0);
       data.current = { index: i, seconds: t, choice };
       renderFrame();
@@ -253,7 +303,7 @@ export default function Studio() {
     canvas.width = 1200;
     canvas.height = 630;
     const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = '#f7f5f0';
+    ctx.fillStyle = '#f3f0e8';
     ctx.fillRect(0, 0, 1200, 630);
     ctx.fillStyle = '#d84f1a';
     ctx.fillRect(54, 52, 8, 28);
@@ -270,7 +320,7 @@ export default function Studio() {
     ctx.fillText('FREE TO EXPLORE  /  OPEN SOURCE', 54, 570);
     const src = source.current,
       scale = Math.min(550 / src.width, 480 / src.height);
-    ctx.fillStyle = '#efeee8';
+    ctx.fillStyle = '#101719';
     ctx.fillRect(620, 110, 550, 480);
     ctx.drawImage(
       src,
@@ -281,6 +331,7 @@ export default function Studio() {
     );
     ctx.font = '13px "IBM Plex Mono"';
     ctx.fillStyle = '#69736a';
+    ctx.fillStyle = '#d0d4cf';
     ctx.fillText(exhibit.title.toUpperCase(), 645, 565);
     const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve));
     if (exhibit.id === 'engine') {
@@ -296,7 +347,23 @@ export default function Studio() {
     }
     if (blob) {
       await saveMedia(blob, `openengineering-social-${exhibit.id}.png`);
-      setStatus('Social card saved');
+      const thumbnail = document.createElement('canvas');
+      thumbnail.width = 720;
+      thumbnail.height = 540;
+      const tc = thumbnail.getContext('2d')!;
+      tc.fillStyle = '#101719';
+      tc.fillRect(0, 0, 720, 540);
+      const fit = Math.min(720 / src.width, 540 / src.height);
+      tc.drawImage(
+        src,
+        (720 - src.width * fit) / 2,
+        (540 - src.height * fit) / 2,
+        src.width * fit,
+        src.height * fit,
+      );
+      const thumb = await new Promise<Blob | null>((resolve) => thumbnail.toBlob(resolve));
+      if (thumb) await saveMedia(thumb, `openengineering-thumbnail-${exhibit.id}.png`);
+      setStatus('Social card and exhibit image saved');
     }
   }
   return (
@@ -337,6 +404,7 @@ export default function Studio() {
             key={exhibit.id}
             scene={exhibit.scene}
             phase={phase}
+            motion={motion}
             explode={explode}
             controls={controls}
             stage={99}
