@@ -12,3 +12,6 @@ test-results/
 # Blender recovery files; editable final sources are committed.
 *.blend1
 *.blend2
+
+# Local numbered save copies; retain the canonical editable sources.
+/assets/source/* [0-9].blend
