@@ -1,0 +1,66 @@
+# OpenEngineering
+
+**Understand how machines work. Play with them in 3D.**
+
+A free, open-source collection of interactive mechanical explanations, built with GPT-6 Astra. Each exhibit combines a short visual story with a working model you can pause, inspect, and experiment with.
+
+## Explore
+
+- **The four-stroke engine:** follow expanding gas through a piston, connecting rod, crank, valves, and a complete 720-degree cycle.
+- **Gear ratios:** trade speed for turning force and watch the relationship change.
+- **The differential:** see how two driven wheels turn at different speeds while their average follows the input.
+
+These are simplified teaching models. The explanations, equations, and limitations are available inside each exhibit. They are not manufacturing drawings or performance predictions.
+
+## Run locally
+
+Use Node.js 22.12+ or 24 LTS and npm.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the local address printed by Astro. No account, API key, or hosted database is required.
+
+```sh
+npm test
+npm run build
+npm run preview
+```
+
+The production build is in `dist/`. GitHub Actions runs mechanical tests, type checking, and the build before publishing to GitHub Pages. Set `SITE_URL` and `BASE_PATH` when deploying under a different domain or repository path.
+
+## Make the next exhibit
+
+```sh
+npm run new-exhibit -- your-mechanism
+```
+
+Start with [the exhibit authoring guide](docs/AUTHORING.md), [the design system](docs/DESIGN.md), and [the Astra brief](docs/ASTRA-BRIEF.md). The gear exhibit is the smallest complete example. The scaffold creates a source-backed brief and an explicit starter scene; it does not claim to generate a physically accurate mechanism automatically.
+
+Contributions can be explanations, technical references, accessibility fixes, translations, models, or code. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [starter opportunities](docs/GOOD-FIRST-ISSUES.md).
+
+## How it is built
+
+Astro serves static pages. React and React Three Fiber render the selected interactive scene. TypeScript functions implement the mechanical relationships independently of rendering. There is no AI call during a visitor's session.
+
+The [build log](docs/BUILD-LOG.md) records what Astra helped produce and what has actually been checked. The [validation record](docs/VALIDATION.md) distinguishes automated/browser checks from external mechanical review and beginner testing.
+
+## Sources and credits
+
+This project is inspired by the curiosity of *The Way Things Work*, Bartosz Ciechanowski's interactive essays, and the explorable-explanations community. Text, code, and procedural models were authored for this project. No book pages, competitor models, screenshots, or videos are incorporated.
+
+Technical sources include NASA Glenn's four-stroke explanation, Eaton's differential introduction, and the gear-ratio relationships documented by Ciechanowski. See [SOURCES.md](SOURCES.md) for links, scope, and limitations.
+
+This independent project is not affiliated with The Open University, whose OpenEngineering Laboratory is a separate educational service, or with OpenAI or Product Hunt. Astra is credited as a development tool.
+
+## License
+
+- Project code and developer documentation: [MIT](LICENSE).
+- Original exhibit prose and original exported educational illustrations: [CC BY 4.0](CONTENT-LICENSE.md).
+- Dependencies and fonts retain their own licenses; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+## Launch materials
+
+The `launch/` directory contains the Product Hunt copy, demo scripts, outreach drafts, eligibility notes, and a validation worksheet. Future launch targets are goals, not reported achievements. External outreach and the Product Hunt submission require the maintainer's review of the finished materials.

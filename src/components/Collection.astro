@@ -1,0 +1,6 @@
+---
+import {exhibits} from '../content/exhibits';
+import {path} from '../lib/paths';
+import MechanismSketch from './MechanismSketch.astro';
+---
+<section class="collection" id="collection"><div class="section-heading"><div><div class="eyebrow">FOLLOW YOUR CURIOSITY</div><h2>There’s more under the surface.</h2></div><span class="collection-count">THE FIRST COLLECTION / 03 EXHIBITS</span></div><div class="collection-grid">{exhibits.map(e=><a class="exhibit-card" href={path(`/exhibits/${e.id}/`)}><MechanismSketch id={e.id} title={`${e.title}: a schematic preview`}/><div class="card-body"><span class="eyebrow">{e.number} / {e.duration} OF CURIOSITY</span><h3>{e.title}<span aria-hidden="true">↗</span></h3><p>{e.question}</p></div></a>)}</div><div class="contribute-strip"><div><span class="eyebrow">THE NEXT EXHIBIT COULD BE YOURS</span><h3>Help someone have an “oh, that’s how” moment.</h3><p>The code, design rules, and a small starter exhibit are yours to build on.</p></div><a href={path('/contribute/')} class="outline-link">Make an exhibit <span>↗</span></a></div></section>

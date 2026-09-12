@@ -1,0 +1,8 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {engine} from '../content/exhibits/engine';
+import ExhibitPlayer from '../components/ExhibitPlayer';
+import Collection from '../components/Collection.astro';
+import WrittenStory from '../components/WrittenStory.astro';
+---
+<Layout><ExhibitPlayer exhibit={engine} client:load/><WrittenStory exhibit={engine}/><Collection/></Layout>

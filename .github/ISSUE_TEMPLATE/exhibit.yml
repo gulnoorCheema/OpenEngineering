@@ -1,0 +1,20 @@
+name: Propose an exhibit
+description: Start with a beginner's question and an experiment.
+labels: [exhibit]
+body:
+  - type: input
+    id: question
+    attributes:
+      label: What question will the exhibit answer?
+    validations:
+      required: true
+  - type: textarea
+    id: learning
+    attributes:
+      label: What can someone change, and what will they notice?
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References, asset rights, and possible model limitations

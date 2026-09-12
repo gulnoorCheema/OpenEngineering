@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {exhibits} from '../../content/exhibits';
+import ExhibitPlayer from '../../components/ExhibitPlayer';
+import Collection from '../../components/Collection.astro';
+import WrittenStory from '../../components/WrittenStory.astro';
+export function getStaticPaths(){return exhibits.map(exhibit=>({params:{id:exhibit.id},props:{exhibit}}));}
+const {exhibit}=Astro.props;
+---
+<Layout title={`${exhibit.title} — OpenEngineering`} description={exhibit.question}><ExhibitPlayer exhibit={exhibit} client:load/><WrittenStory exhibit={exhibit}/><Collection/></Layout>

@@ -1,0 +1,6 @@
+---
+import type {Exhibit} from '../lib/exhibit';
+import MechanismSketch from './MechanismSketch.astro';
+const {exhibit}=Astro.props as {exhibit:Exhibit};
+---
+<section class="written-story" id="written-story"><details><summary><span>Prefer to read? The complete story is here.</span><span>+</span></summary><div class="written-content"><MechanismSketch id={exhibit.id} title={exhibit.question}/><p class="model-note">Schematic overview. The explanation and equations remain available without JavaScript or 3D.</p>{exhibit.steps.map((step,i)=><article id={`read-${step.id}`}><div class="eyebrow">CHAPTER {i+1}</div><h2>{step.title}</h2><p>{step.body}</p><p>{step.why}</p><p>{step.deeper}</p></article>)}</div></details><div id="exhibit-sources" class="source-section"><details><summary><span>Sources, credits & model boundaries</span><span>+</span></summary><div class="written-content"><h3>What this model explains</h3><p>{exhibit.limitations}</p><h3>References</h3><ul>{exhibit.sources.map(s=><li><a href={s.url} target="_blank" rel="noreferrer">{s.title} ↗</a>{s.note&&<p>{s.note}</p>}</li>)}</ul><h3>Made in the open</h3><p>{exhibit.assetCredits}</p><p>Code: MIT. Original educational content and assets: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. No independent mechanical reviewer is credited yet.</p></div></details></div></section>

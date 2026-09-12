@@ -1,0 +1,21 @@
+name: Explain a correction
+description: Help make a mechanism or explanation more accurate.
+labels: [accuracy]
+body:
+  - type: input
+    id: scene
+    attributes:
+      label: Exhibit and chapter link
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should change, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Supporting reference
+      description: A primary technical source is especially helpful.
