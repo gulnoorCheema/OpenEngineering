@@ -29,7 +29,7 @@ The repository has a usable open-source foundation, but its reporting and review
 - License-generator regression verifies distinct version texts, NOTICE retention, unrelated-file preservation, and repeatable regeneration. Python syntax and Git whitespace checks passed.
 - npm reported zero known vulnerabilities at install time. npm also reported pending install-script approvals for esbuild and fsevents; no user-level approval settings were changed. Existing large Three.js bundle and Three CJS warnings remain.
 
-## Remaining maintainer work
+## Remaining maintainer work at the original audit
 
 - **Private reporting:** designate a private conduct contact and a security disclosure route, then publish the corresponding policies. GitHub private vulnerability reporting is currently disabled. No sensitive report should be requested through public issues.
 - **Review enforcement:** main has no branch protection or repository rulesets. The documented PR review process is a convention, not an enforced gate. Configure required PR/build checks and protection against force pushes/deletion with a deliberate owner recovery policy.
@@ -42,4 +42,4 @@ Repository access, branch rules, notification settings, and private-reporting se
 
 The maintainer authorized repository hardening after this audit. Private vulnerability reporting is enabled, and main now requires a PR, the current GitHub Actions build, and resolved conversations; administrator enforcement is enabled and force pushes/deletion are disabled. SECURITY.md and CODEOWNERS document/report the working process. The solo maintainer can merge their own passing PR without a second-person approval.
 
-An instrumented production build verified notices for 21 retained browser/font packages plus Draco across 31 emitted chunks. Neither maath nor stats-gl appears in the delivered JavaScript. Their missing standalone upstream texts therefore do not represent missing notices in the current browser distribution. Reusing those packages or redistributing node_modules still needs review. The check is reproducible with `npm run audit:licenses` and runs in CI. Earlier observations above are historical; see MAINTAINERS.md for current settings. A conduct reporting contact remains pending.
+An instrumented production build verified notices for 21 retained browser/font packages plus Draco across 31 emitted chunks. Neither maath nor stats-gl appears in the delivered JavaScript. Their missing standalone upstream texts therefore do not represent missing notices in the current browser distribution. Reusing those packages or redistributing node_modules still needs review. The check is reproducible with `npm run audit:licenses` and runs in CI. Earlier observations above are historical; see MAINTAINERS.md for current settings. The maintainer subsequently provided the private conduct contact; [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) is now published with that address.

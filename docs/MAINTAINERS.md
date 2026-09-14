@@ -16,4 +16,4 @@ CODEOWNERS requests review from the maintainer. There is no mandatory second-per
 
 Changes should now go through a branch and pull request, including maintainer and agent work. Never weaken the required checks just to get a PR merged. The build includes the browser dependency-notice audit. A security form alone does not ensure email delivery; maintainers must monitor their GitHub security-report notifications.
 
-The private contact for conduct concerns remains pending the maintainer's choice. A [complete conduct-policy draft](CODE-OF-CONDUCT-DRAFT.md) is ready to publish once that contact is supplied. Security reports already have a working private route. Do not send ordinary conduct reports to public issues or to the security advisory form.
+Conduct concerns can be reported privately to [gulnoorcheema@gmail.com](mailto:gulnoorcheema@gmail.com), as set out in the published [code of conduct](../CODE_OF_CONDUCT.md). Security vulnerabilities use the separate private GitHub reporting route. Do not send ordinary conduct reports to public issues or to the security advisory form.
