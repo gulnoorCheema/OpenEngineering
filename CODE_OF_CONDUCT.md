@@ -1,6 +1,4 @@
-# Code of conduct — pending private reporting contact
-
-This is a prepared draft, not the active repository policy. Before publishing it as CODE_OF_CONDUCT.md, the maintainer must provide the private reporting contact below. Remove this introductory note when the contact is filled and the policy is published.
+# Code of conduct
 
 ## How we work together
 
@@ -16,9 +14,9 @@ These expectations apply to this project's issues, pull requests, discussions, a
 
 ## Report a concern privately
 
-Contact: **[MAINTAINER TO PROVIDE A PRIVATE EMAIL ADDRESS]**.
+Email [gulnoorcheema@gmail.com](mailto:gulnoorcheema@gmail.com).
 
-Include relevant links, what happened, and how to contact you if you want a response. Share only information needed to understand the concern. Do not post a sensitive report in a public issue. Security vulnerabilities have a separate private route in SECURITY.md.
+Include relevant links, what happened, and how to contact you if you want a response. Share only information needed to understand the concern. Do not post a sensitive report in a public issue. Security vulnerabilities have a separate private route in [SECURITY.md](SECURITY.md).
 
 The repository maintainer handles reports with discretion and shares details only as needed to assess or address the issue. Absolute confidentiality cannot be guaranteed, including where disclosure is required by law. This volunteer project cannot promise a fixed response time or an independent appeals panel. If a concern involves the maintainer, GitHub's own reporting tools remain available for conduct that violates GitHub's policies.
 

@@ -72,7 +72,7 @@ This independent project is not affiliated with The Open University, whose OpenE
 - Original exhibit prose, Blender sources, models, environment and exported illustrations: [CC BY 4.0](CONTENT-LICENSE.md).
 - Dependencies and fonts retain their own licenses; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). CI verifies retained browser notices with `npm run audit:licenses`.
 
-Security vulnerabilities can be reported through [the private reporting route](SECURITY.md).
+Read our [code of conduct](CODE_OF_CONDUCT.md) for community expectations and private conduct reporting. Security vulnerabilities use [the separate private reporting route](SECURITY.md).
 
 ## Launch materials
 

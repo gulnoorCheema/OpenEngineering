@@ -2,6 +2,8 @@
 
 Help someone understand one thing they have always wondered about.
 
+Read our [code of conduct](CODE_OF_CONDUCT.md) for community expectations and the private conduct-reporting contact.
+
 ## Start small
 
 You do not have to write code. A clear explanation, a dependable technical source, an accessibility improvement, or a careful correction is a useful contribution. See [starter opportunities](docs/GOOD-FIRST-ISSUES.md).
