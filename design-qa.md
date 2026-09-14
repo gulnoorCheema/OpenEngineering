@@ -41,3 +41,7 @@ The live teaching assemblies are simpler and less photorealistic than the genera
 - Astro/TypeScript reports zero errors, warnings or hints; 14 static routes build. Vite's existing large Three.js chunk notice remains.
 - Local production observations: approximately 0.78–0.89 seconds to renderer readiness and 120 fps at high quality in the in-app desktop browser, localhost, without network throttling. These are desktop observations, not a cold phone-network benchmark. Phone five-second interaction and 30 fps acceptance remain unverified.
 - Final homepage gallery, transparent previews, social card, jet portrait clip and refreshed collection demo were inspected. Videos are actual scene captures; the nominal 55-second demo is about 55.6 seconds including scene readiness transitions.
+
+## Open-source copy follow-up
+
+The hero now leads with “Free to explore. Open to build on” and links directly to the open code and models. The footer invites model reuse, story improvements and contributions from people who do not write code. Collection metadata and the homepage social card carry the same emphasis. Checked copy wrapping at 390, 737, 1024 and 1440 px and refreshed the desktop/phone galleries. Existing tests pass; no mechanism behavior changed.

@@ -2,7 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Pause, Play } from 'lucide-react';
 import type { MotionClock } from '../lib/presentation';
 import { heroPlayback, legacyEngineLink } from '../lib/home';
-import { path } from '../lib/paths';
+import { path, REPOSITORY } from '../lib/paths';
 const Viewport = lazy(() => import('./SceneViewport'));
 export default function HomeHero({ count }: { count: number }) {
   const [mounted, setMounted] = useState(false),
@@ -76,9 +76,9 @@ export default function HomeHero({ count }: { count: number }) {
             the world move.
           </h1>
           <p className="hero-promise">
-            Understand how machines work.
+            Understand machines in 3D.
             <br />
-            Play with them in 3D.
+            Free to explore. Open to build on.
           </p>
           <a
             className="home-primary"
@@ -86,7 +86,9 @@ export default function HomeHero({ count }: { count: number }) {
           >
             Start exploring <ArrowUpRight size={22} aria-hidden="true" />
           </a>
-          <p className="hero-reassurance">{count} machines. No sign-up. Open source.</p>
+          <p className="hero-reassurance">
+            {count} machines. <a href={REPOSITORY}>Open code &amp; models ↗</a>
+          </p>
         </div>
         <div
           className="hero-machine scene-canvas"

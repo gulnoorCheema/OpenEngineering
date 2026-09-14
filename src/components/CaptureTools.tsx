@@ -122,11 +122,11 @@ export default function CaptureTools() {
       ctx.fillText(line, 50, 185 + index * 67),
     );
     ctx.font = '24px "DM Sans"';
-    ctx.fillText('Understand how machines work.', 50, 320);
-    ctx.fillText('Play with them in 3D.', 50, 355);
+    ctx.fillText('Understand machines in 3D.', 50, 320);
+    ctx.fillText('Free to explore. Open to build on.', 50, 355);
     ctx.fillStyle = '#ed8150';
     ctx.font = '500 16px "DM Sans"';
-    ctx.fillText('SIX MACHINES. FREE. OPEN SOURCE.', 50, 569);
+    ctx.fillText('OPEN CODE. OPEN MODELS. OPEN TO EVERYONE.', 50, 569);
     const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve));
     if (blob) {
       await saveMedia(blob, 'openengineering-social-home.png');

@@ -816,3 +816,8 @@
     font-size: 18px;
   }
 }
+
+.hero-reassurance a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
