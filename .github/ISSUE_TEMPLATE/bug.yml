@@ -1,0 +1,29 @@
+name: Report a bug or accessibility problem
+description: Help us reproduce a broken control, layout, loading, or access issue.
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page or shared chapter URL
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include what you expected and what happened. Remove private information from logs or screenshots.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Device and browser
+      placeholder: For example, iPhone 13 / Safari, or Windows / Chrome
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: Relevant access settings or evidence
+      description: If relevant, note keyboard use, reduced motion, screen reader, or WebGL fallback. Screenshots and console errors are optional.

@@ -83,3 +83,7 @@ This section supersedes the earlier renderer/layout observations above.
 The app's mechanism transforms now advance in the R3F render loop; React readouts update at 10 Hz. That update cadence is not a frame-rate guarantee. Auto quality reduces effects after sustained sub-27-fps windows. No human reviewer badge or beginner-study result has been added.
 
 The final differential review corrected the common pitch-cone placement and opposing spider directions. A new test compares tangential motion at the side/spider contact in forward, reverse, straight and held-output cases, in addition to the existing mean-speed invariant.
+
+## Contributor audit — September 14, 2026
+
+See [the contributor and open-source audit](CONTRIBUTOR-AUDIT.md) for the clean-checkout/scaffold checks, fixes, and outstanding repository-policy and notice-provenance work. These automated checks do not replace an unfamiliar human contributor test.

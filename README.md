@@ -19,9 +19,11 @@ These are simplified teaching models. The explanations, equations, and limitatio
 
 ## Run locally
 
-Use Node.js 24 LTS and npm.
+Use Node.js 24 LTS and npm (`nvm use` reads the included `.nvmrc` if you use nvm). Fork the repository first if you plan to submit a pull request, then clone your fork. To try the upstream project:
 
 ```sh
+git clone https://github.com/gulnoorCheema/OpenEngineering.git
+cd OpenEngineering
 npm ci
 npm run dev
 ```
@@ -42,7 +44,7 @@ The production build is in `dist/`. GitHub Actions runs mechanical tests, type c
 npm run new-exhibit -- your-mechanism
 ```
 
-Start with [the exhibit authoring guide](docs/AUTHORING.md), [the design system](docs/DESIGN.md), and [the Astra brief](docs/ASTRA-BRIEF.md). The gear exhibit is the smallest complete example. The scaffold creates a source-backed brief and an explicit starter scene; it does not claim to generate a physically accurate mechanism automatically.
+Start with [the exhibit authoring guide](docs/AUTHORING.md), [the design system](docs/DESIGN.md), and [the Astra brief](docs/ASTRA-BRIEF.md). The gear exhibit is the smallest complete example. The scaffold registers a working gear starter with inherited gear explanations, credits, preview images, and a sample test. Replace the sample author, story, model, images, and test before proposing a finished mechanism. The studio supplies a default recording until you add your own shot direction.
 
 Contributions can be explanations, technical references, accessibility fixes, translations, models, or code. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [starter opportunities](docs/GOOD-FIRST-ISSUES.md).
 

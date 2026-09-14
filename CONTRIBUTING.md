@@ -11,7 +11,7 @@ For a new exhibit, open a proposal with one opening question, the intended learn
 ## Development
 
 1. Fork and clone this repository.
-2. Run `npm ci` and `npm run dev`.
+2. Use Node.js 24 (`.nvmrc` is provided). Run `npm ci` and `npm run dev`.
 3. Make a focused change. For an exhibit, follow [AUTHORING.md](docs/AUTHORING.md).
 4. Run `npm test` and `npm run build`.
 5. Verify the relevant interaction in desktop and phone layouts.
@@ -53,3 +53,5 @@ AI-assisted contributions are welcome. Explain how the tool was used and what yo
 Submitting a contribution means you have the rights to contribute it under the relevant project license: MIT for code and developer documentation, CC BY 4.0 for original educational content. Do not upload screenshots, CAD files, book pages, or text from other creators without the required permission and license.
 
 Be kind, precise, and curious. Discuss the work, explain disagreements, and help new contributors find a manageable next step. The maintainer reviews and merges contributions; there is no automatic publication of submitted code.
+
+See [the maintainer and review process](docs/MAINTAINERS.md) for ownership, release behavior, and the reporting-policy gaps still being resolved.

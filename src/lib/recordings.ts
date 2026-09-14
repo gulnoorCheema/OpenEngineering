@@ -1,5 +1,5 @@
 import { exhibits } from '../content/exhibits';
-import { defaultControls, type Controls, type Vec3 } from './exhibit';
+import { defaultControls, animationSpeed, type Exhibit, type Controls, type Vec3 } from './exhibit';
 export interface RecordingFrame {
   phase: number;
   controls: Controls;
@@ -70,11 +70,17 @@ export function recordingSegment(choice: string, time: number) {
   };
 }
 export function recordingFrame(id: string, t: number): RecordingFrame {
+  const exhibit = exhibits.find((e) => e.id === id);
+  if (!exhibit) throw new Error(`Unknown recording exhibit: ${id}`);
+  return exhibitRecordingFrame(exhibit, t);
+}
+/** New manifests get a usable default shot before an author adds custom direction. */
+export function exhibitRecordingFrame(e: Exhibit, t: number): RecordingFrame {
+  const id = e.id;
   t = Math.max(0, Math.min(20, t));
-  const e = exhibits.find((e) => e.id === id)!;
   const controls = defaultControls(e),
     section = Math.min(3, Math.floor(t / 5));
-  let phase = t * e.speed + e.steps[0].phase,
+  let phase = t * animationSpeed(e, controls) + e.steps[0].phase,
     explode = 0;
   let position: Vec3 =
     e.presentation?.cameras?.overview ||
@@ -120,6 +126,6 @@ export function recordingFrame(id: string, t: number): RecordingFrame {
     position,
     target,
     fov: e.presentation?.fov || 34,
-    caption: captions[id][section],
+    caption: captions[id]?.[section] ?? [e.question, e.subtitle],
   };
 }

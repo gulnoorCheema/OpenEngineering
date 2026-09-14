@@ -28,7 +28,7 @@ http
       if (
         req.headers.origin !== origin ||
         req.headers['x-openengineering-capture'] !== 'local' ||
-        !/^openengineering-[a-z-]+\.(png|webm|mp4)$/.test(name)
+        !/^openengineering-[a-z0-9-]+\.(png|webm|mp4)$/.test(name)
       ) {
         res.writeHead(403).end();
         return;

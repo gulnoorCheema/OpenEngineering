@@ -8,7 +8,7 @@ Use Node 24 LTS and npm. Clone the repository, run `npm ci`, then `npm run dev`.
 
 ## Create a working starting point
 
-Run `npm run new-exhibit -- belt-drive`. This creates a manifest, a scene wrapper, and a calculation test, then registers the exhibit. Visit `/exhibits/belt-drive/`. It deliberately begins as a clearly labeled **gear starter**, with gear content inherited from `gears.ts`. Replace that content before proposing a new mechanism. Do not describe the starter as a finished belt drive.
+Run `npm run new-exhibit -- belt-drive`. This creates a manifest, a scene wrapper, a calculation test, and copies the original gear preview/share images, then registers the exhibit. The inherited asset credits apply to that starter artwork. Visit `/exhibits/belt-drive/`. It deliberately begins as a clearly labeled **gear starter**, with gear content inherited from `gears.ts`. Replace that content before proposing a new mechanism. Do not describe the starter as a finished belt drive.
 
 The command refuses invalid slugs and existing files. It expects to run from the project root. It does not download assets, call an AI service, or publish anything.
 
@@ -84,7 +84,7 @@ For a mechanical frequency experiment, `presentation.clockRateControl` names a n
 
 Pass `model="/models/your-exhibit.glb"` to `MechanicalPart` for a separate assembly. Omitting it retains the existing library. Use a base-relative model path, semantic node names, and lazy scene registration; never preload the entire collection on the homepage.
 
-Recording choices and shot definitions live in `src/lib/recordings.ts`. Add captions and a deterministic `recordingFrame` definition for a new exhibit, then export its portrait clip, social card, thumbnail, and desktop/phone gallery through the shared studio. The two collection demos have explicit segment definitions; existing media is retained unless deliberately refreshed.
+Recording choices and shot definitions live in `src/lib/recordings.ts`. New exhibits receive a default shot using their question, subtitle, controls, and overview camera. Add custom captions and deterministic direction in `exhibitRecordingFrame` when ready, then export its portrait clip, social card, thumbnail, and desktop/phone gallery through the shared studio. The two collection demos have explicit segment definitions; existing media is retained unless deliberately refreshed.
 
 ## Homepage imagery and presentation
 
@@ -97,3 +97,7 @@ python3 scripts/prepare-home-media.py
 ```
 
 This requires Pillow and checks thumbnail transparency. It normalizes machinery bounds and creates optimized WebP files without stretching the model. Save the desktop **homepage share card** and copy it to `public/social/home.png`. Use **Save gallery PNG** for the desktop and phone launch images. Rebuild after updating assets and inspect the final exports. Raw captures stay in the ignored `artifacts/captures/` directory. Stop the loopback helper when finished.
+
+For a new exhibit, export its transparent thumbnail and social card from the studio, then run `python3 scripts/prepare-home-media.py --exhibit your-mechanism`. This replaces the starter PNG, WebP, and social image from actual captures without requiring new homepage posters. Install Pillow in a local Python environment if needed (`python3 -m venv .venv`, activate it, then `python -m pip install Pillow`). Blender and Pillow are optional authoring tools; neither is required to run the app. The homepage remains a curated six; the collection and studio include all registered exhibits.
+
+Fork deployments keep source/contribution links pointing upstream by default (`REPOSITORY` in `src/lib/paths.ts`). Change that constant if your fork should accept its own contributions. The local capture-studio closing credit also names the upstream project; review it before publishing independent fork media.

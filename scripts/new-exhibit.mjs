@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 const id = process.argv[2];
 if (!id || !/^([a-z][a-z0-9]*)(-[a-z0-9]+)*$/.test(id)) {
   console.error('Usage: npm run new-exhibit -- belt-drive (lowercase slug)');
   process.exit(1);
 }
-const symbol = id.replaceAll('-', '_'),
+const symbol = `exhibit_${id.replaceAll('-', '_')}`,
   title = id
     .split('-')
     .map((w) => w[0].toUpperCase() + w.slice(1))
@@ -16,9 +16,23 @@ const manifest = `src/content/exhibits/${id}.ts`,
   calculation = `tests/${id}.test.ts`;
 const index = 'src/content/exhibits/index.ts',
   registry = 'src/components/scenes/registry.ts';
-if ([manifest, scene, calculation].some(existsSync)) {
+const previews = [
+  `public/exhibits/${id}.png`,
+  `public/exhibits/${id}.webp`,
+  `public/social/${id}.png`,
+];
+if ([manifest, scene, calculation, ...previews].some(existsSync)) {
   console.error('An exhibit or file with this name already exists. No files changed.');
   process.exit(1);
+}
+// Check every input before writing anything. These original gear renders are starter artwork.
+const previewSources = [
+  'public/exhibits/gears.png',
+  'public/exhibits/gears.webp',
+  'public/social/gears.png',
+];
+for (const source of previewSources) {
+  if (!existsSync(source)) throw new Error(`Missing starter artwork: ${source}. No files changed.`);
 }
 const oldIndex = readFileSync(index, 'utf8'),
   oldRegistry = readFileSync(registry, 'utf8');
@@ -42,6 +56,10 @@ const files = {
 for (const [file, contents] of Object.entries(files)) {
   mkdirSync(dirname(resolve(file)), { recursive: true });
   writeFileSync(file, contents);
+}
+for (const [i, file] of previews.entries()) {
+  mkdirSync(dirname(resolve(file)), { recursive: true });
+  copyFileSync(previewSources[i], file);
 }
 console.log(
   `Created ${id}. Open /exhibits/${id}/ after npm run dev. Read docs/AUTHORING.md before replacing the gear example.`,
