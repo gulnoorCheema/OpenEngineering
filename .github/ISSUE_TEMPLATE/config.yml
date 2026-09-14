@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/gulnoorCheema/OpenEngineering/security/advisories/new
+    about: Keep exploit details and sensitive information out of public issues.
+  - name: Contributor guide and agent instructions
+    url: https://github.com/gulnoorCheema/OpenEngineering/blob/main/CONTRIBUTING.md
+    about: Setup, contribution paths, and the prompt to give your coding agent.

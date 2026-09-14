@@ -37,3 +37,9 @@ The repository has a usable open-source foundation, but its reporting and review
 - **Human checks:** have a contributor unfamiliar with this code run and modify the starter, and retain the existing pending mechanical review, beginner testing, and real-phone performance checks. This audit did not repeat visual QA or establish those outcomes.
 
 Repository access, branch rules, notification settings, and private-reporting settings were inspected but not changed. See [maintainer process](MAINTAINERS.md), [contribution guide](../CONTRIBUTING.md), and [third-party notices](../THIRD-PARTY-NOTICES.md).
+
+## Follow-up completed September 14
+
+The maintainer authorized repository hardening after this audit. Private vulnerability reporting is enabled, and main now requires a PR, the current GitHub Actions build, and resolved conversations; administrator enforcement is enabled and force pushes/deletion are disabled. SECURITY.md and CODEOWNERS document/report the working process. The solo maintainer can merge their own passing PR without a second-person approval.
+
+An instrumented production build verified notices for 21 retained browser/font packages plus Draco across 31 emitted chunks. Neither maath nor stats-gl appears in the delivered JavaScript. Their missing standalone upstream texts therefore do not represent missing notices in the current browser distribution. Reusing those packages or redistributing node_modules still needs review. The check is reproducible with `npm run audit:licenses` and runs in CI. Earlier observations above are historical; see MAINTAINERS.md for current settings. A conduct reporting contact remains pending.

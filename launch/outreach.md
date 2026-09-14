@@ -30,6 +30,6 @@ Candidate relevance comes from public posts/pages inspected during planning. Ava
 
 ## Launch post
 
-“OpenEngineering is live: three machines you can finally get inside. Follow a short story, change the controls, and watch the mechanism answer. Free, open source, and built with GPT-6 Astra. Try an exhibit and tell me which part made something click.”
+“OpenEngineering is live: six machines you can finally get inside. Follow a short story, change the controls, and watch the mechanism answer. Free, open source, and built with GPT-6 Astra. Try an exhibit and tell me which part made something click.”
 
 Include a real product recording and direct link. Product Hunt is a place to discuss the work; invite feedback, not votes.

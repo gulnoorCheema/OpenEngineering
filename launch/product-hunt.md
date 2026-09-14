@@ -1,6 +1,6 @@
 # Product Hunt submission package
 
-Status: prepared copy and launch assets; not submitted or scheduled.
+Status: updated September 14, 2026 for the six-exhibit release. Prepared for the maintainer to review and submit; not submitted or scheduled.
 
 Live product: https://gulnoorcheema.github.io/OpenEngineering/
 Repository: https://github.com/gulnoorCheema/OpenEngineering
@@ -10,49 +10,55 @@ Asset index: [ASSETS.md](ASSETS.md)
 
 OpenEngineering
 
-## Tagline — 51 characters
+## Tagline
 
-Understand how machines work. Play with them in 3D.
+Explore machines in 3D. Free and open source.
 
-## Description — 217 characters
+## Description
 
-Take apart an engine, change a gear ratio, and see why car wheels turn at different speeds. Free, open-source 3D explanations built with GPT-6 Astra. Explore a mechanism, follow its story, or help create the next one.
+Get inside six machines, from jet engines to mechanical watches. Follow a 3D story, change a control, and see why it works. Free to explore, with open code, original models, and explanations you can reuse. Built with GPT-6 Astra.
 
-## Maker comment — review before publishing
+## Maker comment
 
-I've always loved the moment an explanation makes something click. The engine you see every day suddenly becomes a sequence of small, clever ideas.
+I've always loved the moment an explanation makes something click. A machine you've seen a hundred times suddenly makes sense when you can see what's happening inside.
 
-That is why I built OpenEngineering: free interactive 3D stories for curious people. You can follow an engine from a push to a working cycle, change a gear ratio, or explore why a car's driven wheels turn at different speeds. Pause it, take it apart, and follow the part you are curious about.
+I wanted more people to have that experience, so I built OpenEngineering: a free, open-source place to understand machines through interactive 3D stories.
 
-I used GPT-6 Astra in Codex to help research, write, build, and check the experience. The equations are separate from the 3D scenes, and each exhibit states its sources and simplifications. Visitors do not need an AI account or an API key.
+Start with a jet engine and follow the air through it. Look underneath a sewing machine to see how two threads form a stitch. Slow down a mechanical watch to watch its escapement release. There are six exhibits to explore, including a four-stroke engine, gear ratios, and a car differential. Each has a guided story, controls you can experiment with, and sources explaining the model's limits. No sign-up or API key is needed.
 
-One concrete correction during the build: our first cylinder offsets did not match the stated firing order. We corrected them and added a test that checks the actual 1–3–4–2 sequence. We also made clear that the engine animation calculates motion, not combustion pressure or flywheel dynamics.
+The open part matters to me. The code is MIT-licensed. The original explanations, editable Blender models, and artwork are CC BY 4.0, so you can reuse and adapt them with credit. You can run the site yourself, improve an explanation, or build the next exhibit. Third-party dependencies keep their own licenses.
 
-The code, original models, and explanations are open. There is also a shared player, a starter exhibit, a design guide, and an Astra brief so the next contributor can spend more time explaining a mechanism and less time rebuilding the interface.
+To make contributing practical, the repo includes a shared 3D player, a working gear starter, design rules, calculation tests, and AGENTS.md instructions you can give your coding agent. Writers and researchers can help with explanations and sources too.
 
-I would love specific feedback: which moment made something click, and where did the explanation lose you? If you know a mechanism that deserves this treatment, help us make the next exhibit.
+I used GPT-6 Astra in Codex to help research, write, build, and check the project. It also needed correction. Our first engine cylinder offsets didn't match the stated firing order; we fixed them and added a test for the 1–3–4–2 sequence. These are simplified teaching models, and the equations and limitations are there to inspect alongside the visuals.
+
+Try a mechanism and tell me which part clicked, or where the explanation lost you. If you can make one of the stories clearer, I'd love your contribution.
 
 ## Shoutouts
 
-- OpenAI / GPT-6 Astra — research, development, authoring, and revision.
-- ChatGPT / Codex — the development environment.
-- Astro, React, Three.js / React Three Fiber — the application and rendering stack.
+- OpenAI / GPT-6 Astra: research, development, authoring, and revision.
+- ChatGPT / Codex: the development environment.
+- Astro, React, Three.js / React Three Fiber: the application and rendering stack.
 
-Choose up to three applicable topics available in the submission UI, prioritizing open source, education, and interactive 3D. Do not claim a topic exists until inspected.
+Choose up to three applicable topics available in the submission UI, prioritizing open source, education, and interactive 3D. Verify the available topics in that UI.
 
-## Gallery
+## Gallery order and captions
 
-1. Engine: a working cutaway with its story and controls.
-2. Gears: the experiment and corresponding speed/torque relationship.
-3. Phone: the same application at a narrow viewport.
-4. Contribution kit: the project's real authoring resources and three starter opportunities.
+1. [Homepage desktop](assets/openengineering-home-desktop.png): “Six machines. Get inside and see what makes them work.”
+2. [Jet engine desktop](assets/openengineering-jet-engine-desktop.png): “Follow the air. Change the bypass ratio. See where each stream goes.”
+3. [Mechanical watch phone](assets/openengineering-mechanical-watch-phone.png): “Slow down the mechanism and follow its story on your phone.”
+4. [Contribution kit](assets/openengineering-contribution-kit-desktop.png): “Open code, editable models, and a starter for the next contributor.”
 
-Use actual product captures. Do not add fabricated testimonials, awards, reviewer badges, contributor counts, or traffic numbers.
+Use the [512-pixel icon](assets/openengineering-icon.png) as the thumbnail. Review each final export before uploading, particularly the contribution screenshot against the current page. Phone imagery demonstrates layout; it does not establish real-device performance. Do not add testimonials, awards, reviewer badges, contributor counts, or traffic numbers that have not been earned and verified.
 
 ## Demo
 
-The supplied 55-second demo shows motion immediately, then the engine's causal sequence, gear-ratio experiments, differential behavior, and the contribution foundation. It records the actual scene modules with captions; the gallery shows the full application interface. See `demo-scripts.md`.
+Use [New ways to wonder](assets/openengineering-new-collection.mp4), approximately 55 seconds, as the primary demo. It shows the sewing machine, jet engine, mechanical watch, and contribution closing card, using the actual scene renderer. The gallery and description establish that the full product includes six exhibits.
 
-## Submission gate
+Keep [the original collection demo](assets/openengineering-demo.mp4) as a secondary clip for the engine, gear experiments, and differential. All six portrait clips are available in the asset index. The supplied files are local exports, not hosted video URLs; use the submission UI's supported upload or video-link flow without inventing a hosted link.
 
-Read `eligibility.md` before publishing. Launch date is September 18, 2026 at 12:01 a.m. Pacific. A prepared local package or live GitHub site is not evidence that Product Hunt accepted or scheduled a submission.
+## Submission checks
+
+The maintainer confirmed on September 14 that runtime AI calls are not required for this challenge. See [eligibility notes](eligibility.md) for the source of that confirmation and the remaining submission-flow checks.
+
+Target September 18, 2026 at 12:01 a.m. Pacific, verifying the actual scheduled date/time in Product Hunt. Confirm any challenge enrollment and prize conditions in the authenticated flow. A live website and prepared package do not establish that Product Hunt accepted or scheduled the entry. Invite people to try the product and leave specific feedback; do not ask for upvotes.

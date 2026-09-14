@@ -12,7 +12,8 @@
     "new-exhibit": "node scripts/new-exhibit.mjs",
     "licenses": "node scripts/licenses.mjs",
     "studio": "node scripts/capture-server.mjs",
-    "format": "prettier --write src scripts tests docs launch .github *.md *.json astro.config.mjs"
+    "format": "prettier --write src scripts tests docs launch .github *.md *.json astro.config.mjs",
+    "audit:licenses": "astro build --config scripts/license-audit.config.mjs && node scripts/audit-browser-licenses.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",

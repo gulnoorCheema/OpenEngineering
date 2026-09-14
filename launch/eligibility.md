@@ -1,6 +1,6 @@
 # Challenge eligibility and naming checks
 
-Checked September 12, 2026.
+Public pages checked September 12, 2026. Maintainer clarification recorded September 14, 2026.
 
 ## Established by official sources
 
@@ -9,18 +9,17 @@ Checked September 12, 2026.
 - [Featuring guidelines](https://help.producthunt.com/en/articles/9883485-product-hunt-featuring-guidelines): working digital products; usefulness, novelty, craft, and creativity; directories, templates, and courses are normally excluded.
 - [Points](https://help.producthunt.com/en/articles/10275873-what-are-points): multiple authentic engagement signals, not a simple upvote count.
 
-## Not established by the public pages inspected
+## Maintainer-confirmed Astra usage
 
-- Whether using Astra in Codex to build the product is sufficient, or a live API integration is required.
+On September 14, the maintainer confirmed: “we don't need runtime ai calls”. The launch will use the existing browser-only experience built with Astra in Codex. This records the maintainer’s confirmation; it is not a quotation from an organizer or a newly inspected official rule.
+
+## Remaining submission-flow checks
+
 - Complete judging criteria and whether ranking determines the five winners.
 - Any additional enrollment, geographical, age, team, or prize-acceptance conditions.
 - A dependable submission cutoff; the public countdown displayed zero despite the future launch date.
 
-These remain checks for the organizer or authenticated submission flow. No organizer has been contacted and no answer should be implied.
-
-### Draft question for the organizer
-
-“I'm preparing OpenEngineering, a free open-source interactive 3D educational product built with GPT-6 Astra in Codex. The experiences run locally in the browser without live AI calls. Does that satisfy the Astra usage requirement? Could you also point me to the full eligibility/judging rules and any enrollment deadline before the September 18 launch?”
+These remain checks for the authenticated submission flow, or the organizer if the flow does not answer them. No organizer has been contacted and no answer should be implied.
 
 ## Basic naming check
 
