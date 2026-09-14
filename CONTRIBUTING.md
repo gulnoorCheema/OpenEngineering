@@ -54,4 +54,4 @@ Submitting a contribution means you have the rights to contribute it under the r
 
 Be kind, precise, and curious. Discuss the work, explain disagreements, and help new contributors find a manageable next step. The maintainer reviews and merges contributions; there is no automatic publication of submitted code.
 
-See [the maintainer and review process](docs/MAINTAINERS.md) for ownership, release behavior, and the reporting-policy gaps still being resolved.
+See [the maintainer and review process](docs/MAINTAINERS.md) for ownership, release behavior, and repository protections. Report security vulnerabilities privately through [SECURITY.md](SECURITY.md).

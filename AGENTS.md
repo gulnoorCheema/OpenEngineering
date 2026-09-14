@@ -43,7 +43,7 @@ For a new exhibit, run `npm run new-exhibit -- your-mechanism` once from the roo
 - Retain pause, keyboard scrubbing, reset, part selection, browser Back, assembled/exploded inspection, touch scrolling and readable static explanations when JavaScript or WebGL is unavailable.
 - Honor reduced motion and low-effects settings. Use the shared lighting, materials and camera transitions. Keep the approved dark discovery homepage, ivory editorial exhibit pages, dark stages, existing typography and orange/cyan cues described in DESIGN.md. Homepage curation lives separately from manifest featured flags. Preserve legacy root engine share redirects and the dedicated collection route. Do not add a separate shell for an exhibit.
 - Use the base-aware `path()` helper from `src/lib/paths.ts` for internal URLs and assets. The public site lives under `/OpenEngineering/`; never assume deployment at the domain root.
-- Keep runtime assets local and small. Dependencies must solve a concrete need; retain license notices and update the lockfile when changing them. Analytics remains a no-op unless explicitly configured by the site owner; forks collect nothing by default.
+- Keep runtime assets local and small. Dependencies must solve a concrete need; retain license notices and update the lockfile when changing them. Run `npm run licenses` and `npm run audit:licenses` after dependency changes; the latter verifies notices for emitted browser code and runs in CI. Analytics remains a no-op unless explicitly configured by the site owner; forks collect nothing by default.
 
 ## Sources, authorship and trust
 
@@ -71,3 +71,5 @@ The performance targets are a usable scene within five seconds and 30 fps on a r
 Format only files you changed (`npx prettier --write <changed-files>`; use the appropriate formatter for non-Prettier formats). Do not run the repository-wide formatting command just to tidy unrelated files. Inspect `git diff --check` and the final diff. Do not commit `dist/`, dependencies, raw captures or Blender backup/duplicate files. When changing generated artwork, commit the canonical editable sources, generator changes and corresponding runtime exports together.
 
 Finish with the learner-facing change, files affected, sources/limitations, checks actually run, and outstanding verification. Use the PR template and disclose AI assistance and human checks accurately. Contributors submit reviewed pull requests. Do not merge, push to the upstream default branch, deploy, publish launch material or send outreach without explicit maintainer authorization for that action. CI publishes pushes to `main`, so treat such a push as deployment.
+
+Main is protected: use a branch and PR, retain the required GitHub Actions build and resolved-conversation checks, and do not bypass or weaken protections. See [maintainer process](docs/MAINTAINERS.md) and [private security reporting](SECURITY.md).

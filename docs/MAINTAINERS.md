@@ -8,8 +8,12 @@ Contributors retain their authorship and submit under the licenses in LICENSE an
 
 Merged changes to main trigger the Pages workflow. Pull requests run verification without deployment permissions. Fork maintainers control their own releases and should configure Pages and review settings for their repository.
 
-## Repository settings checked September 14, 2026
+## Repository protections configured September 14, 2026
 
-Main currently has no branch protection or rulesets. Private vulnerability reporting is disabled. These are observed gaps, not enforced safeguards. Recommended maintainer setup is to require pull requests and the build check for main, block force pushes/deletion, and enable GitHub private vulnerability reporting. Choose an owner recovery/bypass policy before enforcing rules on this solo-maintainer repository.
+Main requires a pull request, an up-to-date passing `build` check from GitHub Actions, and resolved review conversations. These rules apply to administrators too. Force pushes and branch deletion are disabled. GitHub private vulnerability reporting is enabled; follow [SECURITY.md](../SECURITY.md).
 
-A private contact for conduct concerns and a security disclosure route still need to be designated. Do not place sensitive reports in public issues. This audit has not published a conduct or security policy with an invented contact, nor changed repository access or enforcement settings.
+CODEOWNERS requests review from the maintainer. There is no mandatory second-person approval count: this lets the solo maintainer merge their own PR after checks pass. External contributions are still reviewed by the maintainer before merge. A maintainer can change these settings through repository administration if recovery is necessary; that is a deliberate settings change, not a bypass granted by this policy.
+
+Changes should now go through a branch and pull request, including maintainer and agent work. Never weaken the required checks just to get a PR merged. The build includes the browser dependency-notice audit. A security form alone does not ensure email delivery; maintainers must monitor their GitHub security-report notifications.
+
+The private contact for conduct concerns remains pending the maintainer's choice. A [complete conduct-policy draft](CODE-OF-CONDUCT-DRAFT.md) is ready to publish once that contact is supplied. Security reports already have a working private route. Do not send ordinary conduct reports to public issues or to the security advisory form.

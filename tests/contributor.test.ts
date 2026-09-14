@@ -131,3 +131,65 @@ test('license regeneration preserves distinct versions, NOTICE files, and unrela
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('browser notice audit checks emitted code and rejects a missing notice', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'oe-browser-notices-'));
+  const put = (file: string, text: string) => {
+    mkdirSync(dirname(join(dir, file)), { recursive: true });
+    writeFileSync(join(dir, file), text);
+  };
+  try {
+    const names = [
+      'react',
+      '@fontsource/dm-sans',
+      '@fontsource/space-grotesk',
+      '@fontsource/ibm-plex-mono',
+    ];
+    const inventory = names.map((name, i) => ({
+      name,
+      version: '1.0.0',
+      files: [`notice-${i}.txt`],
+    }));
+    for (const [i, name] of names.entries()) {
+      put(`node_modules/${name}/package.json`, JSON.stringify({ name, version: '1.0.0' }));
+      put(`dist/licenses/notice-${i}.txt`, `Notice for ${name}`);
+    }
+    put('public/licenses/inventory.json', JSON.stringify(inventory));
+    put('dist/_astro/app.js', 'emitted client code');
+    put('dist/draco/LICENSE', 'Decoder notice');
+    put(
+      'artifacts/browser-license-audit/chunks-0.json',
+      JSON.stringify([
+        {
+          file: '_astro/app.js',
+          modules: [
+            { id: join(dir, 'node_modules/react/index.js'), renderedLength: 10 },
+            { id: join(dir, 'node_modules/maath/index.js'), renderedLength: 0 },
+          ],
+        },
+        {
+          file: 'server-only.mjs',
+          modules: [{ id: join(dir, 'node_modules/stats-gl/index.js'), renderedLength: 20 }],
+        },
+      ]),
+    );
+    const run = () =>
+      spawnSync(process.execPath, [resolve('scripts/audit-browser-licenses.mjs')], {
+        cwd: dir,
+        encoding: 'utf8',
+      });
+    const ok = run();
+    assert.equal(ok.status, 0, ok.stderr);
+    const report = JSON.parse(
+      readFileSync(join(dir, 'artifacts/browser-license-audit/report.json'), 'utf8'),
+    );
+    assert.deepEqual(report.excludedFromBrowserBundle, ['maath', 'stats-gl']);
+    assert.equal(report.packages.length, 4);
+    rmSync(join(dir, 'dist/licenses/notice-0.txt'));
+    const failed = run();
+    assert.notEqual(failed.status, 0);
+    assert.match(failed.stderr, /Missing distributed notice/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

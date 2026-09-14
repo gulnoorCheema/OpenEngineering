@@ -36,7 +36,7 @@ Attach `assets/openengineering-differential.mp4`.
 
 The next OpenEngineering exhibit could begin with one good question.
 
-The engine, gears, and differential share a player. There’s a working starter, an authoring brief for Astra, design rules, and calculation tests. Writers and researchers can contribute too.
+Six exhibits share a player, from engines and gears to a sewing machine and a watch. There’s a working starter, an authoring brief, AGENTS.md instructions, design rules, and calculation tests. The code is MIT-licensed; original models and explanations are CC BY 4.0. Writers and researchers can contribute too.
 
 https://github.com/gulnoorCheema/OpenEngineering
 
