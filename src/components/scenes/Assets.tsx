@@ -20,7 +20,7 @@ export function MechanicalPart({
       const materials = (Array.isArray(child.material) ? child.material : [child.material]).map(
         (m: MeshStandardMaterial) => {
           const material = m.clone();
-          material.envMapIntensity = 1.1;
+          material.envMapIntensity = model.includes('jet-engine') ? 0.65 : 1.1;
           // Boolean-cut planar gear webs must not interpolate normals across bores.
           if (name.startsWith('Gear')) material.flatShading = true;
           return material;

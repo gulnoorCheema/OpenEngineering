@@ -161,15 +161,17 @@ function RenderMetrics({ quality }: { quality: Quality }) {
   });
   return null;
 }
-function Bloom() {
+function Bloom({ subtle = false }: { subtle?: boolean }) {
   const { gl, scene, camera, size } = useThree();
   const composer = useMemo(() => {
     const c = new EffectComposer(gl);
     c.addPass(new RenderPass(scene, camera));
-    c.addPass(new UnrealBloomPass(new Vector2(512, 512), 0.2, 0.45, 1.1));
+    c.addPass(
+      new UnrealBloomPass(new Vector2(512, 512), subtle ? 0.12 : 0.2, 0.45, subtle ? 1.5 : 1.1),
+    );
     c.addPass(new OutputPass());
     return c;
-  }, [gl, scene, camera]);
+  }, [gl, scene, camera, subtle]);
   useEffect(() => {
     composer.setSize(size.width, size.height);
   }, [composer, size]);
@@ -197,6 +199,10 @@ export default function SceneViewport({
   onCanvas,
   onSlow,
   annotation,
+  annotations = [],
+  active = true,
+  presentation = 'exhibit',
+  transparentStage = false,
   ...props
 }: SceneProps & {
   scene: string;
@@ -212,6 +218,10 @@ export default function SceneViewport({
   onCanvas?: (canvas: HTMLCanvasElement) => void;
   onSlow?: () => void;
   annotation?: { text: string; anchor: Vec3 };
+  annotations?: { text: string; anchor: Vec3; tone?: 'cool' | 'warm' }[];
+  active?: boolean;
+  presentation?: 'exhibit' | 'showcase';
+  transparentStage?: boolean;
 }) {
   const Scene = scenes[scene as keyof typeof scenes],
     quality: Quality = props.quality || 'high',
@@ -220,30 +230,43 @@ export default function SceneViewport({
   return (
     <SceneBoundary onError={onError}>
       <Canvas
+        frameloop={active ? 'always' : 'never'}
         shadows={{ type: PCFShadowMap }}
         dpr={quality === 'low' ? 1 : [1, 1.5]}
         camera={{ position, fov }}
         gl={{
           antialias: true,
           preserveDrawingBuffer: true,
-          alpha: false,
+          alpha: transparentStage,
           toneMapping: ACESFilmicToneMapping,
-          toneMappingExposure: 1.12,
+          toneMappingExposure: scene === 'jet-engine' ? 0.9 : 1.12,
         }}
         onCreated={({ gl }) => onCanvas?.(gl.domElement)}
       >
-        <color attach="background" args={['#101719']} />
-        <fog attach="fog" args={['#101719', 12, 30]} />
+        {!transparentStage && (
+          <>
+            <color attach="background" args={['#101719']} />
+            <fog attach="fog" args={['#101719', 12, 30]} />
+          </>
+        )}
         <ambientLight intensity={0.32} />
         <directionalLight
           position={[3, 8, 5]}
-          intensity={3.5}
+          intensity={scene === 'jet-engine' ? 2.2 : 3.5}
           castShadow
           shadow-mapSize={quality === 'low' ? [512, 512] : [1024, 1024]}
           shadow-normalBias={0.025}
         />
-        <directionalLight position={[-6, 3, -3]} color="#8cbac8" intensity={2.3} />
-        <directionalLight position={[5, 1, -6]} color="#ff995a" intensity={1.9} />
+        <directionalLight
+          position={[-6, 3, -3]}
+          color="#8cbac8"
+          intensity={scene === 'jet-engine' ? 1.3 : 2.3}
+        />
+        <directionalLight
+          position={[5, 1, -6]}
+          color="#ff995a"
+          intensity={scene === 'jet-engine' ? 0.55 : 1.9}
+        />
         <Suspense fallback={null}>
           <Environment files={path('/environments/studio.hdr')} />
           <Scene {...props} reduced={reduced} />
@@ -257,6 +280,11 @@ export default function SceneViewport({
               <span className="scene-annotation">{annotation.text}</span>
             </Html>
           )}
+          {annotations.map((label) => (
+            <Html key={label.text} position={label.anchor} center style={{ pointerEvents: 'none' }}>
+              <span className={`hero-flow-label ${label.tone || ''}`}>{label.text}</span>
+            </Html>
+          ))}
         </Suspense>
         <mesh
           rotation={[-Math.PI / 2, 0, 0]}
@@ -264,7 +292,16 @@ export default function SceneViewport({
           receiveShadow
         >
           <planeGeometry args={[200, 200]} />
-          <meshStandardMaterial color="#030607" envMapIntensity={0.1} metalness={0} roughness={1} />
+          {transparentStage ? (
+            <shadowMaterial transparent opacity={0.24} />
+          ) : (
+            <meshStandardMaterial
+              color="#080e0f"
+              envMapIntensity={0.1}
+              metalness={presentation === 'showcase' ? 0.15 : 0}
+              roughness={presentation === 'showcase' ? 0.72 : 1}
+            />
+          )}
         </mesh>
         <Camera
           position={position}
@@ -276,7 +313,9 @@ export default function SceneViewport({
           interactive={interactive}
         />
         <AnimationDriver motion={props.motion} onSlow={onSlow} />
-        {quality === 'high' && props.effects !== false && <Bloom />}
+        {quality === 'high' && props.effects !== false && !reduced && (
+          <Bloom subtle={scene === 'jet-engine'} />
+        )}
       </Canvas>
     </SceneBoundary>
   );

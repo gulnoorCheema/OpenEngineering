@@ -1,13 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { engine } from '../content/exhibits/engine';
-import ExhibitPlayer from '../components/ExhibitPlayer';
-import Collection from '../components/Collection.astro';
-import WrittenStory from '../components/WrittenStory.astro';
+import { exhibits } from '../content/exhibits';
+import HomeHero from '../components/HomeHero';
+import MechanismCollection from '../components/MechanismCollection.astro';
+import '../styles/home.css';
 ---
 
-<Layout>
-  <ExhibitPlayer exhibit={engine} home client:load />
-  <WrittenStory exhibit={engine} />
-  <Collection />
+<Layout
+  showcase
+  imageId="home"
+  description="See what makes the world move. Explore six machines through free, open-source interactive 3D stories."
+>
+  <HomeHero count={exhibits.length} client:load />
+  <MechanismCollection />
 </Layout>
+<script>
+  import { legacyEngineLink } from '../lib/home';
+  import { path } from '../lib/paths';
+  const destination = legacyEngineLink(location.search, location.hash, path('/exhibits/engine/'));
+  if (destination) location.replace(destination);
+</script>

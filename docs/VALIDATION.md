@@ -1,5 +1,11 @@
 # Validation record
 
+## Homepage release — September 13
+
+The cinematic discovery homepage has 28 passing tests and a successful 14-page production build. The new collection page and all six exhibit destinations were checked. Legacy root engine state redirects preserve query and fragment and restore paused cycle state; tracking-only visits remain on the homepage. The live jet's pause/reveal, reduced-motion preview, genuine context loss and offscreen suspension were exercised. Only the jet GLB loaded on a fresh homepage.
+
+See [the complete design QA](../design-qa.md) for production screenshots, comparison iterations, keyboard/Back checks, media review and measurement conditions. Local desktop readiness was approximately 0.78–0.89 seconds, with a 120 fps high-quality sample. These are host-Mac / in-app-browser / localhost observations, not real-phone performance. Native Safari, real touch hardware, OS-level reduced-motion checks and cold phone-network targets remain pending.
+
 Recorded September 12, 2026. Update this file when new checks are completed; do not turn targets into results.
 
 ## New collection revision — September 12

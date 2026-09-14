@@ -25,7 +25,8 @@ const wrap = (
   return y + line;
 };
 export default function Studio() {
-  const [choice, setChoice] = useState('engine'),
+  const [collection, setCollection] = useState(false),
+    [choice, setChoice] = useState('engine'),
     [active, setActive] = useState('engine'),
     [sample, setSample] = useState(() => recordingFrame('engine', 0)),
     [recording, setRecording] = useState(false),
@@ -262,8 +263,10 @@ export default function Studio() {
       thumbnail.width = 720;
       thumbnail.height = 540;
       const tc = thumbnail.getContext('2d')!;
-      tc.fillStyle = '#101719';
-      tc.fillRect(0, 0, 720, 540);
+      if (!collection) {
+        tc.fillStyle = '#101719';
+        tc.fillRect(0, 0, 720, 540);
+      }
       const fit = Math.min(720 / src.width, 540 / src.height);
       tc.drawImage(
         src,
@@ -280,6 +283,15 @@ export default function Studio() {
   return (
     <>
       <div className="studio-tools">
+        <label>
+          <input
+            type="checkbox"
+            checked={collection}
+            disabled={recording}
+            onChange={(e) => setCollection(e.target.checked)}
+          />{' '}
+          Transparent collection image
+        </label>
         <label>
           Recording{' '}
           <select
@@ -314,13 +326,21 @@ export default function Studio() {
         />
       )}
       <div className="studio-grid">
-        <div className="studio-preview">
+        <div
+          className="studio-preview"
+          style={
+            collection ? { aspectRatio: '4 / 3', height: 'auto', background: '#182022' } : undefined
+          }
+        >
           <SceneViewport
-            key={active}
+            key={`${active}-${collection}`}
+            transparentStage={collection}
+            reveal={collection && active === 'differential' ? ['spider'] : undefined}
+            reduced={collection && active === 'differential'}
             scene={active}
             phase={sample.phase}
             motion={motion}
-            explode={sample.explode}
+            explode={collection && active === 'differential' ? 0.2 : sample.explode}
             controls={sample.controls}
             stage={99}
             selected=""

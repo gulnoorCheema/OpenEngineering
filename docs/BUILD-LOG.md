@@ -66,3 +66,9 @@ The sewing loop and hook were aligned at capture, feed was limited to the needle
 New optional manifest framing and clock metadata retain old defaults. A responsive FOV adjustment keeps the wide assemblies inside narrow stages. The shared studio now takes per-exhibit shot definitions and retains the original demo alongside a new collection demo. These additions remain illustrative kinematics; no physical or external review is implied.
 
 Recording QA caught a browser-frame timestamp preceding the recording start timestamp by a fraction of a millisecond. The studio now bounds elapsed deltas at zero, and shot definitions clamp their input to the clip duration. A regression check covers the negative initial sample.
+
+## September 13 — cinematic discovery homepage
+
+Implemented the selected combined reference with a live jet hero, six curated mechanism links, an all-exhibits collection route, and an ivory contribution footer. The shared renderer gains optional homepage composition and suspension settings; legacy engine share URLs retain their paused state. Original jet geometry now has swept blades, a shaped spinner, inlet lip and shell detail, with deterministic separate air streams and continuous illustrative combustion.
+
+Corrections during visual QA included a recessed fan, excessive reflections, initially patterned combustion, undersized collection previews, and SVG gallery capture margins. The final media comes from the actual scenes. Automated coverage increased to 28 tests. No independent reviewer, user study, awards result or real-phone performance claim was added. See the root design QA record.

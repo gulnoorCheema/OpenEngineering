@@ -4,6 +4,8 @@ import { Color, Group, InstancedMesh, MathUtils, Object3D } from 'three';
 import type { SceneProps } from '../../lib/exhibit';
 import { jetState, jetFlow } from '../../lib/jet';
 import { MechanicalPart } from './Assets';
+import JetFlow from './JetFlow';
+import JetCombustion from './JetCombustion';
 const model = '/models/jet-engine.glb';
 export default function JetEngineScene(p: SceneProps) {
   const fan = useRef<Group>(null),
@@ -32,7 +34,7 @@ export default function JetEngineScene(p: SceneProps) {
         const f = jetFlow(phase, i, p.controls.bypass, count),
           visible = (p.controls.flow !== 1 || f.core) && (p.controls.flow !== 2 || !f.core);
         scratch.position.set(...f.position);
-        scratch.scale.set(visible ? 0.1 : 0, visible ? 0.022 : 0, visible ? 0.022 : 0);
+        scratch.scale.set(visible ? 0.1 : 0, visible ? 0.006 : 0, visible ? 0.006 : 0);
         scratch.rotation.set(0, 0, 0);
         scratch.updateMatrix();
         flow.current.setMatrixAt(i, scratch.matrix);
@@ -48,7 +50,7 @@ export default function JetEngineScene(p: SceneProps) {
           t = (((phase / 420 + i * 0.618) % 1) + 1) % 1,
           r = 0.44 + 0.025 * Math.sin(a);
         scratch.position.set(-0.2 + t * 0.77, Math.sin(a) * r, Math.cos(a) * r);
-        scratch.scale.set(0.08 + 0.03 * Math.sin(t * Math.PI), 0.035, 0.035);
+        scratch.scale.set(0.1 + 0.07 * Math.sin(t * Math.PI), 0.05, 0.05);
         scratch.updateMatrix();
         fire.current.setMatrixAt(i, scratch.matrix);
       }
@@ -73,7 +75,7 @@ export default function JetEngineScene(p: SceneProps) {
         {part('JetCore', 'compressor')}
       </group>
       {part('JetStand', 'shafts')}
-      <group ref={fan} position={[-2.55, 0, 0]}>
+      <group ref={fan} position={[-2.94, 0, 0]}>
         {part('JetFan', 'fan')}
         {part('JetSpinner', 'fan', [-0.15, 0, 0])}
       </group>
@@ -99,15 +101,23 @@ export default function JetEngineScene(p: SceneProps) {
       {part('JetNozzle', 'nozzle')}
       {p.effects !== false && !p.reduced && (
         <>
+          <JetFlow p={p} />
+          <JetCombustion p={p} />
           <instancedMesh ref={flow} args={[undefined, undefined, count]} frustumCulled={false}>
             <sphereGeometry args={[1, 6, 4]} />
             <meshStandardMaterial roughness={0.35} emissive="#72a3a5" emissiveIntensity={0.45} />
           </instancedMesh>
           <instancedMesh ref={fire} args={[undefined, undefined, 32]} frustumCulled={false}>
             <sphereGeometry args={[1, 8, 6]} />
-            <meshBasicMaterial color="#ff934d" toneMapped={false} />
+            <meshBasicMaterial
+              color="#ffad46"
+              transparent
+              opacity={0.3}
+              depthWrite={false}
+              toneMapped={false}
+            />
           </instancedMesh>
-          <pointLight position={[0.2, 0, 0.1]} color="#ff8a40" intensity={1.2} distance={2} />
+          <pointLight position={[0.2, 0, 0.1]} color="#ff8a40" intensity={3} distance={2.1} />
         </>
       )}
     </group>

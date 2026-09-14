@@ -13,7 +13,7 @@ const { exhibit } = Astro.props;
 <Layout
   title={`${exhibit.title} — OpenEngineering`}
   description={exhibit.question}
-  imageId={['engine', 'gears', 'differential'].includes(exhibit.id) ? exhibit.id : 'engine'}
+  imageId={exhibit.id}
 >
   <ExhibitPlayer exhibit={exhibit} client:load />
   <WrittenStory exhibit={exhibit} />

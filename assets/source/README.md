@@ -31,3 +31,15 @@ blender --background --python scripts/build-exhibit-models.py
 Use the same installed Blender 5.2 executable as above. The generator contains original beveled meshes, cutaways, shafts, teeth, thread spools, and watch components. It does not change the original engine library or reflection asset. Runtime thread curves, flow traces, and hairspring deformation are phase-derived, not baked simulations.
 
 The sewing model uses 0.16 scene units per millimetre of stitch length. Jet core and bypass ducts keep the same schematic geometry for every flow-ratio preset. The watch uses a 15-tooth escape wheel and compound tooth pairs 6:96, 10:75, 10:80, and 10:60, with separate 12:36 and 10:40 motion works. These preserve ratios while using illustrative tooth profiles. Sources and exported models are original CC BY 4.0 artwork; the generator is MIT code.
+
+## Cinematic homepage jet revision
+
+The jet library now uses original cambered and swept blade surfaces, a tapered spinner, an inlet lip, panel bands and fasteners. Flow ribbons and a contained annular combustion effect remain deterministic runtime illustrations. They do not model aerodynamics or thermodynamics. The same GLB and runtime scene serve the homepage, exhibit and studio.
+
+To regenerate only this model, without rewriting the sewing or watch sources:
+
+```sh
+blender --background --python scripts/build-exhibit-models.py -- --only jet-engine
+```
+
+Omit `--only` to export all three libraries. `public/exhibits/*.webp` and `public/home/*` are original browser renders of these CC BY 4.0 teaching assets. Retain editable sources and the reproducible generator whenever changing the geometry.

@@ -13,6 +13,11 @@ export function jetState(phase: number, bypass = 5) {
     bypassFraction: bypass / (1 + bypass),
   };
 }
+/** Keep core traces inside the tapered exhaust, and bypass traces outside the core. */
+export function jetFlowRadius(x: number, core: boolean) {
+  if (!core) return 1.2;
+  return 0.39 - 0.19 * Math.max(0, Math.min(1, (x - 1.8) / 1.15));
+}
 export function jetFlow(
   phase: number,
   index: number,
@@ -23,7 +28,7 @@ export function jetFlow(
   const t = (((phase / 720 + index * 0.61803398875) % 1) + 1) % 1;
   const a = index * 2.39996323;
   const x = -3.45 + t * 6.9;
-  const r = core ? 0.36 + 0.14 * Math.sin(Math.PI * t) : 1.2 + 0.1 * Math.sin(Math.PI * t);
+  const r = jetFlowRadius(x, core);
   return {
     position: [x, Math.sin(a) * r, Math.cos(a) * r],
     core,

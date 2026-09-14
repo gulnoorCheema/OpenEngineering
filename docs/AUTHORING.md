@@ -85,3 +85,15 @@ For a mechanical frequency experiment, `presentation.clockRateControl` names a n
 Pass `model="/models/your-exhibit.glb"` to `MechanicalPart` for a separate assembly. Omitting it retains the existing library. Use a base-relative model path, semantic node names, and lazy scene registration; never preload the entire collection on the homepage.
 
 Recording choices and shot definitions live in `src/lib/recordings.ts`. Add captions and a deterministic `recordingFrame` definition for a new exhibit, then export its portrait clip, social card, thumbnail, and desktop/phone gallery through the shared studio. The two collection demos have explicit segment definitions; existing media is retained unless deliberately refreshed.
+
+## Homepage imagery and presentation
+
+The discovery homepage uses `HomeHero` and the shared jet scene. `SceneViewport` accepts optional `active` (default true), `presentation` (default exhibit), `transparentStage` (default false), and `annotations` (default empty) settings. Existing manifests and player routes require no changes. The homepage keeps playback intent locally and suspends rendering when offscreen or in a hidden tab. Do not write its inspection controls to an exhibit share URL.
+
+For collection previews, open the local studio after its controls become enabled, choose **Transparent collection image**, select each of the six recordings, and save its social card/thumbnail. Confirm the selection before exporting. For homepage posters, open `/?capture=1` at 1440 and 390 pixels, pause the jet and select **Save hero poster**. Then run:
+
+```sh
+python3 scripts/prepare-home-media.py
+```
+
+This requires Pillow and checks thumbnail transparency. It normalizes machinery bounds and creates optimized WebP files without stretching the model. Save the desktop **homepage share card** and copy it to `public/social/home.png`. Use **Save gallery PNG** for the desktop and phone launch images. Rebuild after updating assets and inspect the final exports. Raw captures stay in the ignored `artifacts/captures/` directory. Stop the loopback helper when finished.

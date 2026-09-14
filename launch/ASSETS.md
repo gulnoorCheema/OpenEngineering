@@ -44,3 +44,13 @@ Product Hunt and social posts remain unsubmitted. The local package is not evide
 - Mechanical watch: [desktop](assets/openengineering-mechanical-watch-desktop.png), [phone layout](assets/openengineering-mechanical-watch-phone.png).
 
 Matching `sewing-machine.png`, `jet-engine.png`, and `mechanical-watch.png` images in `public/exhibits/` and `public/social/` come from the shared renderer. These are original simplified teaching assemblies, with no real-performance or reviewer claims.
+
+## Cinematic homepage refresh — September 13
+
+- [Homepage desktop](assets/openengineering-home-desktop.png) and [phone layout](assets/openengineering-home-phone.png) show the actual discovery page.
+- `public/social/home.png` is the homepage's 1200 × 630 share card, composed from the live jet renderer and product typography.
+- `public/home/jet-poster.webp` and `jet-poster-phone.webp` retain separate desktop/phone compositions for loading and WebGL fallback.
+- Six optimized transparent `public/exhibits/*.webp` previews are exported through the studio and prepared with `scripts/prepare-home-media.py`.
+- Jet portrait footage, the new-collection demo, jet social card, and desktop/phone jet gallery images have been refreshed for the upgraded shared scene. The original collection demo remains unchanged. The collection recording runs about 55.6 seconds including readiness transitions.
+
+See [design QA](../design-qa.md) for reviewed images and remaining hardware checks. Publishing the application and repository does not submit Product Hunt material or send outreach.

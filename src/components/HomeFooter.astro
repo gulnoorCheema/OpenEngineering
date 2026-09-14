@@ -1,0 +1,30 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import { path, REPOSITORY } from '../lib/paths';
+---
+
+<footer class="home-footer">
+  <div class="home-container home-footer-main">
+    <h2>
+      Made for curious people.
+      <br />
+      Built by curious people.
+    </h2>
+    <div class="home-footer-invitation">
+      <a class="home-text-link" href={path('/contribute/')}>
+        Help build the next mechanism <ArrowUpRight size={22} aria-hidden="true" />
+      </a>
+      <p>Free. Open source. Built with Astra.</p>
+    </div>
+  </div>
+  <div class="home-container home-footer-bottom">
+    <span>OpenEngineering</span>
+    <div>
+      <a href={path('/sources/')}>Sources & credits</a>
+      <a href={path('/build-log/')}>Build log</a>
+      <a href={REPOSITORY}>
+        GitHub <ArrowUpRight size={15} aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</footer>

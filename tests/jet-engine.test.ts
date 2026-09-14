@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { jetState, jetFlow } from '../src/lib/jet';
+import { jetState, jetFlow, jetFlowRadius } from '../src/lib/jet';
+test('core traces fit the tapered nozzle while bypass traces stay outside the core', () => {
+  assert.ok(jetFlowRadius(2.95, true) < 0.3);
+  assert.ok(jetFlowRadius(2.4, true) < 0.42);
+  for (let x = -3; x <= 3; x += 0.05) {
+    assert.ok(jetFlowRadius(x, true) > 0.135);
+    assert.ok(jetFlowRadius(x, false) > 0.73);
+    assert.ok(jetFlowRadius(x, false) < 1.32);
+  }
+});
 test('jet mass-flow shares and sampled flow partitions match each bypass ratio', () => {
   for (const b of [2, 5, 10]) {
     const k = jetState(73, b);

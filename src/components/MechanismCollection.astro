@@ -1,0 +1,77 @@
+---
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { exhibits } from '../content/exhibits';
+import { homeMechanisms } from '../lib/home';
+import { path } from '../lib/paths';
+const { full = false } = Astro.props;
+const ordered = homeMechanisms.flatMap((item) => {
+  const exhibit = exhibits.find((e) => e.id === item.id);
+  return exhibit ? [{ ...exhibit, title: item.title, question: item.question }] : [];
+});
+const items = full
+  ? [...ordered, ...exhibits.filter((e) => !ordered.some((item) => item.id === e.id))]
+  : ordered;
+const Heading = full ? 'h1' : 'h2';
+---
+
+<section
+  class:list={['mechanism-collection', { 'full-collection': full }]}
+  id="collection"
+  aria-labelledby="collection-title"
+>
+  <div class="home-container">
+    <div class="mechanism-heading">
+      <div>
+        <p class="home-eyebrow">
+          THE COLLECTION /{' '}
+          {full
+            ? `${exhibits.length} MECHANISMS TO EXPLORE`
+            : `${items.length} FEATURED MECHANISMS`}
+        </p>
+        <Heading id="collection-title">
+          Find something
+          <br />
+          worth figuring out.
+        </Heading>
+      </div>
+      {!full && (
+        <a class="home-text-link" href={path('/collection/')}>
+          View full collection <ArrowUpRight size={23} aria-hidden="true" />
+        </a>
+      )}
+      {full && (
+        <p class="collection-intro">
+          Follow a story. Change something.
+          <br />
+          See why it works.
+        </p>
+      )}
+    </div>
+    <div class="mechanism-grid">
+      {items.map((item, i) => (
+        <a class="mechanism-entry" href={path(`/exhibits/${item.id}/`)}>
+          <span class="mechanism-index" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div class="mechanism-image">
+            <img
+              src={path(`/exhibits/${item.id}.webp`)}
+              width="720"
+              height="540"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="mechanism-caption">
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.question}</p>
+            </div>
+            <ArrowRight size={23} aria-hidden="true" />
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
